@@ -1,5 +1,6 @@
 <resources>
     <string name="app_name">Secuencia2</string>
+    <string name="start">Start</string>
 
     <string name="wsp_deadly_sins_lust">Lust</string>
     <string name="wsp_deadly_sins_gluttony">Gluttony</string>

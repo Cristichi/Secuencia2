@@ -3,75 +3,75 @@ package org.iesmurgi.cristichi;
 import android.content.Context;
 import android.support.annotation.DrawableRes;
 import android.support.annotation.StringRes;
-import android.util.Log;
 import android.widget.Button;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-public enum WordStylePack implements StylePack<String> {
-    PECADOS_CAPITALES(R.string.app_name, R.drawable.ic_launcher_foreground, "Avaricia", "Envidia", "Lujuria", "Ira", "Soberbia", "Pereza","Gula")
+public enum WordStylePack implements StylePack<Integer> {
+    PECADOS_CAPITALES(R.string.app_name, R.drawable.ic_launcher_foreground, R.string.app_name, R.string.placeholder)
             ;
 
     @StringRes
-    private int nombre;
+    private int name;
     @DrawableRes
-    private int icono;
-    private String[] botonera;
+    private int icon;
+    @StringRes
+    private int[] values;
 
     private Random rng;
 
-    WordStylePack(int nombre, int icono, String... botonera) {
-        this.nombre = nombre;
-        this.icono = icono;
-        this.botonera = botonera;
+    WordStylePack(int name, int icon, @StringRes int... values) {
+        this.name = name;
+        this.icon = icon;
+        this.values = values;
         rng = new Random();
+        if (values.length==0){
+            throw new IllegalArgumentException("Available values can't be empty");
+        }
     }
 
     @Override
-    public Button[] getBotonera(Context contexto) {
-        Button[] sol = new Button[botonera.length];
+    public Button[] getButtons(Context context) {
+        Button[] sol = new Button[values.length];
         for (int i = 0; i < sol.length; i++) {
-            Button uno = new Button(contexto);
-            uno.setText(botonera[i]);
+            Button uno = new Button(context);
+            uno.setText(values[i]);
             sol[i] = uno;
         }
         return sol;
     }
 
     @Override
-    public void setNombre(@StringRes int nombre) {
-        this.nombre = nombre;
+    public void setName(@StringRes int name) {
+        this.name = name;
     }
 
     @Override
     @StringRes
-    public int getNombre() {
-        return nombre;
+    public int getName() {
+        return name;
     }
 
     @Override
-    public void setIcono(@DrawableRes int icono) {
-        this.icono = icono;
+    public void setIcon(@DrawableRes int icon) {
+        this.icon = icon;
     }
 
     @Override
-    public int getIcono() {
-        return icono;
+    public int getIcon() {
+        return icon;
     }
 
     @Override
-    public List<String> generateRandomSentence(Difficulty difficulty) {
+    public List<Integer> generateRandomSentence(Difficulty difficulty) {
         int elementos = difficulty.getNumElementos();
-        Log.d("CRISTICHIEX", "elementos: " + elementos);
         elementos += (rng.nextBoolean() ? 1 : -1) * rng.nextInt(Math.max(elementos / 4, 1));
-        Log.d("CRISTICHIEX", "elementos: " + elementos);
-        ArrayList<String> sol = new ArrayList<>(elementos);
+        ArrayList<Integer> sol = new ArrayList<>(elementos);
         for (int i = 0; i < elementos; i++) {
-            String word = botonera[rng.nextInt(botonera.length)];
+            int word = values[rng.nextInt(values.length)];
             sol.add(word);
-            Log.d("CRISTICHIEX", "Número " + i + ": " + word);
         }
         return sol;
     }

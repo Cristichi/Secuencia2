@@ -1,12 +1,6 @@
 package org.iesmurgi.cristichi;
 
-import android.app.Activity;
-import android.app.Application;
 import android.content.Context;
-import android.content.res.Resources;
-import android.graphics.drawable.Drawable;
-import android.graphics.drawable.InsetDrawable;
-import android.graphics.drawable.PictureDrawable;
 import android.support.annotation.DrawableRes;
 import android.support.annotation.StringRes;
 import android.util.Log;
@@ -20,50 +14,53 @@ public enum ImageStylePack implements StylePack<Integer>{
     TEST(R.string.app_name, R.drawable.ic_launcher_foreground, R.drawable.ic_launcher_background, R.drawable.ic_launcher_foreground)
     ;
     @StringRes
-    private int nombre;
+    private int name;
     @DrawableRes
-    private int icono;
+    private int icon;
     @DrawableRes
-    private int[] botonera;
+    private int[] values;
 
     private Random rng;
 
-    ImageStylePack(int nombre, int icono, @DrawableRes int... botonera){
-        this.nombre = nombre;
-        this.icono = icono;
-        this.botonera = botonera;
+    ImageStylePack(int name, int icon, @DrawableRes int... values){
+        this.name = name;
+        this.icon = icon;
+        this.values = values;
         rng = new Random();
+        if (this.values.length==0){
+            throw new IllegalArgumentException("Available values can't be empty");
+        }
     }
 
     @Override
-    public Button[] getBotonera(Context contexto) {
-        Button[] sol = new Button[botonera.length];
+    public Button[] getButtons(Context contexto) {
+        Button[] sol = new Button[values.length];
         for (int i = 0; i < sol.length; i++) {
             Button uno = new Button(contexto);
-            uno.setBackground(contexto.getResources().getDrawable(botonera[i]));
+            uno.setBackground(contexto.getResources().getDrawable(values[i]));
             sol[i] = uno;
         }
         return sol;
     }
 
     @Override
-    public void setNombre(@StringRes int nombre) {
-        this.nombre = nombre;
+    public void setName(@StringRes int name) {
+        this.name = name;
     }
 
     @Override @StringRes
-    public int getNombre() {
-        return nombre;
+    public int getName() {
+        return name;
     }
 
     @Override
-    public void setIcono(@DrawableRes int icono) {
-        this.icono = icono;
+    public void setIcon(@DrawableRes int icon) {
+        this.icon = icon;
     }
 
     @Override
-    public int getIcono() {
-        return icono;
+    public int getIcon() {
+        return icon;
     }
 
     @Override
@@ -74,7 +71,7 @@ public enum ImageStylePack implements StylePack<Integer>{
         Log.d("CRISTICHIEX", "elementos: " + elementos);
         ArrayList<Integer> sol = new ArrayList<>(elementos);
         for (int i = 0; i < elementos; i++) {
-            int imagen = botonera[rng.nextInt(botonera.length)];
+            int imagen = values[rng.nextInt(values.length)];
             sol.add(imagen);
             Log.d("CRISTICHIEX", "Número " + i + ": " + imagen);
         }

@@ -13,69 +13,67 @@ import java.util.Random;
 public enum MathStylePack implements StylePack<Character>{
     FORMULAS(R.string.app_name, R.drawable.ic_launcher_foreground);
 
-    private static char[] operaciones;
-    private static char[] numeros;
+    private static char[] operations;
+    private static char[] numbers;
     static {
-        operaciones = new char[]{'+', '-', '*', '/'};
-        numeros = new char[]{'0','1','2','3','4','5','6','7','8','9'};
+        operations = new char[]{'+', '-', '*', '/'};
+        numbers = new char[]{'0','1','2','3','4','5','6','7','8','9'};
     }
 
     @StringRes
-    private int nombre;
+    private int name;
     @DrawableRes
-    private int icono;
+    private int icon;
 
     private Random rng;
 
-    MathStylePack(int nombre, int icono){
-        this.nombre = nombre;
-        this.icono = icono;
+    MathStylePack(int name, int icon){
+        this.name = name;
+        this.icon = icon;
         rng = new Random();
     }
 
     @Override
-    public Button[] getBotonera(Context contexto) {
-        Button[] sol = new Button[operaciones.length+numeros.length];
+    public Button[] getButtons(Context context) {
+        Button[] sol = new Button[operations.length+ numbers.length];
         int i;
-        for (i = 0; i < operaciones.length; i++) {
-            Button uno = new Button(contexto);
-            uno.setText(Character.toString(operaciones[i]));
+        for (i = 0; i < operations.length; i++) {
+            Button uno = new Button(context);
+            uno.setText(Character.toString(operations[i]));
             sol[i] = uno;
         }
-        for (int j = 0; j < numeros.length; j++) {
-            Button uno = new Button(contexto);
-            uno.setText(Character.toString(numeros[j]));
+        for (int j = 0; j < numbers.length; j++) {
+            Button uno = new Button(context);
+            uno.setText(Character.toString(numbers[j]));
             sol[i+j] = uno;
         }
         return sol;
     }
 
     @Override
-    public void setNombre(@StringRes int nombre) {
-        this.nombre = nombre;
+    public void setName(@StringRes int name) {
+        this.name = name;
     }
 
     @Override @StringRes
-    public int getNombre() {
-        return nombre;
+    public int getName() {
+        return name;
     }
 
     @Override
-    public void setIcono(@DrawableRes int icono) {
-        this.icono = icono;
+    public void setIcon(@DrawableRes int icon) {
+        this.icon = icon;
     }
 
     @Override
-    public int getIcono() {
-        return icono;
+    public int getIcon() {
+        return icon;
     }
 
     @Override
     public List<Character> generateRandomSentence(Difficulty difficulty) {
         int elementos = difficulty.getNumElementos();
-        Log.d("CRISTICHIEX", "elementos: "+elementos);
         elementos+= (rng.nextBoolean()?1:-1) * rng.nextInt(elementos/4);
-        Log.d("CRISTICHIEX", "elementos: "+elementos);
         ArrayList<Character> sol = new ArrayList<>(elementos);
         boolean operacion = false;
         for (int i = 0; i < elementos; i++) {
@@ -84,14 +82,13 @@ public enum MathStylePack implements StylePack<Character>{
             }
             char car;
             if (operacion){
-                car = operaciones[rng.nextInt(operaciones.length)];
+                car = operations[rng.nextInt(operations.length)];
                 operacion = false;
             }else{
-                car = numeros[rng.nextInt(numeros.length)];
+                car = numbers[rng.nextInt(numbers.length)];
                 operacion = rng.nextBoolean();
             }
             sol.add(car);
-            Log.d("CRISTICHIEX", "Número "+i+": "+car);
         }
         return sol;
     }

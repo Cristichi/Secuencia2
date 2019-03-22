@@ -9,15 +9,15 @@ import java.util.List;
 
 public interface StylePack<E> {
 
-    Button[] getBotonera(Context contexto);
+    Button[] getButtons(Context contexto);
 
-    void setNombre(@StringRes int nuevoNombre);
+    void setName(@StringRes int name);
     @StringRes
-    int getNombre();
+    int getName();
 
-    void setIcono(@DrawableRes int nuevoIcono);
+    void setIcon(@DrawableRes int icon);
     @DrawableRes
-    int getIcono();
+    int getIcon();
 
     List<E> generateRandomSentence(Difficulty difficulty);
 }

@@ -10,8 +10,9 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Button btn = findViewById(R.id.button);
-        btn.setBackground(getResources().getDrawable(R.drawable.ic_launcher_foreground));
+        WordStylePack.PECADOS_CAPITALES.generateRandomSentence(Difficulty.NOOB);
+        WordStylePack.PECADOS_CAPITALES.generateRandomSentence(Difficulty.EASY);
+        WordStylePack.PECADOS_CAPITALES.generateRandomSentence(Difficulty.MEDIUM);
         WordStylePack.PECADOS_CAPITALES.generateRandomSentence(Difficulty.EXTREME);
     }
 }

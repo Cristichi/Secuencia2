@@ -65,7 +65,7 @@ public enum WordStylePack implements StylePack<String> {
     public List<String> generateRandomSentence(Difficulty difficulty) {
         int elementos = difficulty.getNumElementos();
         Log.d("CRISTICHIEX", "elementos: " + elementos);
-        elementos += (rng.nextBoolean() ? 1 : -1) * rng.nextInt(elementos / 4);
+        elementos += (rng.nextBoolean() ? 1 : -1) * rng.nextInt(Math.max(elementos / 4, 1));
         Log.d("CRISTICHIEX", "elementos: " + elementos);
         ArrayList<String> sol = new ArrayList<>(elementos);
         for (int i = 0; i < elementos; i++) {

@@ -13,9 +13,10 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        List<Integer> lista = WordStylePack.PECADOS_CAPITALES.generateRandomSentence(Difficulty.MEDIUM);
-        for (int inte: lista) {
-            Log.d("CRISTICHIEX", getResources().getString(inte));
+        List<Integer> lista = WordStylePack.WEEK_DAYS.generateRandomSentence(Difficulty.MEDIUM);
+        for (int car: lista) {
+            Log.d("CRISTICHIEX", getResources().getString(car));
         }
+        finish();
     }
 }

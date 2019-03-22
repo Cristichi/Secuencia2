@@ -1,5 +1,19 @@
 <resources>
     <string name="app_name">Secuencia2</string>
 
-    <string name="placeholder">Hola</string>
+    <string name="wsp_deadly_sins_lust">Lust</string>
+    <string name="wsp_deadly_sins_gluttony">Gluttony</string>
+    <string name="wsp_deadly_sins_greed">Greed</string>
+    <string name="wsp_deadly_sins_sloth">Sloth</string>
+    <string name="wsp_deadly_sins_wrath">Wrath</string>
+    <string name="wsp_deadly_sins_envy">Envy</string>
+    <string name="wsp_deadly_sins_pride">Pride</string>
+
+    <string name="wsp_week_days_monday">Monday</string>
+    <string name="wsp_week_days_tuesday">Tuesday</string>
+    <string name="wsp_week_days_wednesday">Wednesday</string>
+    <string name="wsp_week_days_thursday">Thursday</string>
+    <string name="wsp_week_days_friday">Friday</string>
+    <string name="wsp_week_days_saturday">Saturday</string>
+    <string name="wsp_week_days_sunday">Sunday</string>
 </resources>

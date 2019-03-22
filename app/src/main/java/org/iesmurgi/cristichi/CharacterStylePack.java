@@ -10,8 +10,16 @@ import java.util.List;
 import java.util.Random;
 
 public enum CharacterStylePack implements StylePack<Character> {
-    LETRAS_SIMPLES(R.string.app_name, R.drawable.ic_launcher_foreground, 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I')
+    ALPHABET_1(R.string.app_name, R.drawable.ic_launcher_foreground,
+            'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I'),
+    ALPHABET_2(R.string.app_name, R.drawable.ic_launcher_foreground,
+            'J', 'K', 'L', 'N', 'M', 'O', 'P', 'Q', 'R'),
+    ALPHABET_3(R.string.app_name, R.drawable.ic_launcher_foreground,
+            'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'),
+    GREEK(R.string.app_name, R.drawable.ic_launcher_foreground,
+            '\u03b1', '\u03b2', '\u03b3', '\u03b4', '\u03b5', '\u03b6', '\u03b7'),
     ;
+
     @StringRes
     private int name;
     @DrawableRes

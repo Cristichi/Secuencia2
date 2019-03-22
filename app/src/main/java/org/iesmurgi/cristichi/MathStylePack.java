@@ -3,7 +3,6 @@ package org.iesmurgi.cristichi;
 import android.content.Context;
 import android.support.annotation.DrawableRes;
 import android.support.annotation.StringRes;
-import android.util.Log;
 import android.widget.Button;
 
 import java.util.ArrayList;

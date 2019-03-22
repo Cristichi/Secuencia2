@@ -12,5 +12,6 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         Button btn = findViewById(R.id.button);
         btn.setBackground(getResources().getDrawable(R.drawable.ic_launcher_foreground));
+        WordStylePack.PECADOS_CAPITALES.generateRandomSentence(Difficulty.EXTREME);
     }
 }

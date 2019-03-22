@@ -10,18 +10,19 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-public enum CharacterStylePack implements StylePack<Character> {
-    LETRAS_SIMPLES(R.string.app_name, R.drawable.ic_launcher_foreground, 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I')
-    ;
+public enum WordStylePack implements StylePack<String> {
+    PECADOS_CAPITALES(R.string.app_name, R.drawable.ic_launcher_foreground, "Avaricia", "Envidia", "Lujuria", "Ira", "Soberbia", "Pereza","Gula")
+            ;
+
     @StringRes
     private int nombre;
     @DrawableRes
     private int icono;
-    private char[] botonera;
+    private String[] botonera;
 
     private Random rng;
 
-    CharacterStylePack(int nombre, int icono, char... botonera){
+    WordStylePack(int nombre, int icono, String... botonera) {
         this.nombre = nombre;
         this.icono = icono;
         this.botonera = botonera;
@@ -33,7 +34,7 @@ public enum CharacterStylePack implements StylePack<Character> {
         Button[] sol = new Button[botonera.length];
         for (int i = 0; i < sol.length; i++) {
             Button uno = new Button(contexto);
-            uno.setText(Character.toString(botonera[i]));
+            uno.setText(botonera[i]);
             sol[i] = uno;
         }
         return sol;
@@ -44,7 +45,8 @@ public enum CharacterStylePack implements StylePack<Character> {
         this.nombre = nombre;
     }
 
-    @Override @StringRes
+    @Override
+    @StringRes
     public int getNombre() {
         return nombre;
     }
@@ -60,16 +62,16 @@ public enum CharacterStylePack implements StylePack<Character> {
     }
 
     @Override
-    public List<Character> generateRandomSentence(Difficulty difficulty) {
+    public List<String> generateRandomSentence(Difficulty difficulty) {
         int elementos = difficulty.getNumElementos();
-        Log.d("CRISTICHIEX", "elementos: "+elementos);
-        elementos+= (rng.nextBoolean()?1:-1) * rng.nextInt(elementos/4);
-        Log.d("CRISTICHIEX", "elementos: "+elementos);
-        ArrayList<Character> sol = new ArrayList<>(elementos);
+        Log.d("CRISTICHIEX", "elementos: " + elementos);
+        elementos += (rng.nextBoolean() ? 1 : -1) * rng.nextInt(elementos / 4);
+        Log.d("CRISTICHIEX", "elementos: " + elementos);
+        ArrayList<String> sol = new ArrayList<>(elementos);
         for (int i = 0; i < elementos; i++) {
-            char car = botonera[rng.nextInt(botonera.length)];
-            sol.add(car);
-            Log.d("CRISTICHIEX", "Número "+i+": "+car);
+            String word = botonera[rng.nextInt(botonera.length)];
+            sol.add(word);
+            Log.d("CRISTICHIEX", "Número " + i + ": " + word);
         }
         return sol;
     }

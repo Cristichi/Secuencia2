@@ -2,6 +2,25 @@
     <string name="app_name">Secuencia2</string>
     <string name="start">Start</string>
 
+
+    <string name="choose_gamemode">Choose GameMode</string>
+    <string name="choose_csp">Characters Packs</string>
+    <string name="choose_msp">Special Packs</string>
+    <string name="choose_isp">Images Packs</string>
+    <string name="choose_wsp">Words Packs</string>
+
+    <!-- STYLE PACKS -->
+
+    <string name="csp_alphabet1_name">Alphabet 1</string>
+    <string name="csp_alphabet2_name">Alphabet 2</string>
+    <string name="csp_alphabet3_name">Alphabet 3</string>
+    <string name="csp_greek_name">Greek Letters</string>
+
+    <string name="msp_formulas_name">Formulas</string>
+
+    <string name="isp_forms_name">Forms</string>
+
+    <string name="wsp_deadly_sins_name">Deadly Sins</string>
     <string name="wsp_deadly_sins_lust">Lust</string>
     <string name="wsp_deadly_sins_gluttony">Gluttony</string>
     <string name="wsp_deadly_sins_greed">Greed</string>
@@ -10,6 +29,7 @@
     <string name="wsp_deadly_sins_envy">Envy</string>
     <string name="wsp_deadly_sins_pride">Pride</string>
 
+    <string name="wsp_week_days_name">Week Days</string>
     <string name="wsp_week_days_monday">Monday</string>
     <string name="wsp_week_days_tuesday">Tuesday</string>
     <string name="wsp_week_days_wednesday">Wednesday</string>
@@ -17,4 +37,5 @@
     <string name="wsp_week_days_friday">Friday</string>
     <string name="wsp_week_days_saturday">Saturday</string>
     <string name="wsp_week_days_sunday">Sunday</string>
+
 </resources>

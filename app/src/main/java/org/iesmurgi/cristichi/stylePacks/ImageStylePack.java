@@ -1,4 +1,4 @@
-package org.iesmurgi.cristichi;
+package org.iesmurgi.cristichi.stylePacks;
 
 import android.content.Context;
 import android.support.annotation.DrawableRes;
@@ -6,12 +6,19 @@ import android.support.annotation.StringRes;
 import android.util.Log;
 import android.widget.Button;
 
+import org.iesmurgi.cristichi.Difficulty;
+import org.iesmurgi.cristichi.R;
+import org.iesmurgi.cristichi.stylePacks.StylePack;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-public enum ImageStylePack implements StylePack<Integer>{
-    TEST(R.string.app_name, R.drawable.ic_launcher_foreground, R.drawable.ic_launcher_background, R.drawable.ic_launcher_foreground)
+public enum ImageStylePack implements StylePack<Integer> {
+    FORMS(R.string.isp_forms_name, R.drawable.ic_launcher_foreground,
+            R.drawable.isp_form_circle, R.drawable.isp_form_line_horizontal,
+            R.drawable.isp_form_line_vertical, R.drawable.isp_form_square,
+            R.drawable.isp_form_star, R.drawable.isp_form_triangle)
     ;
     @StringRes
     private int name;

@@ -1,36 +1,37 @@
-package org.iesmurgi.cristichi;
+package org.iesmurgi.cristichi.stylePacks;
 
 import android.content.Context;
 import android.support.annotation.DrawableRes;
 import android.support.annotation.StringRes;
 import android.widget.Button;
 
+import org.iesmurgi.cristichi.Difficulty;
+import org.iesmurgi.cristichi.R;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-public enum WordStylePack implements StylePack<Integer> {
-    DEADLY_SINS(R.string.app_name, R.drawable.ic_launcher_foreground,
-            R.string.wsp_deadly_sins_envy, R.string.wsp_deadly_sins_gluttony,
-            R.string.wsp_deadly_sins_greed, R.string.wsp_deadly_sins_lust,
-            R.string.wsp_deadly_sins_pride, R.string.wsp_deadly_sins_sloth,
-            R.string.wsp_deadly_sins_wrath),
-    WEEK_DAYS(R.string.app_name, R.drawable.ic_launcher_foreground,
-            R.string.wsp_week_days_monday, R.string.wsp_week_days_tuesday,
-            R.string.wsp_week_days_wednesday, R.string.wsp_week_days_thursday,
-            R.string.wsp_week_days_saturday, R.string.wsp_week_days_sunday),
+public enum CharacterStylePack implements StylePack<Character> {
+    ALPHABET_1(R.string.csp_alphabet1_name, R.drawable.ic_launcher_foreground,
+            'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I'),
+    ALPHABET_2(R.string.csp_alphabet2_name, R.drawable.ic_launcher_foreground,
+            'J', 'K', 'L', 'N', 'M', 'O', 'P', 'Q', 'R'),
+    ALPHABET_3(R.string.csp_alphabet3_name, R.drawable.ic_launcher_foreground,
+            'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'),
+    GREEK(R.string.csp_greek_name, R.drawable.ic_launcher_foreground,
+            '\u03b1', '\u03b2', '\u03b3', '\u03b4', '\u03b5', '\u03b6', '\u03b7'),
     ;
 
     @StringRes
     private int name;
     @DrawableRes
     private int icon;
-    @StringRes
-    private int[] values;
+    private char[] values;
 
     private Random rng;
 
-    WordStylePack(int name, int icon, @StringRes int... values) {
+    CharacterStylePack(int name, int icon, char... values){
         this.name = name;
         this.icon = icon;
         this.values = values;
@@ -45,7 +46,7 @@ public enum WordStylePack implements StylePack<Integer> {
         Button[] sol = new Button[values.length];
         for (int i = 0; i < sol.length; i++) {
             Button uno = new Button(context);
-            uno.setText(values[i]);
+            uno.setText(Character.toString(values[i]));
             sol[i] = uno;
         }
         return sol;
@@ -56,8 +57,7 @@ public enum WordStylePack implements StylePack<Integer> {
         this.name = name;
     }
 
-    @Override
-    @StringRes
+    @Override @StringRes
     public int getName() {
         return name;
     }
@@ -73,13 +73,13 @@ public enum WordStylePack implements StylePack<Integer> {
     }
 
     @Override
-    public List<Integer> generateRandomSentence(Difficulty difficulty) {
+    public List<Character> generateRandomSentence(Difficulty difficulty) {
         int elementos = difficulty.getNumElementos();
-        elementos += (rng.nextBoolean() ? 1 : -1) * rng.nextInt(Math.max(elementos / 4, 1));
-        ArrayList<Integer> sol = new ArrayList<>(elementos);
+        elementos+= (rng.nextBoolean()?1:-1) * rng.nextInt(elementos/4);
+        ArrayList<Character> sol = new ArrayList<>(elementos);
         for (int i = 0; i < elementos; i++) {
-            int word = values[rng.nextInt(values.length)];
-            sol.add(word);
+            char car = values[rng.nextInt(values.length)];
+            sol.add(car);
         }
         return sol;
     }

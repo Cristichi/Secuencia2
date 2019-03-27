@@ -1,16 +1,20 @@
-package org.iesmurgi.cristichi;
+package org.iesmurgi.cristichi.stylePacks;
 
 import android.content.Context;
 import android.support.annotation.DrawableRes;
 import android.support.annotation.StringRes;
 import android.widget.Button;
 
+import org.iesmurgi.cristichi.Difficulty;
+import org.iesmurgi.cristichi.R;
+import org.iesmurgi.cristichi.stylePacks.StylePack;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-public enum MathStylePack implements StylePack<Character>{
-    FORMULAS(R.string.app_name, R.drawable.ic_launcher_foreground);
+public enum MathStylePack implements StylePack<Character> {
+    FORMULAS(R.string.msp_formulas_name, R.drawable.ic_launcher_foreground);
 
     private static char[] operations;
     private static char[] numbers;

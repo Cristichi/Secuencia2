@@ -1,18 +1,14 @@
 package org.iesmurgi.cristichi;
 
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import org.iesmurgi.cristichi.stylePacks.StylePack;
-import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.List;

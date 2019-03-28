@@ -7,14 +7,13 @@ import android.widget.Button;
 
 import org.iesmurgi.cristichi.Difficulty;
 import org.iesmurgi.cristichi.R;
-import org.iesmurgi.cristichi.stylePacks.StylePack;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-public enum MathStylePack implements StylePack<Character> {
-    FORMULAS(R.string.msp_formulas_name, R.drawable.ic_launcher_foreground);
+public enum SpecialStylePack implements StylePack<Character> {
+    FORMULAS(R.string.ssp_formulas_name, R.drawable.icon_ssp_formulas);
 
     private static char[] operations;
     private static char[] numbers;
@@ -30,7 +29,7 @@ public enum MathStylePack implements StylePack<Character> {
 
     private Random rng;
 
-    MathStylePack(int name, int icon){
+    SpecialStylePack(int name, int icon){
         this.name = name;
         this.icon = icon;
         rng = new Random();

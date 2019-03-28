@@ -2,18 +2,22 @@ package org.iesmurgi.cristichi;
 
 import android.content.res.Resources;
 import android.os.Bundle;
+import android.os.PersistableBundle;
+import android.support.annotation.NonNull;
 import android.support.design.widget.TabLayout;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
+import android.view.MotionEvent;
+import android.view.View;
+import android.widget.Toast;
 
 import org.iesmurgi.cristichi.stylePacks.CharacterStylePack;
 import org.iesmurgi.cristichi.stylePacks.ImageStylePack;
-import org.iesmurgi.cristichi.stylePacks.MathStylePack;
+import org.iesmurgi.cristichi.stylePacks.SpecialStylePack;
 import org.iesmurgi.cristichi.stylePacks.WordStylePack;
 
 import java.util.ArrayList;
@@ -40,6 +44,20 @@ public class TabbedMenuActivity extends AppCompatActivity {
 
         tabLayout = findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(viewPager);
+
+        setupTabIcons();
+    }
+
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+    }
+
+    private void setupTabIcons() {
+        tabLayout.getTabAt(0).setIcon(CharacterStylePack.values()[0].getIcon());
+        tabLayout.getTabAt(1).setIcon(ImageStylePack.values()[0].getIcon());
+        tabLayout.getTabAt(2).setIcon(WordStylePack.values()[0].getIcon());
+        tabLayout.getTabAt(3).setIcon(SpecialStylePack.values()[0].getIcon());
     }
 
     private void setupViewPager(ViewPager viewPager) {
@@ -53,7 +71,7 @@ public class TabbedMenuActivity extends AppCompatActivity {
         fspImg.setPacks(ImageStylePack.values());
 
         FragmentStylePacks fspMath = new FragmentStylePacks();
-        fspMath.setPacks(MathStylePack.values());
+        fspMath.setPacks(SpecialStylePack.values());
 
         FragmentStylePacks fspWords = new FragmentStylePacks();
         fspWords.setPacks(WordStylePack.values());

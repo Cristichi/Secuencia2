@@ -14,12 +14,12 @@ import java.util.List;
 import java.util.Random;
 
 public enum WordStylePack implements StylePack<Integer> {
-    DEADLY_SINS(R.string.wsp_deadly_sins_name, R.drawable.ic_launcher_foreground,
+    DEADLY_SINS(R.string.wsp_deadly_sins_name, R.drawable.icon_wsp_deadly_sins,
             R.string.wsp_deadly_sins_envy, R.string.wsp_deadly_sins_gluttony,
             R.string.wsp_deadly_sins_greed, R.string.wsp_deadly_sins_lust,
             R.string.wsp_deadly_sins_pride, R.string.wsp_deadly_sins_sloth,
             R.string.wsp_deadly_sins_wrath),
-    WEEK_DAYS(R.string.wsp_week_days_name, R.drawable.ic_launcher_foreground,
+    WEEK_DAYS(R.string.wsp_week_days_name, R.drawable.icon_wsp_week_days,
             R.string.wsp_week_days_monday, R.string.wsp_week_days_tuesday,
             R.string.wsp_week_days_wednesday, R.string.wsp_week_days_thursday,
             R.string.wsp_week_days_saturday, R.string.wsp_week_days_sunday),

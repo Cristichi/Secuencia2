@@ -8,14 +8,13 @@ import android.widget.Button;
 
 import org.iesmurgi.cristichi.Difficulty;
 import org.iesmurgi.cristichi.R;
-import org.iesmurgi.cristichi.stylePacks.StylePack;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
 public enum ImageStylePack implements StylePack<Integer> {
-    FORMS(R.string.isp_forms_name, R.drawable.ic_launcher_foreground,
+    FORMS(R.string.isp_forms_name, R.drawable.icon_isp_forms,
             R.drawable.isp_form_circle, R.drawable.isp_form_line_horizontal,
             R.drawable.isp_form_line_vertical, R.drawable.isp_form_square,
             R.drawable.isp_form_star, R.drawable.isp_form_triangle)
@@ -29,7 +28,7 @@ public enum ImageStylePack implements StylePack<Integer> {
 
     private Random rng;
 
-    ImageStylePack(int name, int icon, @DrawableRes int... values){
+    ImageStylePack(int name, @DrawableRes int icon, @DrawableRes int... values){
         this.name = name;
         this.icon = icon;
         this.values = values;
@@ -65,7 +64,7 @@ public enum ImageStylePack implements StylePack<Integer> {
         this.icon = icon;
     }
 
-    @Override
+    @Override @DrawableRes
     public int getIcon() {
         return icon;
     }

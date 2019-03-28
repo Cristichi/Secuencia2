@@ -1,6 +1,7 @@
 package org.iesmurgi.cristichi.stylePacks;
 
 import android.content.Context;
+import android.os.Parcelable;
 import android.support.annotation.DrawableRes;
 import android.support.annotation.StringRes;
 import android.widget.Button;

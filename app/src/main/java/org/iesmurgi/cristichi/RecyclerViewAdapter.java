@@ -1,7 +1,9 @@
 package org.iesmurgi.cristichi;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.support.annotation.NonNull;
@@ -33,15 +35,30 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewHolder
             final int contado = cont++;
             @Override
             public void onClick(View v) {
-                StylePack este = itemList.get(contado);
+                final StylePack este = itemList.get(contado);
                 Toast.makeText(context, "HOLA "+context.getString(este.getName()), Toast.LENGTH_SHORT).show();
-                Intent intento = new Intent(context, GameActivity.class);
-                intento.putExtra("stylePack", este);
-                context.startActivity(intento);
-                if (context instanceof Activity){
-                    ((Activity)context).finish();
-
+                String[] diffs = new String[Difficulty.values().length];
+                for (int i=0; i<diffs.length; i++){
+                    diffs[i] = context.getString(Difficulty.values()[i].getName());
                 }
+
+                AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                builder.setTitle(context.getString(R.string.pick_diff)+" "+context.getString(este.getName()));
+                builder.setItems(diffs, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        Intent intento = new Intent(context, GameActivity.class);
+                        intento.putExtra("stylePack", este);
+                        intento.putExtra("difficulty", which);
+                        context.startActivity(intento);
+                        if (context instanceof Activity){
+                            ((Activity)context).finish();
+
+                        }
+                    }
+                });
+                builder.show();
+
             }
         });
         return rcv;

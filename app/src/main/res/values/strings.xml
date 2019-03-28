@@ -38,4 +38,12 @@
     <string name="wsp_week_days_saturday">Saturday</string>
     <string name="wsp_week_days_sunday">Sunday</string>
 
+    <!-- Difficulties -->
+    <string name="diff_easiest">Easiest</string>
+    <string name="diff_easy">Easy</string>
+    <string name="diff_medium">Medium</string>
+    <string name="diff_hard">Hard</string>
+    <string name="diff_extreme">Extreme</string>
+
+    <string name="pick_diff">Pick a difficulty for</string>
 </resources>

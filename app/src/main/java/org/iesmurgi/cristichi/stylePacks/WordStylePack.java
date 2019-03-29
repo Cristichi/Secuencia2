@@ -10,6 +10,7 @@ import org.iesmurgi.cristichi.R;
 import org.iesmurgi.cristichi.stylePacks.StylePack;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
@@ -45,13 +46,14 @@ public enum WordStylePack implements StylePack<Integer> {
     }
 
     @Override
-    public Button[] getButtons(Context context) {
-        Button[] sol = new Button[values.length];
-        for (int i = 0; i < sol.length; i++) {
+    public ArrayList<Button> getButtons(Context context) {
+        ArrayList<Button> sol = new ArrayList<>(values.length);
+        for (int i = 0; i < sol.size(); i++) {
             Button uno = new Button(context);
             uno.setText(values[i]);
-            sol[i] = uno;
+            sol.add(uno);
         }
+        Collections.shuffle(sol);
         return sol;
     }
 

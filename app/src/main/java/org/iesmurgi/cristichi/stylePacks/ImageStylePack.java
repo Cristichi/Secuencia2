@@ -10,6 +10,7 @@ import org.iesmurgi.cristichi.Difficulty;
 import org.iesmurgi.cristichi.R;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
@@ -39,13 +40,15 @@ public enum ImageStylePack implements StylePack<Integer> {
     }
 
     @Override
-    public Button[] getButtons(Context contexto) {
-        Button[] sol = new Button[values.length];
-        for (int i = 0; i < sol.length; i++) {
-            Button uno = new Button(contexto);
-            uno.setBackground(contexto.getResources().getDrawable(values[i]));
-            sol[i] = uno;
+    public ArrayList<Button> getButtons(Context context) {
+        ArrayList<Button> sol = new ArrayList<>(values.length);
+
+        for (int i = 0; i < sol.size(); i++) {
+            Button uno = new Button(context);
+            uno.setBackground(context.getResources().getDrawable(values[i]));
+            sol.add(uno);
         }
+        Collections.shuffle(sol);
         return sol;
     }
 

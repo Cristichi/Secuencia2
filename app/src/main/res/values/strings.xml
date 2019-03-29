@@ -2,6 +2,9 @@
     <string name="app_name">Secuencia2</string>
     <string name="start">Start</string>
 
+    <string name="error_access_game_tit">Error accessing game data</string>
+    <string name="error_access_game_msg">
+        Maybe you accessed to this Activity from somewere odd</string>
 
     <string name="choose_gamemode">Choose GameMode</string>
     <string name="choose_csp">Characters Packs</string>

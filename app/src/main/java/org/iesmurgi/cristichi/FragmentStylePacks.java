@@ -70,7 +70,7 @@ public class FragmentStylePacks extends Fragment {
             outState.putInt("type", 0);
         }else if (packs.get(0) instanceof WordStylePack){
             outState.putInt("type", 0);
-        }else if (packs.get(0) instanceof SpecialStylePack){
+        }else if (packs.get(0) instanceof SpecialGameActivity){
             outState.putInt("type", 0);
         }
         //Save the fragment's state here

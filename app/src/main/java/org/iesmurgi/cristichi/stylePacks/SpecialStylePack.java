@@ -9,6 +9,7 @@ import org.iesmurgi.cristichi.Difficulty;
 import org.iesmurgi.cristichi.R;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
@@ -36,19 +37,21 @@ public enum SpecialStylePack implements StylePack<Character> {
     }
 
     @Override
-    public Button[] getButtons(Context context) {
-        Button[] sol = new Button[operations.length+ numbers.length];
+    public ArrayList<Button> getButtons(Context context) {
+        ArrayList<Button> sol = new ArrayList<>(operations.length+ numbers.length);
         int i;
         for (i = 0; i < operations.length; i++) {
             Button uno = new Button(context);
             uno.setText(Character.toString(operations[i]));
-            sol[i] = uno;
+            sol.add(uno);
         }
         for (int j = 0; j < numbers.length; j++) {
             Button uno = new Button(context);
             uno.setText(Character.toString(numbers[j]));
-            sol[i+j] = uno;
+            sol.add(uno);
         }
+
+        Collections.shuffle(sol);
         return sol;
     }
 

@@ -11,6 +11,8 @@ import org.iesmurgi.cristichi.Difficulty;
 import org.iesmurgi.cristichi.R;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
@@ -44,13 +46,15 @@ public enum CharacterStylePack implements StylePack<Character> {
     }
 
     @Override
-    public Button[] getButtons(Context context) {
-        Button[] sol = new Button[values.length];
-        for (int i = 0; i < sol.length; i++) {
+    public ArrayList<Button> getButtons(Context context) {
+        ArrayList<Button> sol = new ArrayList<>(values.length);
+
+        for (int i = 0; i < sol.size(); i++) {
             Button uno = new Button(context);
             uno.setText(Character.toString(values[i]));
-            sol[i] = uno;
+            sol.add(uno);
         }
+        Collections.shuffle(sol);
         return sol;
     }
 

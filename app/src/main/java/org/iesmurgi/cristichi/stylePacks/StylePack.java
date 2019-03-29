@@ -9,11 +9,12 @@ import android.widget.Button;
 import org.iesmurgi.cristichi.Difficulty;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 public interface StylePack<E> extends Serializable {
 
-    Button[] getButtons(Context ctxt);
+    ArrayList<Button> getButtons(Context ctxt);
 
     void setName(@StringRes int name);
     @StringRes

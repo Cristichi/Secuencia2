@@ -9,19 +9,21 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".game.WordGameActivity"></activity>
-        <activity android:name=".game.SpecialGameActivity" />
-        <activity android:name=".game.ImageGameActivity" />
-        <activity android:name=".game.CharacterGameActivity" />
+        <activity android:name=".game.WordGameActivity"
+            android:configChanges="orientation|keyboardHidden"/>
+        <activity android:name=".game.SpecialGameActivity"
+            android:configChanges="orientation|keyboardHidden"/>
+        <activity android:name=".game.ImageGameActivity"
+            android:configChanges="orientation|keyboardHidden"/>
+        <activity android:name=".game.CharacterGameActivity"
+            android:configChanges="orientation|keyboardHidden"/>
         <activity
             android:name=".TabbedMenuActivity"
             android:configChanges="orientation|keyboardHidden"
-            android:label="@string/choose_gamemode"
-            android:screenOrientation="portrait" />
+            android:label="@string/choose_gamemode" />
         <activity
             android:name=".MainActivity"
-            android:configChanges="orientation|keyboardHidden"
-            android:screenOrientation="portrait">
+            android:configChanges="orientation|keyboardHidden">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

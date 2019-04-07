@@ -78,7 +78,7 @@ public enum SpecialStylePack implements StylePack<Character> {
     @Override
     public List<Character> generateRandomSentence(Difficulty difficulty) {
         int elementos = difficulty.getNumElementos();
-        elementos+= (rng.nextBoolean()?1:-1) * rng.nextInt(elementos/4);
+        elementos+= (rng.nextBoolean()?1:-1) * rng.nextInt(Math.max(elementos / 4, 1));
         ArrayList<Character> sol = new ArrayList<>(elementos);
         boolean operacion = false;
         for (int i = 0; i < elementos; i++) {

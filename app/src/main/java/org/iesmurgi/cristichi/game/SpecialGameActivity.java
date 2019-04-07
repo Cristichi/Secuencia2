@@ -7,6 +7,7 @@ import android.os.Bundle;
 
 import org.iesmurgi.cristichi.Difficulty;
 import org.iesmurgi.cristichi.R;
+import org.iesmurgi.cristichi.stylePacks.SpecialStylePack;
 import org.iesmurgi.cristichi.stylePacks.StylePack;
 
 public class SpecialGameActivity extends AppCompatActivity {
@@ -18,7 +19,7 @@ public class SpecialGameActivity extends AppCompatActivity {
 
         try{
             Bundle extras = getIntent().getExtras();
-            StylePack sp = (StylePack) extras.get("stylePack");
+            SpecialStylePack sp = SpecialStylePack.values()[extras.getInt("stylePack", -1)];
             Difficulty diff = Difficulty.values()[extras.getInt("difficulty", -1)];
 
             /// Y AQUÍ OCURRE LA MAGIA

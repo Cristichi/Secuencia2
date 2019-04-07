@@ -65,11 +65,11 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewHolder
                         } else if (este instanceof SpecialStylePack){
                             intento = new Intent(context, SpecialGameActivity.class);
                         }
-                        intento.putExtra("stylePack", este);
+                        intento.putExtra("stylePack", contado);
                         intento.putExtra("difficulty", which);
                         context.startActivity(intento);
                         if (context instanceof Activity){
-                            ((Activity)context).finish();
+                            //((Activity)context).finish();
                         }
                     }
                 });

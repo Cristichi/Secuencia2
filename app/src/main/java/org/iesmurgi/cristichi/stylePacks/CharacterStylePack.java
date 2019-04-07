@@ -17,8 +17,14 @@ import java.util.List;
 import java.util.Random;
 
 public enum CharacterStylePack implements StylePack<Character> {
+    ALPHABET(R.string.csp_alphabet_name, R.drawable.icon_csp_alphabet1,
+            'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I',
+            'J', 'K', 'L', 'N', 'M', 'O', 'P', 'Q', 'R',
+                    'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'),
     ALPHABET_1(R.string.csp_alphabet1_name, R.drawable.icon_csp_alphabet1,
-            'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I'),
+            'A', 'B', 'C',
+            'D', 'E', 'F',
+            'G', 'H', 'I'),
     ALPHABET_2(R.string.csp_alphabet2_name, R.drawable.icon_csp_alphabet2,
             'J', 'K', 'L', 'N', 'M', 'O', 'P', 'Q', 'R'),
     ALPHABET_3(R.string.csp_alphabet3_name, R.drawable.icon_csp_alphabet3,
@@ -49,9 +55,10 @@ public enum CharacterStylePack implements StylePack<Character> {
     public ArrayList<Button> getButtons(Context context) {
         ArrayList<Button> sol = new ArrayList<>(values.length);
 
-        for (int i = 0; i < sol.size(); i++) {
+        for (int i = 0; i < values.length; i++) {
             Button uno = new Button(context);
             uno.setText(Character.toString(values[i]));
+            uno.setTag(values[i]);
             sol.add(uno);
         }
         Collections.shuffle(sol);
@@ -81,7 +88,7 @@ public enum CharacterStylePack implements StylePack<Character> {
     @Override
     public List<Character> generateRandomSentence(Difficulty difficulty) {
         int elementos = difficulty.getNumElementos();
-        elementos+= (rng.nextBoolean()?1:-1) * rng.nextInt(elementos/4);
+        elementos+= (rng.nextBoolean()?1:-1) * rng.nextInt(Math.max(elementos / 4, 1));
         ArrayList<Character> sol = new ArrayList<>(elementos);
         for (int i = 0; i < elementos; i++) {
             char car = values[rng.nextInt(values.length)];

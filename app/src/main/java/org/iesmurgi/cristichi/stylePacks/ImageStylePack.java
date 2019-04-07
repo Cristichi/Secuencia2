@@ -3,7 +3,6 @@ package org.iesmurgi.cristichi.stylePacks;
 import android.content.Context;
 import android.support.annotation.DrawableRes;
 import android.support.annotation.StringRes;
-import android.util.Log;
 import android.widget.Button;
 
 import org.iesmurgi.cristichi.Difficulty;
@@ -18,7 +17,10 @@ public enum ImageStylePack implements StylePack<Integer> {
     FORMS(R.string.isp_forms_name, R.drawable.icon_isp_forms,
             R.drawable.isp_form_circle, R.drawable.isp_form_line_horizontal,
             R.drawable.isp_form_line_vertical, R.drawable.isp_form_square,
-            R.drawable.isp_form_star, R.drawable.isp_form_triangle)
+            R.drawable.isp_form_star, R.drawable.isp_form_triangle),
+    CATS(R.string.isp_cats_name, R.drawable.icon_isp_cats,
+            R.drawable.isp_cats_1, R.drawable.isp_cats_2,
+            R.drawable.isp_cats_3, R.drawable.isp_cats_4)
     ;
     @StringRes
     private int name;
@@ -43,9 +45,10 @@ public enum ImageStylePack implements StylePack<Integer> {
     public ArrayList<Button> getButtons(Context context) {
         ArrayList<Button> sol = new ArrayList<>(values.length);
 
-        for (int i = 0; i < sol.size(); i++) {
+        for (int i = 0; i < values.length; i++) {
             Button uno = new Button(context);
             uno.setBackground(context.getResources().getDrawable(values[i]));
+            uno.setTag(values[i]);
             sol.add(uno);
         }
         Collections.shuffle(sol);
@@ -75,14 +78,11 @@ public enum ImageStylePack implements StylePack<Integer> {
     @Override
     public List<Integer> generateRandomSentence(Difficulty difficulty) {
         int elementos = difficulty.getNumElementos();
-        Log.d("CRISTICHIEX", "elementos: " + elementos);
-        elementos += (rng.nextBoolean() ? 1 : -1) * rng.nextInt(elementos / 4);
-        Log.d("CRISTICHIEX", "elementos: " + elementos);
+        elementos += (rng.nextBoolean() ? 1 : -1) * rng.nextInt(Math.max(elementos / 4, 1));
         ArrayList<Integer> sol = new ArrayList<>(elementos);
         for (int i = 0; i < elementos; i++) {
             int imagen = values[rng.nextInt(values.length)];
             sol.add(imagen);
-            Log.d("CRISTICHIEX", "Número " + i + ": " + imagen);
         }
         return sol;
     }

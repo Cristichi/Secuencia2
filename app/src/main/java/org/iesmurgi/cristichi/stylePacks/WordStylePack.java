@@ -15,15 +15,20 @@ import java.util.List;
 import java.util.Random;
 
 public enum WordStylePack implements StylePack<Integer> {
+    ERASMUS(R.string.wsp_erasmus_name, R.drawable.icon_wsp_week_days,
+            R.string.wsp_erasmus_greece, R.string.wsp_erasmus_italy,
+            R.string.wsp_erasmus_turkey, R.string.wsp_erasmus_poland,
+            R.string.wsp_erasmus_spain),
+    WEEK_DAYS(R.string.wsp_week_days_name, R.drawable.icon_wsp_week_days,
+            R.string.wsp_week_days_monday, R.string.wsp_week_days_tuesday,
+            R.string.wsp_week_days_wednesday, R.string.wsp_week_days_thursday,
+            R.string.wsp_week_days_friday, R.string.wsp_week_days_saturday,
+            R.string.wsp_week_days_sunday),
     DEADLY_SINS(R.string.wsp_deadly_sins_name, R.drawable.icon_wsp_deadly_sins,
             R.string.wsp_deadly_sins_envy, R.string.wsp_deadly_sins_gluttony,
             R.string.wsp_deadly_sins_greed, R.string.wsp_deadly_sins_lust,
             R.string.wsp_deadly_sins_pride, R.string.wsp_deadly_sins_sloth,
             R.string.wsp_deadly_sins_wrath),
-    WEEK_DAYS(R.string.wsp_week_days_name, R.drawable.icon_wsp_week_days,
-            R.string.wsp_week_days_monday, R.string.wsp_week_days_tuesday,
-            R.string.wsp_week_days_wednesday, R.string.wsp_week_days_thursday,
-            R.string.wsp_week_days_saturday, R.string.wsp_week_days_sunday),
     ;
 
     @StringRes
@@ -48,9 +53,10 @@ public enum WordStylePack implements StylePack<Integer> {
     @Override
     public ArrayList<Button> getButtons(Context context) {
         ArrayList<Button> sol = new ArrayList<>(values.length);
-        for (int i = 0; i < sol.size(); i++) {
+        for (int i = 0; i < values.length; i++) {
             Button uno = new Button(context);
             uno.setText(values[i]);
+            uno.setTag(values[i]);
             sol.add(uno);
         }
         Collections.shuffle(sol);

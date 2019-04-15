@@ -31,6 +31,9 @@ public enum CharacterStylePack implements StylePack<Character> {
             'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'),
     GREEK(R.string.csp_greek_name, R.drawable.icon_csp_greek,
             '\u03b1', '\u03b2', '\u03b3', '\u03b4', '\u03b5', '\u03b6', '\u03b7'),
+    FORMULAS(R.string.ssp_formulas_name, R.drawable.icon_ssp_formulas,
+            '0','1','2','3','4','5','6','7','8','9',
+            '+', '-', '*', '/')
     ;
 
     @StringRes

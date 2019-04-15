@@ -53,10 +53,10 @@ public enum WordStylePack implements StylePack<Integer> {
     @Override
     public ArrayList<Button> getButtons(Context context) {
         ArrayList<Button> sol = new ArrayList<>(values.length);
-        for (int i = 0; i < values.length; i++) {
+        for (int value : values) {
             Button uno = new Button(context);
-            uno.setText(values[i]);
-            uno.setTag(values[i]);
+            uno.setText(value);
+            uno.setTag(value);
             sol.add(uno);
         }
         Collections.shuffle(sol);

@@ -38,16 +38,17 @@ public enum SpecialStylePack implements StylePack<Character> {
 
     @Override
     public ArrayList<Button> getButtons(Context context) {
-        ArrayList<Button> sol = new ArrayList<>(operations.length+ numbers.length);
-        int i;
-        for (i = 0; i < operations.length; i++) {
+        ArrayList<Button> sol = new ArrayList<>(operations.length + numbers.length);
+        for (int i = 0; i < operations.length; i++) {
             Button uno = new Button(context);
             uno.setText(Character.toString(operations[i]));
+            uno.setTag(operations[i]);
             sol.add(uno);
         }
         for (int j = 0; j < numbers.length; j++) {
             Button uno = new Button(context);
             uno.setText(Character.toString(numbers[j]));
+            uno.setTag(numbers[j]);
             sol.add(uno);
         }
 

@@ -31,6 +31,7 @@ public enum ImageStylePack implements StylePack<Integer> {
 
     private Random rng;
 
+
     ImageStylePack(int name, @DrawableRes int icon, @DrawableRes int... values){
         this.name = name;
         this.icon = icon;

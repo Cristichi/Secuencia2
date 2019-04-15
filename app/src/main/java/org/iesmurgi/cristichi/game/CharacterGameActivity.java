@@ -3,7 +3,6 @@ package org.iesmurgi.cristichi.game;
 import android.content.DialogInterface;
 import android.content.res.Configuration;
 import android.os.Bundle;
-import android.os.PersistableBundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.DisplayMetrics;
@@ -122,6 +121,10 @@ public class CharacterGameActivity extends AppCompatActivity {
         Log.d("CRISTICHIEX", "RANDOMIZANDO");
     }
 
+    private boolean empezado = false;
+    private double inicio;
+    private double fin;
+
     private void randomizeBtns(){
         List<Button> buttons = sp.getButtons(this);
         tlButtons.removeAllViews();
@@ -138,12 +141,22 @@ public class CharacterGameActivity extends AppCompatActivity {
             btn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    if (!empezado){
+                        empezado = true;
+                        inicio = System.currentTimeMillis();
+                    }
                     Character car = (char)v.getTag();
                     if (secuence.get(0).equals(car)){
                         llSerialView.removeViewAt(0);
                         secuence.remove(0);
                         if (secuence.isEmpty()){
-                            CharacterGameActivity.this.finish();
+                            //CharacterGameActivity.this.finish();
+                            fin = System.currentTimeMillis();
+                            double segundos = (fin-inicio)/1000;
+                            TextView tv = new TextView(CharacterGameActivity.this);
+                            tv.setText("Tiempo: "+segundos+"s");
+                            llSerialView.addView(tv);
+                            tlButtons.setVisibility(View.INVISIBLE);
                         }
                     }else{
                         secuence.add(car);

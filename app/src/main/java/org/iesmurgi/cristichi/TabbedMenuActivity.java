@@ -57,7 +57,7 @@ public class TabbedMenuActivity extends AppCompatActivity {
         tabLayout.getTabAt(0).setIcon(CharacterStylePack.values()[0].getIcon());
         tabLayout.getTabAt(1).setIcon(ImageStylePack.values()[0].getIcon());
         tabLayout.getTabAt(2).setIcon(WordStylePack.values()[0].getIcon());
-        tabLayout.getTabAt(3).setIcon(SpecialStylePack.values()[0].getIcon());
+        //tabLayout.getTabAt(3).setIcon(SpecialStylePack.values()[0].getIcon());
     }
 
     private void setupViewPager(ViewPager viewPager) {
@@ -79,7 +79,7 @@ public class TabbedMenuActivity extends AppCompatActivity {
         adapter.addFragment(fspChar, res.getString(R.string.choose_csp));
         adapter.addFragment(fspImg, res.getString(R.string.choose_isp));
         adapter.addFragment(fspWords, res.getString(R.string.choose_wsp));
-        adapter.addFragment(fspMath, res.getString(R.string.choose_msp));
+        //adapter.addFragment(fspMath, res.getString(R.string.choose_msp));
         viewPager.setAdapter(adapter);
     }
 

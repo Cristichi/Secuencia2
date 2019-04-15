@@ -33,7 +33,9 @@ public enum CharacterStylePack implements StylePack<Character> {
             '\u03b1', '\u03b2', '\u03b3', '\u03b4', '\u03b5', '\u03b6', '\u03b7'),
     FORMULAS(R.string.ssp_formulas_name, R.drawable.icon_ssp_formulas,
             '0','1','2','3','4','5','6','7','8','9',
-            '+', '-', '*', '/')
+            '+', '-', '*', '/'),
+    TESTEO(R.string.diff_easy, R.drawable.ic_launcher_foreground,
+            'X')
     ;
 
     @StringRes
@@ -86,6 +88,10 @@ public enum CharacterStylePack implements StylePack<Character> {
     @Override
     public int getIcon() {
         return icon;
+    }
+
+    public char[] getValues() {
+        return values;
     }
 
     @Override

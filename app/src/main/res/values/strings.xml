@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">Secuencia2</string>
     <string name="start">Start</string>
+    <string name="back">Back</string>
 
     <string name="error_access_game_tit">Error accessing game data</string>
     <string name="error_access_game_msg">
@@ -11,6 +12,10 @@
     <string name="choose_msp">Special Packs</string>
     <string name="choose_isp">Images Packs</string>
     <string name="choose_wsp">Words Packs</string>
+
+    <string name="end_game_title">Final Score</string>
+    <string name="end_game_message">Your Score in %1$s (%2$s) is %3$f</string>
+    <string name="end_game_screenshot">Save Screenshot</string>
 
     <!-- STYLE PACKS -->
 

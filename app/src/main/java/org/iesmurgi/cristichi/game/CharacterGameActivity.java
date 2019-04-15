@@ -1,7 +1,9 @@
 package org.iesmurgi.cristichi.game;
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -20,6 +22,7 @@ import android.widget.TextView;
 
 import org.iesmurgi.cristichi.Difficulty;
 import org.iesmurgi.cristichi.R;
+import org.iesmurgi.cristichi.ScoreActivity;
 import org.iesmurgi.cristichi.stylePacks.CharacterStylePack;
 
 import java.util.List;
@@ -38,6 +41,7 @@ public class CharacterGameActivity extends AppCompatActivity {
     private TableLayout tlButtons;
 
     private List<Character> secuence;
+    private int secuenceInicial;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,8 +64,6 @@ public class CharacterGameActivity extends AppCompatActivity {
             sp = CharacterStylePack.values()[extras.getInt("stylePack", -1)];
             diff = Difficulty.values()[extras.getInt("difficulty", -1)];
 
-            /// Y AQUÍ OCURRE LA MAGIA
-
             TextView title = findViewById(R.id.tvTitle);
             title.setText(sp.getName());
 
@@ -71,6 +73,7 @@ public class CharacterGameActivity extends AppCompatActivity {
             tlButtons = findViewById(R.id.tlButtons);
 
             secuence = sp.generateRandomSentence(diff);
+            secuenceInicial = secuence.size();
             for(Character car : secuence){
                 TextView tv = new TextView(this);
                 tv.setPadding(5,5,5,5);
@@ -103,14 +106,6 @@ public class CharacterGameActivity extends AppCompatActivity {
     @Override
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
-
-        /*
-        // Checks the orientation of the screen
-        if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {
-        } else if (newConfig.orientation == Configuration.ORIENTATION_PORTRAIT){
-        }
-        */
-
 
         Display display = getWindowManager().getDefaultDisplay();
         DisplayMetrics outMetrics = new DisplayMetrics();
@@ -150,12 +145,23 @@ public class CharacterGameActivity extends AppCompatActivity {
                         llSerialView.removeViewAt(0);
                         secuence.remove(0);
                         if (secuence.isEmpty()){
-                            //CharacterGameActivity.this.finish();
                             fin = System.currentTimeMillis();
                             double segundos = (fin-inicio)/1000;
-                            TextView tv = new TextView(CharacterGameActivity.this);
-                            tv.setText("Tiempo: "+segundos+"s");
-                            llSerialView.addView(tv);
+                            double score = secuenceInicial/segundos;
+                            Resources res = getResources();
+                            new AlertDialog.Builder(CharacterGameActivity.this)
+                                    .setTitle(R.string.end_game_title)
+                                    .setMessage(String.format(res.getString(R.string.end_game_message), res.getString(sp.getName()), res.getString(diff.getName()), score))
+                                    .setCancelable(false)
+                                    .setNeutralButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+                                        @Override
+                                        public void onClick(DialogInterface dialog, int which) {
+                                            Intent intento = new Intent(CharacterGameActivity.this, ScoreActivity.class);
+                                            CharacterGameActivity.this.startActivity(intento);
+                                            CharacterGameActivity.this.finish();
+                                        }
+                                    })
+                                    .show();
                             tlButtons.setVisibility(View.INVISIBLE);
                         }
                     }else{

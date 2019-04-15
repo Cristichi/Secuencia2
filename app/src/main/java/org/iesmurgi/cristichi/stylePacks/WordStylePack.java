@@ -84,6 +84,7 @@ public enum WordStylePack implements StylePack<Integer> {
         return icon;
     }
 
+
     @Override
     public List<Integer> generateRandomSentence(Difficulty difficulty) {
         int elementos = difficulty.getNumElementos();

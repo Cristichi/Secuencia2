@@ -2,6 +2,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="org.iesmurgi.cristichi">
 
+    <uses-permission
+        android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -9,14 +12,28 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".game.WordGameActivity"
-            android:configChanges="orientation|keyboardHidden"/>
-        <activity android:name=".game.SpecialGameActivity"
-            android:configChanges="orientation|keyboardHidden"/>
-        <activity android:name=".game.ImageGameActivity"
-            android:configChanges="orientation|keyboardHidden"/>
-        <activity android:name=".game.CharacterGameActivity"
-            android:configChanges="orientation|keyboardHidden"/>
+        <provider
+            android:name=".GenericFileProvider"
+            android:authorities="com.iesmurgi.cristichi"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/provider_paths"/>
+        </provider>
+        <activity android:name=".ScoreActivity"></activity>
+        <activity
+            android:name=".game.WordGameActivity"
+            android:configChanges="orientation|keyboardHidden" />
+        <activity
+            android:name=".game.SpecialGameActivity"
+            android:configChanges="orientation|keyboardHidden" />
+        <activity
+            android:name=".game.ImageGameActivity"
+            android:configChanges="orientation|keyboardHidden" />
+        <activity
+            android:name=".game.CharacterGameActivity"
+            android:configChanges="orientation|keyboardHidden" />
         <activity
             android:name=".TabbedMenuActivity"
             android:configChanges="orientation|keyboardHidden"

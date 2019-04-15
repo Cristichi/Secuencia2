@@ -2,6 +2,7 @@ package org.iesmurgi.cristichi.game;
 
 import android.content.DialogInterface;
 import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -39,6 +40,7 @@ public class ImageGameActivity extends AppCompatActivity {
     private TableLayout tlButtons;
 
     private List<Integer> secuence;
+    private int secuenceInicial;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,10 +51,9 @@ public class ImageGameActivity extends AppCompatActivity {
         DisplayMetrics outMetrics = new DisplayMetrics();
         display.getMetrics(outMetrics);
 
-        float density  = getResources().getDisplayMetrics().density;
+        //float density  = getResources().getDisplayMetrics().density;
         //screenWidth = outMetrics.widthPixels / density;
         screenWidth = outMetrics.widthPixels;
-
 
         try{
             Bundle extras = getIntent().getExtras();
@@ -61,8 +62,6 @@ public class ImageGameActivity extends AppCompatActivity {
 
             btnSize = getResources().getDimension(R.dimen.btn_image_width);
             imageSize = getResources().getDimension(R.dimen.image_width);
-
-            /// Y AQUÍ OCURRE LA MAGIA
 
             TextView title = findViewById(R.id.tvTitle);
             title.setText(sp.getName());
@@ -73,6 +72,7 @@ public class ImageGameActivity extends AppCompatActivity {
             tlButtons = findViewById(R.id.tlButtons);
 
             secuence = sp.generateRandomSentence(diff);
+            secuenceInicial = secuence.size();
             for(Integer img : secuence){
                 ImageView tv = new ImageView(this);
                 tv.setPadding(5,5,5,5);
@@ -103,14 +103,6 @@ public class ImageGameActivity extends AppCompatActivity {
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
 
-        /*
-        // Checks the orientation of the screen
-        if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {
-        } else if (newConfig.orientation == Configuration.ORIENTATION_PORTRAIT){
-        }
-        */
-
-
         Display display = getWindowManager().getDefaultDisplay();
         DisplayMetrics outMetrics = new DisplayMetrics();
         display.getMetrics(outMetrics);
@@ -119,6 +111,10 @@ public class ImageGameActivity extends AppCompatActivity {
         randomizeBtns();
         Log.d("CRISTICHIEX", "RANDOMIZANDO");
     }
+
+    private boolean empezado = false;
+    private double inicio;
+    private double fin;
 
     private void randomizeBtns(){
         List<Button> buttons = sp.getButtons(this);
@@ -135,12 +131,31 @@ public class ImageGameActivity extends AppCompatActivity {
             btn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    if (!empezado){
+                        empezado = true;
+                        inicio = System.currentTimeMillis();
+                    }
                     Integer car = (int) v.getTag();
                     if (secuence.get(0).equals(car)){
                         llSerialView.removeViewAt(0);
                         secuence.remove(0);
                         if (secuence.isEmpty()){
-                            ImageGameActivity.this.finish();
+                            fin = System.currentTimeMillis();
+                            double segundos = (fin-inicio)/1000;
+                            double score = secuenceInicial/segundos;
+                            Resources res = getResources();
+                            new AlertDialog.Builder(ImageGameActivity.this)
+                                    .setTitle(R.string.end_game_title)
+                                    .setMessage(String.format(res.getString(R.string.end_game_message), res.getString(sp.getName()), res.getString(diff.getName()), score))
+                                    .setCancelable(false)
+                                    .setNeutralButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+                                        @Override
+                                        public void onClick(DialogInterface dialog, int which) {
+                                            ImageGameActivity.this.finish();
+                                        }
+                                    })
+                                    .show();
+                            tlButtons.setVisibility(View.INVISIBLE);
                         }
                     }else{
                         secuence.add(car);

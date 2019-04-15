@@ -2,6 +2,7 @@ package org.iesmurgi.cristichi.game;
 
 import android.content.DialogInterface;
 import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.os.PersistableBundle;
 import android.support.v7.app.AlertDialog;
@@ -40,6 +41,7 @@ public class SpecialGameActivity extends AppCompatActivity {
     private TableLayout tlButtons;
 
     private List<Character> secuence;
+    private int secuenceInicial;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,8 +64,6 @@ public class SpecialGameActivity extends AppCompatActivity {
             sp = SpecialStylePack.values()[extras.getInt("stylePack", -1)];
             diff = Difficulty.values()[extras.getInt("difficulty", -1)];
 
-            /// Y AQUÍ OCURRE LA MAGIA
-
             TextView title = findViewById(R.id.tvTitle);
             title.setText(sp.getName());
 
@@ -73,6 +73,7 @@ public class SpecialGameActivity extends AppCompatActivity {
             tlButtons = findViewById(R.id.tlButtons);
 
             secuence = sp.generateRandomSentence(diff);
+            secuenceInicial = secuence.size();
             for(Character car : secuence){
                 TextView tv = new TextView(this);
                 tv.setPadding(5,5,5,5);
@@ -106,14 +107,6 @@ public class SpecialGameActivity extends AppCompatActivity {
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
 
-        /*
-        // Checks the orientation of the screen
-        if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {
-        } else if (newConfig.orientation == Configuration.ORIENTATION_PORTRAIT){
-        }
-        */
-
-
         Display display = getWindowManager().getDefaultDisplay();
         DisplayMetrics outMetrics = new DisplayMetrics();
         display.getMetrics(outMetrics);
@@ -122,6 +115,10 @@ public class SpecialGameActivity extends AppCompatActivity {
         randomizeBtns();
         Log.d("CRISTICHIEX", "RANDOMIZANDO");
     }
+
+    private boolean empezado = false;
+    private double inicio;
+    private double fin;
 
     private void randomizeBtns(){
         List<Button> buttons = sp.getButtons(this);
@@ -139,12 +136,31 @@ public class SpecialGameActivity extends AppCompatActivity {
             btn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    if (!empezado){
+                        empezado = true;
+                        inicio = System.currentTimeMillis();
+                    }
                     Character car = (char)v.getTag();
                     if (secuence.get(0).equals(car)){
                         llSerialView.removeViewAt(0);
                         secuence.remove(0);
                         if (secuence.isEmpty()){
-                            SpecialGameActivity.this.finish();
+                            fin = System.currentTimeMillis();
+                            double segundos = (fin-inicio)/1000;
+                            double score = secuenceInicial/segundos;
+                            Resources res = getResources();
+                            new AlertDialog.Builder(SpecialGameActivity.this)
+                                    .setTitle(R.string.end_game_title)
+                                    .setMessage(String.format(res.getString(R.string.end_game_message), res.getString(sp.getName()), res.getString(diff.getName()), score))
+                                    .setCancelable(false)
+                                    .setNeutralButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+                                        @Override
+                                        public void onClick(DialogInterface dialog, int which) {
+                                            SpecialGameActivity.this.finish();
+                                        }
+                                    })
+                                    .show();
+                            tlButtons.setVisibility(View.INVISIBLE);
                         }
                     }else{
                         secuence.add(car);

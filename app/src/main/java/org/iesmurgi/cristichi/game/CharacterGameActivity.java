@@ -148,21 +148,12 @@ public class CharacterGameActivity extends AppCompatActivity {
                             fin = System.currentTimeMillis();
                             double segundos = (fin-inicio)/1000;
                             double score = secuenceInicial/segundos;
-                            Resources res = getResources();
-                            new AlertDialog.Builder(CharacterGameActivity.this)
-                                    .setTitle(R.string.end_game_title)
-                                    .setMessage(String.format(res.getString(R.string.end_game_message), res.getString(sp.getName()), res.getString(diff.getName()), score))
-                                    .setCancelable(false)
-                                    .setNeutralButton(android.R.string.ok, new DialogInterface.OnClickListener() {
-                                        @Override
-                                        public void onClick(DialogInterface dialog, int which) {
-                                            Intent intento = new Intent(CharacterGameActivity.this, ScoreActivity.class);
-                                            CharacterGameActivity.this.startActivity(intento);
-                                            CharacterGameActivity.this.finish();
-                                        }
-                                    })
-                                    .show();
-                            tlButtons.setVisibility(View.INVISIBLE);
+                            Intent intento = new Intent(CharacterGameActivity.this, ScoreActivity.class);
+                            intento.putExtra("score", score);
+                            intento.putExtra("difficulty", diff.getName());
+                            intento.putExtra("gamemode", sp.getName());
+                            CharacterGameActivity.this.startActivity(intento);
+                            CharacterGameActivity.this.finish();
                         }
                     }else{
                         secuence.add(car);

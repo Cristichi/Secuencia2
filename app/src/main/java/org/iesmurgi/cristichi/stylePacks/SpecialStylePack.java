@@ -24,11 +24,11 @@ public enum SpecialStylePack implements StylePack<Character> {
     }
 
     @StringRes
-    private int name;
+    protected int name;
     @DrawableRes
-    private int icon;
+    protected int icon;
 
-    private Random rng;
+    protected Random rng;
 
     SpecialStylePack(int name, int icon){
         this.name = name;

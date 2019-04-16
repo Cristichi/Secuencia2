@@ -2,6 +2,7 @@ package org.iesmurgi.cristichi.game;
 
 import android.annotation.SuppressLint;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.os.Bundle;
@@ -23,6 +24,7 @@ import android.widget.TextView;
 
 import org.iesmurgi.cristichi.Difficulty;
 import org.iesmurgi.cristichi.R;
+import org.iesmurgi.cristichi.ScoreActivity;
 import org.iesmurgi.cristichi.stylePacks.WordStylePack;
 
 import java.util.List;
@@ -144,31 +146,24 @@ public class WordGameActivity extends AppCompatActivity {
             btn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    if (!empezado){
+                        empezado = true;
+                        inicio = System.currentTimeMillis();
+                    }
                     Integer car = (int)v.getTag();
                     if (secuence.get(0).equals(car)){
                         llSerialView.removeViewAt(0);
                         secuence.remove(0);
                         if (secuence.isEmpty()){
-                            if (!empezado){
-                                empezado = true;
-                                inicio = System.currentTimeMillis();
-                            }
                             fin = System.currentTimeMillis();
                             double segundos = (fin-inicio)/1000;
                             double score = secuenceInicial/segundos;
-                            Resources res = getResources();
-                            new AlertDialog.Builder(WordGameActivity.this)
-                                    .setTitle(R.string.end_game_title)
-                                    .setMessage(String.format(res.getString(R.string.end_game_message), res.getString(sp.getName()), res.getString(diff.getName()), score))
-                                    .setCancelable(false)
-                                    .setNeutralButton(android.R.string.ok, new DialogInterface.OnClickListener() {
-                                        @Override
-                                        public void onClick(DialogInterface dialog, int which) {
-                                            WordGameActivity.this.finish();
-                                        }
-                                    })
-                                    .show();
-                            tlButtons.setVisibility(View.INVISIBLE);
+                            Intent intento = new Intent(WordGameActivity.this, ScoreActivity.class);
+                            intento.putExtra("score", score);
+                            intento.putExtra("difficulty", diff.getName());
+                            intento.putExtra("gamemode", sp.getName());
+                            WordGameActivity.this.startActivity(intento);
+                            WordGameActivity.this.finish();
                         }
                     }else{
                         secuence.add(car);

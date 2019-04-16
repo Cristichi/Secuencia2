@@ -1,6 +1,7 @@
 package org.iesmurgi.cristichi.game;
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.support.v7.app.AlertDialog;
@@ -22,6 +23,7 @@ import android.widget.TextView;
 
 import org.iesmurgi.cristichi.Difficulty;
 import org.iesmurgi.cristichi.R;
+import org.iesmurgi.cristichi.ScoreActivity;
 import org.iesmurgi.cristichi.stylePacks.ImageStylePack;
 
 import java.util.List;
@@ -143,19 +145,12 @@ public class ImageGameActivity extends AppCompatActivity {
                             fin = System.currentTimeMillis();
                             double segundos = (fin-inicio)/1000;
                             double score = secuenceInicial/segundos;
-                            Resources res = getResources();
-                            new AlertDialog.Builder(ImageGameActivity.this)
-                                    .setTitle(R.string.end_game_title)
-                                    .setMessage(String.format(res.getString(R.string.end_game_message), res.getString(sp.getName()), res.getString(diff.getName()), score))
-                                    .setCancelable(false)
-                                    .setNeutralButton(android.R.string.ok, new DialogInterface.OnClickListener() {
-                                        @Override
-                                        public void onClick(DialogInterface dialog, int which) {
-                                            ImageGameActivity.this.finish();
-                                        }
-                                    })
-                                    .show();
-                            tlButtons.setVisibility(View.INVISIBLE);
+                            Intent intento = new Intent(ImageGameActivity.this, ScoreActivity.class);
+                            intento.putExtra("score", score);
+                            intento.putExtra("difficulty", diff.getName());
+                            intento.putExtra("gamemode", sp.getName());
+                            ImageGameActivity.this.startActivity(intento);
+                            ImageGameActivity.this.finish();
                         }
                     }else{
                         secuence.add(car);

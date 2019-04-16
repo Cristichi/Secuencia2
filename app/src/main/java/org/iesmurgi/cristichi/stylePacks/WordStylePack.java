@@ -32,13 +32,13 @@ public enum WordStylePack implements StylePack<Integer> {
     ;
 
     @StringRes
-    private int name;
+    protected int name;
     @DrawableRes
-    private int icon;
+    protected int icon;
     @StringRes
-    private int[] values;
+    protected int[] values;
 
-    private Random rng;
+    protected Random rng;
 
     WordStylePack(int name, int icon, @StringRes int... values) {
         this.name = name;

@@ -1,6 +1,8 @@
 package org.iesmurgi.cristichi;
 
 import android.Manifest;
+import android.app.Dialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
@@ -17,14 +19,21 @@ import android.util.Log;
 import android.view.View;
 import android.view.ViewConfiguration;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Switch;
 import android.widget.TextView;
+
+import org.w3c.dom.Text;
 
 import java.io.File;
 import java.io.FileOutputStream;
 import java.util.Date;
+import java.util.Locale;
 
 public class ScoreActivity extends AppCompatActivity {
 
+    private TextView tvTitle;
+    private TextView tvDate;
     private TextView tvGamemode;
     private TextView tvDifficulty;
     private TextView tvScore;
@@ -32,28 +41,90 @@ public class ScoreActivity extends AppCompatActivity {
     private Button btnBack;
     private Button btnScreenshot;
 
+    private String date;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_score);
 
+        Date now = new Date();
+        final CharSequence date = android.text.format.DateFormat.format("yyyy-MM-dd hh:mm:ss", now);
+
+        tvTitle = findViewById(R.id.tvTitle);
+        final TextView tvDate = findViewById(R.id.tvDate);
         tvGamemode = findViewById(R.id.tvGamemode);
         tvDifficulty = findViewById(R.id.tvDifficulty);
         tvScore = findViewById(R.id.tvScore);
         btnBack = findViewById(R.id.btnBack);
         btnScreenshot = findViewById(R.id.btnScreenshot);
 
+        btnBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ScoreActivity.this.onBackPressed();
+            }
+        });
+
         btnScreenshot.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                takeScreenshot();
+                final Dialog dialog = new Dialog(ScoreActivity.this);
+                dialog.setContentView(R.layout.screenshot_ask);
+                dialog.setTitle("TITULO RANDOM");
+
+                // set the custom dialog components - text, image and button
+                final EditText etName = dialog.findViewById(R.id.etYourName);
+                final Switch switchDate = dialog.findViewById(R.id.switchIncludeDate);
+
+                Button dialogButton = dialog.findViewById(R.id.btnOk);
+                // if button is clicked, close the custom dialog
+                dialogButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        dialog.dismiss();
+                    }
+                });
+
+                dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
+                    @Override
+                    public void onDismiss(DialogInterface dialog) {
+                        btnBack.setVisibility(View.INVISIBLE);
+                        btnScreenshot.setVisibility(View.INVISIBLE);
+                        if (switchDate.isChecked()){
+                            tvDate.setText(date);
+                        }
+                        String title = tvTitle.getText().toString();
+                        String name = etName.getText().toString();
+                        tvTitle.setText(name);
+                        takeScreenshot();
+                        tvTitle.setText(title);
+                        tvDate.setText("");
+                        btnBack.setVisibility(View.VISIBLE);
+                        btnScreenshot.setVisibility(View.VISIBLE);
+                    }
+                });
+                dialog.show();
             }
         });
+
+        try {
+            Bundle extras = getIntent().getExtras();
+            double score = extras.getDouble("score");
+            int gamemode = extras.getInt("gamemode");
+            int difficulty = extras.getInt("difficulty");
+
+            tvScore.setText(String.format(Locale.getDefault(), "%.3f", score));
+            tvGamemode.setText(gamemode);
+            tvDifficulty.setText(difficulty);
+        }catch (NullPointerException e){
+
+        }
     }
 
     private void takeScreenshot() {
         Date now = new Date();
-        CharSequence date = android.text.format.DateFormat.format("yyyy-MM-dd hh:mm:ss", now);
+        CharSequence date = android.text.format.DateFormat.format("yyyy-MM-dd\nhh:mm:ss", now);
         /*
         if (Build.VERSION.SDK_INT >= 23) {
             int permissionCheck = ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE);

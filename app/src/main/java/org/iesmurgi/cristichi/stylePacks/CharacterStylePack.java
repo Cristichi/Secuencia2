@@ -20,7 +20,7 @@ public enum CharacterStylePack implements StylePack<Character> {
     ALPHABET(R.string.csp_alphabet_name, R.drawable.icon_csp_alphabet1,
             'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I',
             'J', 'K', 'L', 'N', 'M', 'O', 'P', 'Q', 'R',
-                    'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'),
+            'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'),
     ALPHABET_1(R.string.csp_alphabet1_name, R.drawable.icon_csp_alphabet1,
             'A', 'B', 'C',
             'D', 'E', 'F',
@@ -33,18 +33,44 @@ public enum CharacterStylePack implements StylePack<Character> {
             '\u03b1', '\u03b2', '\u03b3', '\u03b4', '\u03b5', '\u03b6', '\u03b7'),
     FORMULAS(R.string.ssp_formulas_name, R.drawable.icon_ssp_formulas,
             '0','1','2','3','4','5','6','7','8','9',
-            '+', '-', '*', '/'),
-    TESTEO(R.string.diff_easy, R.drawable.ic_launcher_foreground,
-            'X')
+            '+', '-', '*', '/'){
+
+        char[] numbers = new char[]{'0','1','2','3','4','5','6','7','8','9'};
+        char[] operations = new char[]{'+', '-', '*', '/'};
+
+        @Override
+        public List<Character> generateRandomSentence(Difficulty difficulty) {
+            int elementos = difficulty.getNumElementos();
+            elementos+= (rng.nextBoolean()?1:-1) * rng.nextInt(Math.max(elementos / 4, 1));
+            ArrayList<Character> sol = new ArrayList<>(elementos);
+            boolean operacion = false;
+            for (int i = 0; i < elementos; i++) {
+                if (i==elementos-1){
+                    operacion= false;
+                }
+                char car;
+                if (operacion){
+                    car = operations[rng.nextInt(operations.length)];
+                    operacion = false;
+                }else{
+                    car = numbers[rng.nextInt(numbers.length)];
+                    operacion = rng.nextBoolean();
+                }
+                sol.add(car);
+            }
+            return sol;
+        }
+    },
+    TESTEO(R.string.diff_easy, R.drawable.ic_launcher_foreground, 'X')
     ;
 
     @StringRes
-    private int name;
+    protected int name;
     @DrawableRes
-    private int icon;
-    private char[] values;
+    protected int icon;
+    protected char[] values;
 
-    private Random rng;
+    protected Random rng;
 
     CharacterStylePack(int name, int icon, char... values){
         this.name = name;

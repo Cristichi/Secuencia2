@@ -23,13 +23,13 @@ public enum ImageStylePack implements StylePack<Integer> {
             R.drawable.isp_cats_3, R.drawable.isp_cats_4)
     ;
     @StringRes
-    private int name;
+    protected int name;
     @DrawableRes
-    private int icon;
+    protected int icon;
     @DrawableRes
-    private int[] values;
+    protected int[] values;
 
-    private Random rng;
+    protected Random rng;
 
 
     ImageStylePack(int name, @DrawableRes int icon, @DrawableRes int... values){

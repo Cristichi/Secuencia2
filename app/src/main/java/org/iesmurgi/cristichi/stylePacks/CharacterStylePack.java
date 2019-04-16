@@ -1,8 +1,6 @@
 package org.iesmurgi.cristichi.stylePacks;
 
 import android.content.Context;
-import android.os.Parcel;
-import android.os.Parcelable;
 import android.support.annotation.DrawableRes;
 import android.support.annotation.StringRes;
 import android.widget.Button;
@@ -11,13 +9,12 @@ import org.iesmurgi.cristichi.Difficulty;
 import org.iesmurgi.cristichi.R;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
 public enum CharacterStylePack implements StylePack<Character> {
-    ALPHABET(R.string.csp_alphabet_name, R.drawable.icon_csp_alphabet1,
+    ALPHABET(R.string.csp_alphabet_name, R.drawable.icon_csp_alphabet,
             'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I',
             'J', 'K', 'L', 'N', 'M', 'O', 'P', 'Q', 'R',
             'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'),
@@ -60,8 +57,7 @@ public enum CharacterStylePack implements StylePack<Character> {
             }
             return sol;
         }
-    },
-    TESTEO(R.string.diff_easy, R.drawable.ic_launcher_foreground, 'X')
+    }
     ;
 
     @StringRes

@@ -1,6 +1,7 @@
 package org.iesmurgi.cristichi;
 
 import android.Manifest;
+import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -71,14 +72,12 @@ public class ScoreActivity extends AppCompatActivity {
             public void onClick(View v) {
                 final Dialog dialog = new Dialog(ScoreActivity.this);
                 dialog.setContentView(R.layout.screenshot_ask);
-                dialog.setTitle("TITULO RANDOM");
+                dialog.setTitle(R.string.screenshot_ask_title);
 
-                // set the custom dialog components - text, image and button
                 final EditText etName = dialog.findViewById(R.id.etYourName);
                 final Switch switchDate = dialog.findViewById(R.id.switchIncludeDate);
 
                 Button dialogButton = dialog.findViewById(R.id.btnOk);
-                // if button is clicked, close the custom dialog
                 dialogButton.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -95,7 +94,7 @@ public class ScoreActivity extends AppCompatActivity {
                             tvDate.setText(date);
                         }
                         String title = tvTitle.getText().toString();
-                        String name = etName.getText().toString();
+                        String name = etName.getText().toString().trim();
                         tvTitle.setText(name);
                         takeScreenshot();
                         tvTitle.setText(title);
@@ -118,61 +117,34 @@ public class ScoreActivity extends AppCompatActivity {
             tvGamemode.setText(gamemode);
             tvDifficulty.setText(difficulty);
         }catch (NullPointerException e){
-
         }
     }
 
     private void takeScreenshot() {
         Date now = new Date();
-        CharSequence date = android.text.format.DateFormat.format("yyyy-MM-dd\nhh:mm:ss", now);
-        /*
-        if (Build.VERSION.SDK_INT >= 23) {
-            int permissionCheck = ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE);
-            if (permissionCheck != PackageManager.PERMISSION_GRANTED) {
-                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
-            }
-        }
-        */
-        /* */
-        // Here, thisActivity is the current activity
+        CharSequence date = android.text.format.DateFormat.format("yyyy-MM-dd hh.mm.ss", now);
+
         if (ContextCompat.checkSelfPermission(this,
                 Manifest.permission.READ_CONTACTS)
                 != PackageManager.PERMISSION_GRANTED) {
 
-            // Should we show an explanation?
             if (ActivityCompat.shouldShowRequestPermissionRationale(this,
                     Manifest.permission.READ_CONTACTS)) {
-
-                // Show an expanation to the user *asynchronously* -- don't block
-                // this thread waiting for the user's response! After the user
-                // sees the explanation, try again to request the permission.
-
             } else {
-
-                // No explanation needed, we can request the permission.
-
                 ActivityCompat.requestPermissions(this,
                         new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
                          1);
-
-                // LZTSDixVHjTGXffS41y2HPDkCqQhu5yRJVTS is an
-                // app-defined int constant. The callback method gets the
-                // result of the request.
             }
         }
         /* */
         try {
-            // image naming and path  to include sd card  appending name you choose for file
             //String mPath = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES).toString() + "/" + now + ".jpg";
             String mPath = Environment.getExternalStorageDirectory().toString() + "/screenshot (" + date + ").jpg";
 
-            Log.d("CRISTICHIEX", mPath);
-            // create bitmap screen capture
             View v1 = getWindow().getDecorView().getRootView();
             v1.setDrawingCacheEnabled(true);
             Bitmap bitmap = Bitmap.createBitmap(v1.getDrawingCache());
             v1.setDrawingCacheEnabled(false);
-
 
             File imageFile = new File(mPath);
 
@@ -186,8 +158,12 @@ public class ScoreActivity extends AppCompatActivity {
 
             openScreenshot(imageFile);
         } catch (Throwable e) {
-            // Several error may come out with file handling or DOM
             e.printStackTrace();
+            new AlertDialog.Builder(this)
+                    .setCancelable(true)
+                    .setTitle(R.string.screenshot_ask_error_title)
+                    .setMessage(getString(R.string.screenshot_ask_error_msg)+"\n"+e.getMessage())
+                    .show();
         }
     }
 

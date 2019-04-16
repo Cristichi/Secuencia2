@@ -3,8 +3,11 @@
     <string name="start">Start</string>
     <string name="back">Back</string>
 
+    <string name="screenshot_ask_title">Take Screenshot</string>
     <string name="screenshot_ask_your_name">Your Name</string>
     <string name="screenshot_ask_include_date">Include date and time</string>
+    <string name="screenshot_ask_error_title">Error</string>
+    <string name="screenshot_ask_error_msg">Error trying to save image</string>
 
     <string name="error_access_game_tit">Error accessing game data</string>
     <string name="error_access_game_msg">
@@ -59,10 +62,10 @@
     <string name="wsp_erasmus_spain">El Ejido</string>
 
     <!-- Difficulties -->
-    <string name="diff_easiest">Easiest</string>
-    <string name="diff_easy">Easy</string>
+    <string name="diff_easiest">Shortest</string>
+    <string name="diff_easy">Short</string>
     <string name="diff_medium">Medium</string>
-    <string name="diff_hard">Hard</string>
+    <string name="diff_hard">Long</string>
     <string name="diff_extreme">Extreme</string>
 
     <string name="pick_diff">Pick a difficulty for</string>

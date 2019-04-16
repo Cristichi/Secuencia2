@@ -21,7 +21,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intento = new Intent(MainActivity.this, TabbedMenuActivity.class);
                 startActivity(intento);
-                finish();
+                //finish();
             }
         });
     }

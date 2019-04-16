@@ -6,22 +6,17 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
-import android.media.Image;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import org.iesmurgi.cristichi.game.CharacterGameActivity;
 import org.iesmurgi.cristichi.game.ImageGameActivity;
-import org.iesmurgi.cristichi.game.SpecialGameActivity;
 import org.iesmurgi.cristichi.game.WordGameActivity;
 import org.iesmurgi.cristichi.stylePacks.CharacterStylePack;
 import org.iesmurgi.cristichi.stylePacks.ImageStylePack;
-import org.iesmurgi.cristichi.stylePacks.SpecialStylePack;
 import org.iesmurgi.cristichi.stylePacks.StylePack;
 import org.iesmurgi.cristichi.stylePacks.WordStylePack;
 
@@ -63,8 +58,6 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewHolder
                             intento = new Intent(context, WordGameActivity.class);
                         } else if (este instanceof ImageStylePack){
                             intento = new Intent(context, ImageGameActivity.class);
-                        } else if (este instanceof SpecialStylePack){
-                            intento = new Intent(context, SpecialGameActivity.class);
                         }
                         intento.putExtra("stylePack", contado);
                         intento.putExtra("difficulty", which);

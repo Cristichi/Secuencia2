@@ -13,11 +13,10 @@
     <string name="error_access_game_msg">
         Maybe you accessed to this Activity from somewere odd</string>
 
-    <string name="choose_gamemode">Choose GameMode</string>
-    <string name="choose_csp">Characters Packs</string>
-    <string name="choose_msp">Special Packs</string>
-    <string name="choose_isp">Images Packs</string>
-    <string name="choose_wsp">Words Packs</string>
+    <string name="choose_gamemode">Choose Gamemode</string>
+    <string name="choose_csp">Character Packs</string>
+    <string name="choose_isp">Image Packs</string>
+    <string name="choose_wsp">Word Packs</string>
 
     <string name="end_game_title">Final Score</string>
     <string name="end_game_message">Your Score in %1$s (%2$s) is %3$f</string>

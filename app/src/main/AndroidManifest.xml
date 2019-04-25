@@ -2,8 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="org.iesmurgi.cristichi">
 
-    <uses-permission
-        android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <application
         android:allowBackup="true"
@@ -12,6 +11,7 @@
         android:roundIcon="@drawable/logo"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+
         <provider
             android:name=".GenericFileProvider"
             android:authorities="com.iesmurgi.cristichi"
@@ -19,9 +19,10 @@
             android:grantUriPermissions="true">
             <meta-data
                 android:name="android.support.FILE_PROVIDER_PATHS"
-                android:resource="@xml/provider_paths"/>
+                android:resource="@xml/provider_paths" />
         </provider>
-        <activity android:name=".ScoreActivity"></activity>
+
+        <activity android:name=".ScoreActivity" />
         <activity
             android:name=".game.WordGameActivity"
             android:configChanges="orientation|keyboardHidden" />
@@ -35,6 +36,12 @@
             android:name=".TabbedMenuActivity"
             android:configChanges="orientation|keyboardHidden"
             android:label="@string/choose_gamemode" />
+        <activity
+            android:name=".SettingsActivity"
+            android:label="@string/settings"
+            android:configChanges="orientation|keyboardHidden"
+            android:theme="@style/AppTheme.WithBar">
+        </activity>
         <activity
             android:name=".MainActivity"
             android:configChanges="orientation|keyboardHidden">

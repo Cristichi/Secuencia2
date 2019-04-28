@@ -34,6 +34,7 @@ public class WordGameActivity extends AppCompatActivity {
     private int screenWidth;
     private int btnSize;
     private float wordSize;
+    private float wordSizeTarget;
 
     private WordStylePack sp;
     private Difficulty diff;
@@ -61,6 +62,7 @@ public class WordGameActivity extends AppCompatActivity {
 
         btnSize = (int) getResources().getDimension(R.dimen.btn_word_width);
         wordSize = getResources().getDimension(R.dimen.word_size)/density;
+        wordSizeTarget = getResources().getDimension(R.dimen.word_size_target)/density;
 
         try{
             Bundle extras = getIntent().getExtras();
@@ -84,14 +86,20 @@ public class WordGameActivity extends AppCompatActivity {
 
             secuence = sp.generateRandomSentence(diff);
             secuenceInicial = secuence.size();
+            boolean first = true;
             for(Integer car : secuence){
                 TextView tv = new TextView(this);
                 tv.setText(car);
-                tv.setTextSize(wordSize);
                 tv.setPadding(5,5,10,5);
                 llSerialView.addView(tv);
-                tv.measure(0,0);
-                scrollView.getLayoutParams().height = tv.getMeasuredHeight();
+                if (first){
+                    tv.setTextSize(wordSizeTarget);
+                    tv.measure(0,0);
+                    scrollView.getLayoutParams().height = tv.getMeasuredHeight();
+                    first = false;
+                }else{
+                    tv.setTextSize(wordSize);
+                }
             }
 
             randomizeBtns();
@@ -164,13 +172,16 @@ public class WordGameActivity extends AppCompatActivity {
                             intento.putExtra("gamemode", sp.getName());
                             WordGameActivity.this.startActivity(intento);
                             WordGameActivity.this.finish();
+                        }else{
+                            ((TextView)llSerialView.getChildAt(0)).setTextSize(wordSizeTarget);
                         }
                     }else{
                         secuence.add(car);
                         TextView tv = new TextView(WordGameActivity.this);
                         tv.setText(car);
-                        llSerialView.addView(tv);
                         tv.setTextSize(wordSize);
+                        tv.setPadding(5,5,10,5);
+                        llSerialView.addView(tv);
                         scrollView.fullScroll(View.FOCUS_UP);
                     }
                     randomizeBtns();

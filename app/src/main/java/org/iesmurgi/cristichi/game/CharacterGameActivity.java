@@ -24,6 +24,7 @@ import org.iesmurgi.cristichi.Difficulty;
 import org.iesmurgi.cristichi.R;
 import org.iesmurgi.cristichi.ScoreActivity;
 import org.iesmurgi.cristichi.stylePacks.CharacterStylePack;
+import org.w3c.dom.Text;
 
 import java.util.List;
 
@@ -32,6 +33,7 @@ public class CharacterGameActivity extends AppCompatActivity {
     private int screenWidth;
     private int btnSize;
     private float charSize;
+    private float charSizeTarget;
 
     private CharacterStylePack sp;
     private Difficulty diff;
@@ -58,6 +60,7 @@ public class CharacterGameActivity extends AppCompatActivity {
 
         btnSize = (int) getResources().getDimension(R.dimen.btn_char_width);
         charSize = getResources().getDimension(R.dimen.char_size)/density;
+        charSizeTarget = getResources().getDimension(R.dimen.char_size_target)/density;
 
         try{
             Bundle extras = getIntent().getExtras();
@@ -74,11 +77,17 @@ public class CharacterGameActivity extends AppCompatActivity {
 
             secuence = sp.generateRandomSentence(diff);
             secuenceInicial = secuence.size();
+            boolean first = true;
             for(Character car : secuence){
                 TextView tv = new TextView(this);
-                tv.setPadding(5,5,5,5);
+                if (first){
+                    tv.setTextSize(charSizeTarget);
+                    first = false;
+                }else{
+                    tv.setTextSize(charSize);
+                }
                 tv.setText(car.toString());
-                tv.setTextSize(charSize);
+                tv.setPadding(5,5,5,5);
                 llSerialView.addView(tv);
             }
 
@@ -154,14 +163,16 @@ public class CharacterGameActivity extends AppCompatActivity {
                             intento.putExtra("gamemode", sp.getName());
                             CharacterGameActivity.this.startActivity(intento);
                             CharacterGameActivity.this.finish();
+                        }else{
+                            ((TextView)llSerialView.getChildAt(0)).setTextSize(charSizeTarget);
                         }
                     }else{
                         secuence.add(car);
                         TextView tv = new TextView(CharacterGameActivity.this);
                         tv.setPadding(5,5,5,5);
+                        tv.setTextSize(charSize);
                         tv.setText(car.toString());
                         llSerialView.addView(tv);
-                        tv.setTextSize(charSize);
                         scrollView.fullScroll(View.FOCUS_UP);
                     }
                     randomizeBtns();

@@ -4,6 +4,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.content.res.Resources;
+import android.media.Image;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -33,6 +34,7 @@ public class ImageGameActivity extends AppCompatActivity {
     private float screenWidth;
     private float btnSize;
     private float imageSize;
+    private float imageSizeTarget;
 
     private ImageStylePack sp;
     private Difficulty diff;
@@ -64,6 +66,7 @@ public class ImageGameActivity extends AppCompatActivity {
 
             btnSize = getResources().getDimension(R.dimen.btn_image_width);
             imageSize = getResources().getDimension(R.dimen.image_width);
+            imageSizeTarget = getResources().getDimension(R.dimen.image_width_target);
 
             TextView title = findViewById(R.id.tvTitle);
             title.setText(sp.getName());
@@ -75,13 +78,19 @@ public class ImageGameActivity extends AppCompatActivity {
 
             secuence = sp.generateRandomSentence(diff);
             secuenceInicial = secuence.size();
+            boolean first = true;
             for(Integer img : secuence){
                 ImageView tv = new ImageView(this);
                 tv.setPadding(5,5,5,5);
                 tv.setImageResource(img);
                 llSerialView.addView(tv);
                 ViewGroup.LayoutParams lp = tv.getLayoutParams();
-                lp.height = lp.width = (int) imageSize;
+                if (first){
+                    lp.height = lp.width = (int) imageSizeTarget;
+                    first = false;
+                }else{
+                    lp.height = lp.width = (int) imageSize;
+                }
             }
 
             randomizeBtns();
@@ -151,6 +160,10 @@ public class ImageGameActivity extends AppCompatActivity {
                             intento.putExtra("gamemode", sp.getName());
                             ImageGameActivity.this.startActivity(intento);
                             ImageGameActivity.this.finish();
+                        }else{
+                            ViewGroup.LayoutParams lp = (llSerialView.getChildAt(0)).getLayoutParams();
+                            lp.height = lp.width = (int) imageSizeTarget;
+
                         }
                     }else{
                         secuence.add(car);

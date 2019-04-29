@@ -10,6 +10,7 @@ import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Environment;
 import android.provider.MediaStore;
@@ -25,11 +26,21 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Switch;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import org.iesmurgi.cristichi.ddbb.DDBBConstraints;
 import org.w3c.dom.Text;
 
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.IOError;
+import java.io.IOException;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.Date;
 import java.util.Locale;
 
@@ -170,11 +181,70 @@ public class ScoreActivity extends AppCompatActivity {
     }
 
     private void openScreenshot(File imageFile) {
+        /* *
         Intent intent = new Intent();
         intent.setAction(Intent.ACTION_VIEW);
         intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
         Uri photoURI = FileProvider.getUriForFile(this, "com.iesmurgi.cristichi", imageFile);
         intent.setDataAndType(photoURI, "image/*");
         startActivity(intent);
+        /* */
+        BaseMYSQL connectMySql = new BaseMYSQL();
+        connectMySql.execute("select Email from Users");
+    }
+
+    private class BaseMYSQL extends AsyncTask<String, Void, String> {
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            Toast.makeText(ScoreActivity.this, "Uploading...", Toast.LENGTH_SHORT)
+                    .show();
+
+        }
+
+        @Override
+        protected String doInBackground(String... params) {
+            if (params.length==0){
+                return "Empty params";
+            }
+
+            String res;
+            Connection con = null;
+            try {
+                Class.forName("com.mysql.jdbc.Driver");
+                Log.d("CRISTICHIEX", "Conectando");
+                con = DriverManager.getConnection(DDBBConstraints.URL_DDBB, DDBBConstraints.USER, DDBBConstraints.PASSWORD);
+                Log.d("CRISTICHIEX", "Success");
+
+                String result = "Database Connection Successful\n";
+                Statement st = con.createStatement();
+                ResultSet rs = st.executeQuery(params[0]);
+
+                while (rs.next()) {
+                    result += rs.getString(1) + "\n";
+                }
+                res = result;
+            } catch (Exception e) {
+                e.printStackTrace();
+                res = e.toString();
+            }
+            if (con != null){
+                try{
+                    con.close();
+                }catch (SQLException e){
+                    e.printStackTrace();
+                }
+            }
+            return res;
+        }
+
+        @Override
+        protected void onPostExecute(String result) {
+            Log.d("CRISTICHIEX", result);
+            Toast.makeText(ScoreActivity.this, result, Toast.LENGTH_SHORT)
+                    .show();
+        }
     }
 }
+

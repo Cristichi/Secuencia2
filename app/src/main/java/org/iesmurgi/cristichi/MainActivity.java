@@ -6,10 +6,13 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
+import org.iesmurgi.cristichi.ddbb.Session;
+
 public class MainActivity extends AppCompatActivity {
 
     private Button btnPlay;
     private Button btnOptions;
+    private Button btnAccount;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,6 +36,20 @@ public class MainActivity extends AppCompatActivity {
                 Intent intento = new Intent(MainActivity.this, SettingsActivity.class);
                 startActivity(intento);
                 //finish();
+            }
+        });
+
+        btnAccount = findViewById(R.id.btnAccount);
+        btnAccount.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (Session.logged){
+                    Intent intento = new Intent(MainActivity.this, LoginActivity.class);
+                    startActivity(intento);
+                }else{
+                    Intent intento = new Intent(MainActivity.this, AccountActivity.class);
+                    startActivity(intento);
+                }
             }
         });
     }

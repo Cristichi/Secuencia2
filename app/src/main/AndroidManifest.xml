@@ -3,6 +3,7 @@
     package="org.iesmurgi.cristichi">
 
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:allowBackup="true"
@@ -11,6 +12,8 @@
         android:roundIcon="@drawable/logo"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".AccountActivity"></activity>
+        <activity android:name=".LoginActivity" />
 
         <provider
             android:name=".GenericFileProvider"
@@ -38,10 +41,9 @@
             android:label="@string/choose_gamemode" />
         <activity
             android:name=".SettingsActivity"
-            android:label="@string/settings"
             android:configChanges="orientation|keyboardHidden"
-            android:theme="@style/AppTheme.WithBar">
-        </activity>
+            android:label="@string/settings"
+            android:theme="@style/AppTheme.WithBar" />
         <activity
             android:name=".MainActivity"
             android:configChanges="orientation|keyboardHidden">

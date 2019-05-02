@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.Button;
 
 import org.iesmurgi.cristichi.ddbb.Session;
+import org.iesmurgi.cristichi.storage.StorageHelper;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -43,11 +44,12 @@ public class MainActivity extends AppCompatActivity {
         btnAccount.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (Session.logged){
-                    Intent intento = new Intent(MainActivity.this, LoginActivity.class);
+                StorageHelper.tryLoginFromFile(MainActivity.this);
+                if (Session.isLogged()){
+                    Intent intento = new Intent(MainActivity.this, AccountActivity.class);
                     startActivity(intento);
                 }else{
-                    Intent intento = new Intent(MainActivity.this, AccountActivity.class);
+                    Intent intento = new Intent(MainActivity.this, LoginActivity.class);
                     startActivity(intento);
                 }
             }

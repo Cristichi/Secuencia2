@@ -2,6 +2,21 @@
     <string name="app_name">Secuencia2</string>
     <string name="back">Back</string>
 
+    <string name="error_login">Email or password are incorrect</string>
+    <string name="error_net">Error trying to connect to server</string>
+
+    <string name="login_title">Login</string>
+    <string name="login_email">Email</string>
+    <string name="login_password">Password</string>
+    <string name="login_login">Log in</string>
+    <string name="login_register">New Account</string>
+    <string name="login_error_empty">Please, fill all the fields</string>
+
+    <string name="register_title">Register</string>
+
+    <string name="account_title">Account</string>
+    <string name="account_logout">Log out</string>
+
     <string name="play">Play</string>
     <string name="settings">Settings</string>
 

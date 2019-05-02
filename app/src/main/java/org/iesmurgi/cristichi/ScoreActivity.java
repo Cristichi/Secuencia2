@@ -47,7 +47,6 @@ import java.util.Locale;
 public class ScoreActivity extends AppCompatActivity {
 
     private TextView tvTitle;
-    private TextView tvDate;
     private TextView tvGamemode;
     private TextView tvDifficulty;
     private TextView tvScore;
@@ -55,7 +54,7 @@ public class ScoreActivity extends AppCompatActivity {
     private Button btnBack;
     private Button btnScreenshot;
 
-    private String date;
+    //TODO: AÑADIR BOTÓN DE GUARDAR SCORE QUE ES INVISIBLE SI EL SCORE NO ES HIGHSCORE, Y SI LO ES PUEDE GUARDARLO Y TAL
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -189,11 +188,10 @@ public class ScoreActivity extends AppCompatActivity {
         intent.setDataAndType(photoURI, "image/*");
         startActivity(intent);
         /* */
-        BaseMYSQL connectMySql = new BaseMYSQL();
-        connectMySql.execute("select Email from Users");
     }
 
-    private class BaseMYSQL extends AsyncTask<String, Void, String> {
+    //TODO: TOTALMENTE SIN HACER, SÓLO NOMBRE CAMBIADO
+    private class SaveScoreMYSQL extends AsyncTask<String, Void, String> {
 
         @Override
         protected void onPreExecute() {
@@ -244,6 +242,63 @@ public class ScoreActivity extends AppCompatActivity {
             Log.d("CRISTICHIEX", result);
             Toast.makeText(ScoreActivity.this, result, Toast.LENGTH_SHORT)
                     .show();
+        }
+    }
+
+    //TODO: EN PRINCIPIO TERMINADO
+    private class IsHighScore extends AsyncTask<Void, Void, Boolean> {
+
+        private boolean ini = false;
+
+        private double score;
+        private String email;
+        private String mode;
+        private String diff;
+
+        IsHighScore(double score, String email, String mode, String diff){
+            ini = true;
+            this.score = score;
+            this.email = email;
+            this.mode = mode;
+            this.diff = diff;
+        }
+
+        @Override
+        protected Boolean doInBackground(Void... params) {
+            if (!ini){
+                return false;
+            }
+
+            boolean sol = false;
+            Connection con = null;
+            try {
+                Class.forName("com.mysql.jdbc.Driver");
+                Log.d("CRISTICHIEX", "Conectando");
+                con = DriverManager.getConnection(DDBBConstraints.URL_DDBB, DDBBConstraints.USER, DDBBConstraints.PASSWORD);
+                Log.d("CRISTICHIEX", "Success");
+
+                Statement st = con.createStatement();
+                ResultSet rs = st.executeQuery(
+                        "select Score from HighScores where Score = max(Score) and UserEmail='"+email+"' and Gamemode='"+mode+"' and Difficulty='"+diff+"'");
+
+                if (rs.first()) {
+                    if (rs.getFloat(0)<score){
+                        sol = true;
+                    }
+                }else{
+                    sol = true;
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            if (con != null){
+                try{
+                    con.close();
+                }catch (SQLException e){
+                    e.printStackTrace();
+                }
+            }
+            return sol;
         }
     }
 }

@@ -20,6 +20,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        StorageHelper.tryLoginFromFile(MainActivity.this);
+
         btnPlay = findViewById(R.id.btnPlay);
         btnPlay.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -44,7 +46,6 @@ public class MainActivity extends AppCompatActivity {
         btnAccount.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                StorageHelper.tryLoginFromFile(MainActivity.this);
                 if (Session.isLogged()){
                     Intent intento = new Intent(MainActivity.this, AccountActivity.class);
                     startActivity(intento);

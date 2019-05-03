@@ -29,6 +29,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import org.iesmurgi.cristichi.ddbb.DDBBConstraints;
+import org.iesmurgi.cristichi.ddbb.Session;
+import org.iesmurgi.cristichi.ddbb.User;
 import org.w3c.dom.Text;
 
 import java.io.File;
@@ -43,6 +45,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Date;
 import java.util.Locale;
+import java.util.concurrent.TimeUnit;
 
 public class ScoreActivity extends AppCompatActivity {
 
@@ -54,6 +57,11 @@ public class ScoreActivity extends AppCompatActivity {
     private Button btnBack;
     private Button btnScreenshot;
 
+    private double score;
+    private boolean highScore;
+    private CharSequence date;
+    private static final String DATE_FORMAT = "yyyy/MM/dd HH:mm";
+
     //TODO: AÑADIR BOTÓN DE GUARDAR SCORE QUE ES INVISIBLE SI EL SCORE NO ES HIGHSCORE, Y SI LO ES PUEDE GUARDARLO Y TAL
 
     @Override
@@ -62,7 +70,7 @@ public class ScoreActivity extends AppCompatActivity {
         setContentView(R.layout.activity_score);
 
         Date now = new Date();
-        final CharSequence date = android.text.format.DateFormat.format("yyyy-MM-dd hh:mm:ss", now);
+        date = android.text.format.DateFormat.format(DATE_FORMAT, now);
 
         tvTitle = findViewById(R.id.tvTitle);
         final TextView tvDate = findViewById(R.id.tvDate);
@@ -121,13 +129,32 @@ public class ScoreActivity extends AppCompatActivity {
 
         try {
             Bundle extras = getIntent().getExtras();
-            double score = extras.getDouble("score");
+            score = extras.getDouble("score", 0);
             int gamemode = extras.getInt("gamemode");
             int difficulty = extras.getInt("difficulty");
 
             tvScore.setText(String.format(Locale.getDefault(), "%.3f", score));
             tvGamemode.setText(gamemode);
             tvDifficulty.setText(difficulty);
+
+            if (Session.isLogged()){
+                User user = Session.getUser();
+                String mode = getString(gamemode);
+                String diff = getString(difficulty);
+                try{
+                    IsHighScore task = new IsHighScore(score, user.email, mode, diff);
+                    task.execute();
+                    if (task.get(2, TimeUnit.SECONDS)){
+                        highScore = true;
+                        TextView tvHS = findViewById(R.id.tvHighScore);
+                        tvHS.setVisibility(View.VISIBLE);
+                        SaveScoreMYSQL taskSave = new SaveScoreMYSQL(score, user.email, mode, diff, date.toString());
+                        taskSave.execute();
+                    }else{
+                        highScore = false;
+                    }
+                }catch (Exception e){}
+            }
         }catch (NullPointerException e){
         }
     }
@@ -180,7 +207,7 @@ public class ScoreActivity extends AppCompatActivity {
     }
 
     private void openScreenshot(File imageFile) {
-        /* *
+        /* */
         Intent intent = new Intent();
         intent.setAction(Intent.ACTION_VIEW);
         intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
@@ -191,41 +218,45 @@ public class ScoreActivity extends AppCompatActivity {
     }
 
     //TODO: TOTALMENTE SIN HACER, SÓLO NOMBRE CAMBIADO
-    private class SaveScoreMYSQL extends AsyncTask<String, Void, String> {
+    private static class SaveScoreMYSQL extends AsyncTask<Void, Void, Void> {
+        private boolean ini;
 
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-            Toast.makeText(ScoreActivity.this, "Uploading...", Toast.LENGTH_SHORT)
-                    .show();
+        private double score;
+        private String email;
+        private String mode;
+        private String diff;
+        private String date;
 
+        SaveScoreMYSQL(double score, String email, String mode, String diff, String date){
+            ini = true;
+            this.score = score;
+            this.email = email;
+            this.mode = mode;
+            this.diff = diff;
+            this.date = date;
         }
 
         @Override
-        protected String doInBackground(String... params) {
-            if (params.length==0){
-                return "Empty params";
+        protected Void doInBackground(Void... params) {
+            if (!ini){
+                return null;
             }
 
-            String res;
             Connection con = null;
             try {
+                Log.d("CRISTICHIEX", "delete from HighScores where UserEmail='"+email+"' and Gamemode='"+mode+"' and Difficulty='"+diff+"'");
+                Log.d("CRISTICHIEX", "insert into HighScores values('"+email+"', '"+mode+"', '"+diff+"', '"+score+"', '"+date+"')");
                 Class.forName("com.mysql.jdbc.Driver");
-                Log.d("CRISTICHIEX", "Conectando");
                 con = DriverManager.getConnection(DDBBConstraints.URL_DDBB, DDBBConstraints.USER, DDBBConstraints.PASSWORD);
-                Log.d("CRISTICHIEX", "Success");
 
-                String result = "Database Connection Successful\n";
                 Statement st = con.createStatement();
-                ResultSet rs = st.executeQuery(params[0]);
-
-                while (rs.next()) {
-                    result += rs.getString(1) + "\n";
-                }
-                res = result;
+                st.execute(
+                        "delete from HighScores where UserEmail='"+email+"' and Gamemode='"+mode+"' and Difficulty='"+diff+"'");
+                Statement st2 = con.createStatement();
+                st2.execute(
+                        "insert into HighScores values('"+email+"', '"+mode+"', '"+diff+"', '"+score+"', '"+date+"')");
             } catch (Exception e) {
                 e.printStackTrace();
-                res = e.toString();
             }
             if (con != null){
                 try{
@@ -234,21 +265,13 @@ public class ScoreActivity extends AppCompatActivity {
                     e.printStackTrace();
                 }
             }
-            return res;
-        }
-
-        @Override
-        protected void onPostExecute(String result) {
-            Log.d("CRISTICHIEX", result);
-            Toast.makeText(ScoreActivity.this, result, Toast.LENGTH_SHORT)
-                    .show();
+            return null;
         }
     }
 
     //TODO: EN PRINCIPIO TERMINADO
-    private class IsHighScore extends AsyncTask<Void, Void, Boolean> {
-
-        private boolean ini = false;
+    private static class IsHighScore extends AsyncTask<Void, Void, Boolean> {
+        private boolean ini;
 
         private double score;
         private String email;
@@ -273,16 +296,21 @@ public class ScoreActivity extends AppCompatActivity {
             Connection con = null;
             try {
                 Class.forName("com.mysql.jdbc.Driver");
-                Log.d("CRISTICHIEX", "Conectando");
                 con = DriverManager.getConnection(DDBBConstraints.URL_DDBB, DDBBConstraints.USER, DDBBConstraints.PASSWORD);
-                Log.d("CRISTICHIEX", "Success");
 
                 Statement st = con.createStatement();
                 ResultSet rs = st.executeQuery(
-                        "select Score from HighScores where Score = max(Score) and UserEmail='"+email+"' and Gamemode='"+mode+"' and Difficulty='"+diff+"'");
+                        "select max(Score) from HighScores where UserEmail='"+email+"' and Gamemode='"+mode+"' and Difficulty='"+diff+"'");
 
-                if (rs.first()) {
-                    if (rs.getFloat(0)<score){
+                if (rs.next()) {
+                    try{
+                        float f = rs.getFloat(1);
+                        Log.d("CRISTICHIEX", ""+f+"<"+score+"=="+(f<score));
+                        if (f<score){
+                            sol = true;
+                        }
+                    }catch (Exception e){
+                        e.printStackTrace();
                         sol = true;
                     }
                 }else{

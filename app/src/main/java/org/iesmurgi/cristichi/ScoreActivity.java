@@ -62,8 +62,6 @@ public class ScoreActivity extends AppCompatActivity {
     private CharSequence date;
     private static final String DATE_FORMAT = "yyyy/MM/dd HH:mm";
 
-    //TODO: AÑADIR BOTÓN DE GUARDAR SCORE QUE ES INVISIBLE SI EL SCORE NO ES HIGHSCORE, Y SI LO ES PUEDE GUARDARLO Y TAL
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -217,7 +215,6 @@ public class ScoreActivity extends AppCompatActivity {
         /* */
     }
 
-    //TODO: TOTALMENTE SIN HACER, SÓLO NOMBRE CAMBIADO
     private static class SaveScoreMYSQL extends AsyncTask<Void, Void, Void> {
         private boolean ini;
 
@@ -269,7 +266,6 @@ public class ScoreActivity extends AppCompatActivity {
         }
     }
 
-    //TODO: EN PRINCIPIO TERMINADO
     private static class IsHighScore extends AsyncTask<Void, Void, Boolean> {
         private boolean ini;
 

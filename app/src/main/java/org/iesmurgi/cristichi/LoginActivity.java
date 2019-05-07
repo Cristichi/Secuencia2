@@ -45,12 +45,11 @@ public class LoginActivity extends AppCompatActivity {
                 if (email.isEmpty() || pass.isEmpty()){
                     tvError.setText(R.string.login_error_empty);
                 }else {
-                    Throwable e = Session.login(email, pass);
+                    Throwable e = Session.login(LoginActivity.this, email, pass);
                     if (e==null){
                         Intent intent = new Intent(LoginActivity.this, AccountActivity.class);
                         startActivity(intent);
                         finish();
-                        StorageHelper.saveUser(LoginActivity.this, Session.getUser(), pass);
                     }else{
                         if (e instanceof LoginException){
                             tvError.setText(R.string.error_login);
@@ -66,8 +65,18 @@ public class LoginActivity extends AppCompatActivity {
         btnRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                Intent intent = new Intent(LoginActivity.this, RegisterActivity.class);
+                startActivity(intent);
             }
         });
+    }
+
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        if (Session.isLogged()){
+            finish();
+        }
     }
 }

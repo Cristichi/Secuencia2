@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import org.iesmurgi.cristichi.ddbb.Session;
 import org.iesmurgi.cristichi.ddbb.User;
@@ -38,8 +39,10 @@ public class AccountActivity extends AppCompatActivity {
         btnLogout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                StorageHelper.logout(AccountActivity.this);
-                finish();
+                if (StorageHelper.logout(AccountActivity.this))
+                    finish();
+                else
+                    Toast.makeText(AccountActivity.this, "Error", Toast.LENGTH_LONG);
             }
         });
     }

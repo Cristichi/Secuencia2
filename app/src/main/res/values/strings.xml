@@ -13,11 +13,26 @@
     <string name="login_error_empty">Please, fill all the fields</string>
 
     <string name="register_title">Register</string>
+    <string name="register_nickname">Nickname</string>
+    <string name="register_email">Email</string>
+    <string name="register_password1">Password</string>
+    <string name="register_password2">Repeat Password</string>
+    <string name="register_btn_register">Create Account</string>
+    <string name="register_btn_back">Cancel</string>
+    <string name="register_registered">Account registered</string>
+    <string name="register_error_nick_empty">Your nickname cannot be empty</string>
+    <string name="register_error_email_empty">Please, enter your email to register</string>
+    <string name="register_error_pass_empty">Please, a password for your account</string>
+    <string name="register_error_pass_equal">Both passwords does not match</string>
+    <string name="register_error_exists">This email is already registered</string>
+    <string name="register_error_generic">Error trying to connect to server</string>
 
     <string name="account_title">Account</string>
     <string name="account_logout">Log out</string>
 
     <string name="play">Play</string>
+    <string name="account">Account</string>
+    <string name="login">Login</string>
     <string name="settings">Settings</string>
 
     <string name="score_highscore">HIGHSCORE!</string>

@@ -56,4 +56,14 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        if (Session.isLogged()){
+            btnAccount.setText(R.string.account);
+        }else{
+            btnAccount.setText(R.string.login);
+        }
+    }
 }

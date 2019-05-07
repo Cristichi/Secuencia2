@@ -4,6 +4,7 @@ import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
 
+import org.iesmurgi.cristichi.LoginActivity;
 import org.iesmurgi.cristichi.storage.StorageHelper;
 
 import java.sql.Connection;
@@ -27,7 +28,7 @@ public class Session {
         return user;
     }
 
-    public static Throwable login(String email, String pass){
+    public static Throwable login(Context ctxt, String email, String pass){
         LoginMYSQL login = new LoginMYSQL();
         try{
             login.execute(email, pass);
@@ -35,6 +36,7 @@ public class Session {
             if (ret.e == null){
                 logged = true;
                 user = ret.user;
+                StorageHelper.saveUser(ctxt, Session.getUser(), pass);
                 return null;
             }else{
                 logged = false;
@@ -58,24 +60,11 @@ class ReturnLogin{
 
     ReturnLogin(){
     }
-
-    ReturnLogin(Throwable error, User user){
-        this.e = error;
-        this.user = user;
-    }
 }
 
 
 
 class LoginMYSQL extends AsyncTask<String, Void, ReturnLogin> {
-
-    private boolean sinConex;
-
-    @Override
-    protected void onPreExecute() {
-        super.onPreExecute();
-
-    }
 
     @Override
     protected ReturnLogin doInBackground(String... params) {

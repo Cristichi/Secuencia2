@@ -42,7 +42,7 @@ public class StorageHelper {
         try{
             FileReader fr = new FileReader(file);
             BufferedReader br = new BufferedReader(fr);
-            Throwable e = Session.login(br.readLine(), br.readLine());
+            Throwable e = Session.login(context, br.readLine(), br.readLine());
             if (e==null){
                 return true;
             }
@@ -56,6 +56,9 @@ public class StorageHelper {
         File file = new File(dir, FILE);
 
         try{
+            if (!file.exists()){
+                return true;
+            }
             if (file.delete()){
                 Session.logout();
                 return true;

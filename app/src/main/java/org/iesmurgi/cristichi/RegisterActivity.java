@@ -1,12 +1,9 @@
 package org.iesmurgi.cristichi;
 
-import android.content.Context;
 import android.os.AsyncTask;
-import android.support.annotation.Nullable;
+import android.os.Bundle;
 import android.support.annotation.StringRes;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -14,6 +11,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import org.iesmurgi.cristichi.ddbb.DDBBConstraints;
+import org.iesmurgi.cristichi.ddbb.ReturnLogin;
 import org.iesmurgi.cristichi.ddbb.Session;
 import org.iesmurgi.cristichi.ddbb.User;
 
@@ -22,7 +20,6 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.concurrent.ExecutionException;
 
 public class RegisterActivity extends AppCompatActivity {
 
@@ -74,13 +71,20 @@ public class RegisterActivity extends AppCompatActivity {
                         if (res==null){
                             tvError.setText(task.getError());
                         }else{
-                            Throwable e = Session.login(RegisterActivity.this, res.email, pass1);
-                            if (e==null){
-                                Toast.makeText(RegisterActivity.this, R.string.register_registered, Toast.LENGTH_SHORT).show();
-                                finish();
-                            }else{
-                                Toast.makeText(RegisterActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
-                            }
+                            LoginActivity.LoginTask login = new LoginActivity.LoginTask(RegisterActivity.this, res.email, pass1){
+                                @Override
+                                protected void onPostExecute(ReturnLogin sol) {
+                                    super.onPostExecute(sol);
+                                    if (sol.e==null){
+                                        Toast.makeText(RegisterActivity.this, R.string.register_registered, Toast.LENGTH_SHORT).show();
+                                        finish();
+                                    }else{
+                                        Toast.makeText(RegisterActivity.this, sol.e.getMessage(), Toast.LENGTH_SHORT).show();
+                                        tvError.setText(R.string.register_error_generic);
+                                    }
+                                }
+                            };
+                            login.execute();
                         }
                     }catch (Exception e){
                         e.printStackTrace();
@@ -114,7 +118,7 @@ public class RegisterActivity extends AppCompatActivity {
         }
 
         @StringRes
-        public int getError() {
+        int getError() {
             return error;
         }
 
@@ -135,8 +139,8 @@ public class RegisterActivity extends AppCompatActivity {
                     error = R.string.register_error_exists;
                 }else{
                     Statement st2 = con.createStatement();
-                    st2.execute("insert into Users(Email, Nickname, Pass) values('"+email+"', '"+
-                            nick+"', '"+pass+"')");
+                    st2.execute("insert into Users(Email, Nickname, Pass) values('" + email + "', '" +
+                            nick + "', '" + Session.encrypt(pass) + "')");
                         sol = new User(nick, email);
                 }
             } catch (Exception e) {

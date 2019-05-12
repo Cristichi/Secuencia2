@@ -45,19 +45,6 @@
             tools:layout_editor_absoluteY="77dp" />
     </ScrollView>
 
-    <ImageView
-        android:id="@+id/imageView3"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginStart="8dp"
-        android:contentDescription="@string/app_name"
-        android:scaleType="fitXY"
-        app:layout_constraintBottom_toBottomOf="@+id/svSerial"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/tvTitle"
-        app:layout_constraintTop_toTopOf="@+id/divider2"
-        app:srcCompat="@drawable/gradient" />
-
     <View
         android:id="@+id/divider3"
         android:layout_width="0dp"

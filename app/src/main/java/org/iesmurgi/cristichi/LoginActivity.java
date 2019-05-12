@@ -1,32 +1,20 @@
 package org.iesmurgi.cristichi;
 
 import android.app.AlertDialog;
-import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
-import android.support.v4.content.ContextCompat;
+import android.os.Bundle;
 import android.support.v4.content.res.ResourcesCompat;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import org.iesmurgi.cristichi.ddbb.DDBBConstraints;
+import org.iesmurgi.cristichi.ddbb.ReturnLogin;
 import org.iesmurgi.cristichi.ddbb.Session;
-import org.iesmurgi.cristichi.ddbb.User;
-import org.iesmurgi.cristichi.storage.StorageHelper;
-
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
-
-import javax.security.auth.login.LoginException;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -75,30 +63,14 @@ public class LoginActivity extends AppCompatActivity {
                         @Override
                         protected void onPostExecute(ReturnLogin sol) {
                             super.onPostExecute(sol);
-                            if (sol.e!=null){
-                                tvError.setText(sol.e.getMessage());
-                            }else{
-                                Session.login(LoginActivity.this, sol.user, pass);
+                            if (sol.e==null){
                                 finish();
+                            }else{
+                                tvError.setText(sol.e.getMessage());
                             }
                         }
                     };
                     login.execute();
-
-                    /* *
-                    Throwable e = Session.login(LoginActivity.this, email, pass);
-                    if (e==null){
-                        Intent intent = new Intent(LoginActivity.this, AccountActivity.class);
-                        startActivity(intent);
-                        finish();
-                    }else{
-                        if (e instanceof LoginException){
-                            tvError.setText(R.string.error_login);
-                        }else{
-                            tvError.setText(R.string.error_net);
-                        }
-                    }
-                    /* */
                 }
             }
         });
@@ -119,77 +91,38 @@ public class LoginActivity extends AppCompatActivity {
             finish();
         }
     }
-}
 
-class ReturnLogin{
-    Throwable e = null;
-    User user = null;
-}
+    public static class LoginTask extends AsyncTask<Void, Void, ReturnLogin> {
 
-class LoginTask extends AsyncTask<Void, Void, ReturnLogin> {
+        private AlertDialog dial;
+        private Context ctxt;
+        private String email, pass;
 
-    private AlertDialog dial;
-    private Context ctxt;
-    private String email, pass;
-
-    LoginTask(Context ctxt, String email, String pass){
-        this.ctxt = ctxt;
-        this.email = email;
-        this.pass = pass;
-    }
-
-    @Override
-    protected void onPreExecute() {
-        super.onPreExecute();
-        dial = new AlertDialog.Builder(ctxt)
-                .setTitle(R.string.login_loging_dial_title)
-                .setMessage(R.string.login_loging_dial_msg)
-                .setCancelable(false)
-                .show();
-    }
-
-    @Override
-    protected ReturnLogin doInBackground(Void... params) {
-        ReturnLogin sol = new ReturnLogin();
-
-        Connection con = null;
-        try {
-            Class.forName("com.mysql.jdbc.Driver");
-            DriverManager.setLoginTimeout(2);
-            con = DriverManager.getConnection(DDBBConstraints.URL_DDBB, DDBBConstraints.USER, DDBBConstraints.PASSWORD);
-
-            Statement st = con.createStatement();
-            ResultSet rs = st.executeQuery("SELECT Nickname, Email from Users where Email='" + email + "' and Pass='" + pass + "'");
-
-            if (rs.first()) {
-                sol.user = new User(rs.getString(1), rs.getString(2));
-            }else{
-                sol.e = new LoginException();
-            }
-        }catch (Exception e) {
-            e.printStackTrace();
-            sol.e = new ServerException(ctxt.getString(R.string.error_net));
-        }
-        if (con != null){
-            try{
-                con.close();
-            }catch (SQLException e){
-                e.printStackTrace();
-            }
+        public LoginTask(Context ctxt, String email, String pass){
+            this.ctxt = ctxt;
+            this.email = email;
+            this.pass = pass;
         }
 
-        return sol;
-    }
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            dial = new AlertDialog.Builder(ctxt)
+                    .setTitle(R.string.login_loging_dial_title)
+                    .setMessage(R.string.login_loging_dial_msg)
+                    .setCancelable(false)
+                    .show();
+        }
 
-    @Override
-    protected void onPostExecute(ReturnLogin sol) {
-        super.onPostExecute(sol);
-        dial.dismiss();
-    }
-}
+        @Override
+        protected ReturnLogin doInBackground(Void... params) {
+            return Session.login(ctxt, email, pass);
+        }
 
-class ServerException extends RuntimeException{
-    public ServerException(String msg) {
-        super(msg);
+        @Override
+        protected void onPostExecute(ReturnLogin sol) {
+            super.onPostExecute(sol);
+            dial.dismiss();
+        }
     }
 }

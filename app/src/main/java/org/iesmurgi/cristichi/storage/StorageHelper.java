@@ -2,6 +2,7 @@ package org.iesmurgi.cristichi.storage;
 
 import android.content.Context;
 
+import org.iesmurgi.cristichi.LoginActivity;
 import org.iesmurgi.cristichi.ddbb.Session;
 import org.iesmurgi.cristichi.ddbb.User;
 
@@ -35,20 +36,24 @@ public class StorageHelper {
         }
     }
 
-    public static boolean tryLoginFromFile(Context context){
+    public static void tryLoginFromFile(Context context){
         File dir = context.getFilesDir();
         File file = new File(dir, FILE);
 
         try{
             FileReader fr = new FileReader(file);
             BufferedReader br = new BufferedReader(fr);
-            Throwable e = Session.login(context, br.readLine(), br.readLine());
-            if (e==null){
-                return true;
+            String email = br.readLine();
+            String pass = br.readLine();
+            LoginActivity.LoginTask loginTask = new LoginActivity.LoginTask(context, email, pass);
+            loginTask.execute();
+            try {
+                loginTask.get();
+            }catch (Exception e){
+                e.printStackTrace();
             }
-            return false;
         }catch (IOException e){
-            return false;
+            e.printStackTrace();
         }
     }
     public static boolean logout(Context context){

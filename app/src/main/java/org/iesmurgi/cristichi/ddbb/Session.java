@@ -1,14 +1,14 @@
 package org.iesmurgi.cristichi.ddbb;
 
-import android.app.AlertDialog;
-import android.app.Dialog;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
 
-import org.iesmurgi.cristichi.LoginActivity;
+import org.iesmurgi.cristichi.R;
 import org.iesmurgi.cristichi.storage.StorageHelper;
 
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -30,72 +30,31 @@ public class Session {
         return user;
     }
 
-    public static void login(Context ctxt, User user, String pass){
-        logged = true;
-        Session.user = user;
-        StorageHelper.saveUser(ctxt, Session.getUser(), pass);
-    }
-
-    public static Throwable login(Context ctxt, String email, String pass){
-        LoginMYSQL login = new LoginMYSQL();
-        try{
-            login.execute(email, pass);
-            ReturnLogin ret = login.get();
-            if (ret.e == null){
-                logged = true;
-                user = ret.user;
-                StorageHelper.saveUser(ctxt, Session.getUser(), pass);
-                return null;
-            }else{
-                logged = false;
-                return ret.e;
-            }
-        }catch (Exception e){
-            e.printStackTrace();
-            return e;
-        }
-    }
-
-    public static void logout(){
-        logged = false;
-        user = null;
-    }
-}
-
-class ReturnLogin{
-    Throwable e = null;
-    User user = null;
-}
-
-class LoginMYSQL extends AsyncTask<String, Void, ReturnLogin> {
-
-    @Override
-    protected ReturnLogin doInBackground(String... params) {
-        if (params.length != 2) {
-            throw new IllegalArgumentException("Wrong params in LoginMYSQL.execute(), use (String email, String password)");
-        }
+    public static ReturnLogin login(Context ctxt, String email, String pass){
         ReturnLogin sol = new ReturnLogin();
-        String email = params[0];
-        String pass = params[1];
 
         Connection con = null;
         try {
             Class.forName("com.mysql.jdbc.Driver");
-            Log.d("CRISTICHIEX", "Conectando");
+            DriverManager.setLoginTimeout(2);
             con = DriverManager.getConnection(DDBBConstraints.URL_DDBB, DDBBConstraints.USER, DDBBConstraints.PASSWORD);
-            Log.d("CRISTICHIEX", "Success");
 
             Statement st = con.createStatement();
-            ResultSet rs = st.executeQuery("SELECT Nickname, Email from Users where Email='" + email + "' and Pass='" + pass + "'");
+            ResultSet rs = st.executeQuery("SELECT Nickname, Email from Users where Email='" + email + "' and Pass='" + Session.encrypt(pass) + "'");
 
             if (rs.first()) {
-                sol.user = new User(rs.getString(1), rs.getString(2));
-            } else {
-                sol.e = new LoginException();
+                String nickread = rs.getString(1);
+                String emailread = rs.getString(2);
+                sol.user = new User(nickread, emailread);
+                StorageHelper.saveUser(ctxt, sol.user, pass);
+                logged = true;
+                Session.user = sol.user;
+            }else{
+                sol.e = new LoginException(ctxt.getString(R.string.error_login));
             }
         }catch (Exception e) {
             e.printStackTrace();
-            sol.e = e;
+            sol.e = new ServerException(ctxt.getString(R.string.error_net));
         }
         if (con != null){
             try{
@@ -104,6 +63,37 @@ class LoginMYSQL extends AsyncTask<String, Void, ReturnLogin> {
                 e.printStackTrace();
             }
         }
+
         return sol;
+    }
+
+    public static void logout(){
+        logged = false;
+        user = null;
+    }
+
+    public static String encrypt(final String s) {
+        final String MD5 = "MD5";
+        try {
+            // Create MD5 Hash
+            MessageDigest digest = java.security.MessageDigest
+                    .getInstance(MD5);
+            digest.update(s.getBytes());
+            byte messageDigest[] = digest.digest();
+
+            // Create Hex String
+            StringBuilder hexString = new StringBuilder();
+            for (byte aMessageDigest : messageDigest) {
+                String h = Integer.toHexString(0xFF & aMessageDigest);
+                while (h.length() < 2)
+                    h = "0" + h;
+                hexString.append(h);
+            }
+            return hexString.toString();
+
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        }
+        return "";
     }
 }

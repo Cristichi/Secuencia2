@@ -1,5 +1,7 @@
 package org.iesmurgi.cristichi.ddbb;
 
+import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
@@ -26,6 +28,12 @@ public class Session {
 
     public static User getUser() {
         return user;
+    }
+
+    public static void login(Context ctxt, User user, String pass){
+        logged = true;
+        Session.user = user;
+        StorageHelper.saveUser(ctxt, Session.getUser(), pass);
     }
 
     public static Throwable login(Context ctxt, String email, String pass){
@@ -57,12 +65,7 @@ public class Session {
 class ReturnLogin{
     Throwable e = null;
     User user = null;
-
-    ReturnLogin(){
-    }
 }
-
-
 
 class LoginMYSQL extends AsyncTask<String, Void, ReturnLogin> {
 

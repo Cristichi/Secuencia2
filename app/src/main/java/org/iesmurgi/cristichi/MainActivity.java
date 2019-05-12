@@ -5,6 +5,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 
 import org.iesmurgi.cristichi.ddbb.Session;
 import org.iesmurgi.cristichi.storage.StorageHelper;
@@ -14,6 +15,8 @@ public class MainActivity extends AppCompatActivity {
     private Button btnPlay;
     private Button btnOptions;
     private Button btnAccount;
+
+    private ImageView ivNewPoint;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,15 +58,21 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
+
+        ivNewPoint = findViewById(R.id.ivNew);
     }
 
     @Override
     protected void onStart() {
         super.onStart();
         if (Session.isLogged()){
-            btnAccount.setText(R.string.account);
+            //String str = getString(R.string.account) + " " + Session.getUser().nick;
+            String str = Session.getUser().nick;
+            btnAccount.setText(str);
+            ivNewPoint.setVisibility(View.INVISIBLE);
         }else{
             btnAccount.setText(R.string.login);
+            ivNewPoint.setVisibility(View.VISIBLE);
         }
     }
 }

@@ -10,6 +10,8 @@
     <string name="login_password">Password</string>
     <string name="login_login">Log in</string>
     <string name="login_register">New Account</string>
+    <string name="login_loging_dial_title">Loging</string>
+    <string name="login_loging_dial_msg">Connecting to the server, please wait...</string>
     <string name="login_error_empty">Please, fill all the fields</string>
 
     <string name="register_title">Register</string>

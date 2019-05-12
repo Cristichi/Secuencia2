@@ -1,11 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#008577</color>
-    <color name="colorPrimaryDark">#00574B</color>
-    <color name="colorAccent">#D81B60</color>
-    <color name="textColorPrimary">#FFFFFF</color>
-    <color name="windowBackground">#FFFFFF</color>
-    <color name="navigationBarColor">#000000</color>
+    <color name="primaryColor">#283593</color>
+    <color name="primaryLightColor">#5f5fc4</color>
+    <color name="primaryDarkColor">#001064</color>
+    <color name="primaryTextColor">#ffffff</color>
+    <color name="primaryHintTextColor">#CCCCCC</color>
+
+    <color name="secondaryColor">#00695c</color>
+    <color name="secondaryLightColor">#439889</color>
+    <color name="secondaryDarkColor">#003d33</color>
+    <color name="secondaryTextColor">#ffffff</color>
+    <color name="secondaryHintTextColor">#CCCCCC</color>
 
     <color name="isp_forms_tint">#EE0000</color>
 </resources>

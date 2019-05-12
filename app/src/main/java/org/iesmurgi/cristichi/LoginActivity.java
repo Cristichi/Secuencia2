@@ -5,9 +5,12 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
+import android.support.v4.content.ContextCompat;
+import android.support.v4.content.res.ResourcesCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -48,10 +51,21 @@ public class LoginActivity extends AppCompatActivity {
         btnLogin = findViewById(R.id.btnLogin);
         btnRegister = findViewById(R.id.btnRegister);
 
+        int color = ResourcesCompat.getColor(getResources(), R.color.primaryTextColor, getTheme());
+        int colorHint = ResourcesCompat.getColor(getResources(), R.color.primaryHintTextColor, getTheme());
+        etEmail.setTextColor(color);
+        etEmail.setHintTextColor(colorHint);
+        etPass.setTextColor(color);
+        etPass.setHintTextColor(colorHint);
+
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 tvError.setText("");
+                InputMethodManager inputManager = (InputMethodManager)
+                        getSystemService(Context.INPUT_METHOD_SERVICE);
+                inputManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(),
+                        InputMethodManager.HIDE_NOT_ALWAYS);
                 final String email = etEmail.getText().toString(),
                         pass = etPass.getText().toString();
                 if (email.isEmpty() || pass.isEmpty()){
@@ -98,7 +112,6 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
 
-
     @Override
     protected void onStart() {
         super.onStart();
@@ -142,6 +155,7 @@ class LoginTask extends AsyncTask<Void, Void, ReturnLogin> {
         Connection con = null;
         try {
             Class.forName("com.mysql.jdbc.Driver");
+            DriverManager.setLoginTimeout(2);
             con = DriverManager.getConnection(DDBBConstraints.URL_DDBB, DDBBConstraints.USER, DDBBConstraints.PASSWORD);
 
             Statement st = con.createStatement();

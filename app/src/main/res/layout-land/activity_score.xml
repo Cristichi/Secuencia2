@@ -17,7 +17,7 @@
         android:layout_marginBottom="8dp"
         android:text="@string/score_highscore"
         android:textAppearance="@android:style/TextAppearance.Material.Display2"
-        android:textColor="@color/colorPrimaryDark"
+        android:textColor="@color/primaryTextColor"
         android:textStyle="bold"
         android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="parent"

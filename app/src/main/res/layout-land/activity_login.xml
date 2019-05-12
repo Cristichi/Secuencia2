@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/background_gradient"
     tools:context=".LoginActivity">
 
     <ImageView
@@ -30,6 +31,8 @@
         android:ems="10"
         android:hint="@string/login_email"
         android:inputType="textEmailAddress"
+        android:textAppearance="@android:style/TextAppearance.Material.Medium"
+        android:textColor="@color/isp_forms_tint"
         app:layout_constraintBottom_toTopOf="@+id/etPassword"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
@@ -45,6 +48,7 @@
         android:ems="10"
         android:hint="@string/login_password"
         android:inputType="textPassword"
+        android:textColor="@color/primaryTextColor"
         app:layout_constraintBottom_toTopOf="@+id/btnLogin"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />

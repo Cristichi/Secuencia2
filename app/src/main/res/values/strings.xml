@@ -31,13 +31,20 @@
 
     <string name="account_title">Account</string>
     <string name="account_logout">Log out</string>
+    <string name="account_highscores_title">Your HighScores</string>
+    <string name="account_highscores_title_gamemode">Gamemode</string>
+    <string name="account_highscores_title_difficulty">Difficulty</string>
+    <string name="account_highscores_title_score">Score</string>
+    <string name="account_highscores_title_date">Date</string>
+    <string name="account_highscores_loading">Loading your highscores&#8230;</string>
+    <string name="account_highscores_error_empty">Play to save your scores online!</string>
 
     <string name="play">Play</string>
     <string name="account">Account</string>
     <string name="login">Login</string>
     <string name="settings">Settings</string>
 
-    <string name="score_highscore">HIGHSCORE!</string>
+    <string name="score_highscore">NEW HIGHSCORE!</string>
 
     <string name="screenshot_ask_title">Take Screenshot</string>
     <string name="screenshot_ask_your_name">Your Name</string>

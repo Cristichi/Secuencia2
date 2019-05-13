@@ -5,6 +5,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
+import android.support.v4.content.res.ResourcesCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.DisplayMetrics;
@@ -34,6 +35,8 @@ public class WordGameActivity extends AppCompatActivity {
     private int btnSize;
     private float wordSize;
     private float wordSizeTarget;
+    private int textColorPrimary;
+    private int textColorSecondary;
 
     private WordStylePack sp;
     private Difficulty diff;
@@ -50,6 +53,9 @@ public class WordGameActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
+
+        textColorPrimary =  ResourcesCompat.getColor(getResources(), R.color.primaryTextColor, getTheme());
+        textColorSecondary =  ResourcesCompat.getColor(getResources(), R.color.secondaryTextColor, getTheme());
 
         Display display = getWindowManager().getDefaultDisplay();
         DisplayMetrics outMetrics = new DisplayMetrics();
@@ -88,6 +94,7 @@ public class WordGameActivity extends AppCompatActivity {
             boolean first = true;
             for(Integer car : secuence){
                 TextView tv = new TextView(this);
+                tv.setTextColor(textColorSecondary);
                 tv.setText(car);
                 tv.setPadding(5,5,10,5);
                 llSerialView.addView(tv);
@@ -177,6 +184,7 @@ public class WordGameActivity extends AppCompatActivity {
                     }else{
                         secuence.add(car);
                         TextView tv = new TextView(WordGameActivity.this);
+                        tv.setTextColor(textColorSecondary);
                         tv.setText(car);
                         tv.setTextSize(wordSize);
                         tv.setPadding(5,5,10,5);

@@ -81,12 +81,14 @@ public class AccountActivity extends AppCompatActivity {
         String diff;
         String score;
         String date;
+        boolean allBold = false;
 
         private HighScore(String gamemode, String diff, String score, String date){
             this.gamemode = gamemode;
             this.diff = diff;
             this.score = score;
             this.date = date;
+            allBold = true;
         }
 
         private HighScore(String gamemode, String diff, float score, Date date){
@@ -97,24 +99,40 @@ public class AccountActivity extends AppCompatActivity {
         }
     }
 
-    private class RecyclerViewHolders extends RecyclerView.ViewHolder {
-
+    private static class RecyclerViewHolders extends RecyclerView.ViewHolder {
         TextView tvGamemode;
         TextView tvDifficulty;
         TextView tvScore;
         TextView tvDate;
 
-        RecyclerViewHolders(View itemView) {
+        RecyclerViewHolders(View itemView, int textColor, boolean allBold) {
             super(itemView);
 
             tvGamemode = itemView.findViewById(R.id.tvGamemode);
             tvDifficulty = itemView.findViewById(R.id.tvDifficulty);
             tvScore = itemView.findViewById(R.id.tvScore);
             tvDate = itemView.findViewById(R.id.tvDate);
+
+            tvGamemode.setTextColor(textColor);
+            tvDifficulty.setTextColor(textColor);
+            tvScore.setTextColor(textColor);
+            tvDate.setTextColor(textColor);
+
+            if (allBold){
+                boldAll();
+            }
         }
 
         void boldAll(){
             Typeface boldTypeface = Typeface.defaultFromStyle(Typeface.BOLD);
+            tvGamemode.setTypeface(boldTypeface);
+            tvDifficulty.setTypeface(boldTypeface);
+            tvScore.setTypeface(boldTypeface);
+            tvDate.setTypeface(boldTypeface);
+        }
+
+        void unboldAll(){
+            Typeface boldTypeface = Typeface.defaultFromStyle(Typeface.NORMAL);
             tvGamemode.setTypeface(boldTypeface);
             tvDifficulty.setTypeface(boldTypeface);
             tvScore.setTypeface(boldTypeface);
@@ -125,8 +143,9 @@ public class AccountActivity extends AppCompatActivity {
     private class RVHighScoresAdapter extends RecyclerView.Adapter<RecyclerViewHolders>{
 
         List<HighScore> highScores;
+        int textColor;
 
-        RVHighScoresAdapter(List<HighScore> highScores){
+        RVHighScoresAdapter(List<HighScore> highScores, int textColor){
             this.highScores = highScores;
             Resources res = AccountActivity.this.getResources();
             String gamemode = res.getString(R.string.account_highscores_title_gamemode);
@@ -134,13 +153,14 @@ public class AccountActivity extends AppCompatActivity {
             String score = res.getString(R.string.account_highscores_title_score);
             String date = res.getString(R.string.account_highscores_title_date);
             this.highScores.add(0, new HighScore(gamemode, difficulty, score, date));
+            this.textColor = textColor;
         }
 
         @NonNull
         @Override
         public RecyclerViewHolders onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
             View layoutView = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.item_highscore, viewGroup, false);
-            return new RecyclerViewHolders(layoutView);
+            return new RecyclerViewHolders(layoutView, textColor, false);
         }
 
         @Override
@@ -152,6 +172,8 @@ public class AccountActivity extends AppCompatActivity {
             holder.tvDate.setText(hs.date);
             if (position==0){
                 holder.boldAll();
+            }else{
+                holder.unboldAll();
             }
         }
 
@@ -221,7 +243,7 @@ public class AccountActivity extends AppCompatActivity {
                 tvOutput.setText(R.string.account_highscores_error_empty);
             } else {
                 tvOutput.setText("");
-                rvHighScores.setAdapter(new RVHighScoresAdapter(list));
+                rvHighScores.setAdapter(new RVHighScoresAdapter(list, textColor));
                 rvHighScores.setLayoutManager(new LinearLayoutManager(AccountActivity.this));
             }
         }

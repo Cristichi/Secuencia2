@@ -49,16 +49,13 @@ import java.util.concurrent.TimeUnit;
 
 public class ScoreActivity extends AppCompatActivity {
 
-    private TextView tvTitle;
     private TextView tvGamemode;
     private TextView tvDifficulty;
     private TextView tvScore;
 
     private Button btnBack;
-    private Button btnScreenshot;
 
     private double score;
-    private boolean highScore;
     private CharSequence date;
     private static final String DATE_FORMAT = "yyyy/MM/dd HH:mm";
 
@@ -70,58 +67,15 @@ public class ScoreActivity extends AppCompatActivity {
         Date now = new Date();
         date = android.text.format.DateFormat.format(DATE_FORMAT, now);
 
-        tvTitle = findViewById(R.id.tvTitle);
-        final TextView tvDate = findViewById(R.id.tvDate);
         tvGamemode = findViewById(R.id.tvGamemode);
         tvDifficulty = findViewById(R.id.tvDifficulty);
         tvScore = findViewById(R.id.tvScore);
         btnBack = findViewById(R.id.btnBack);
-        btnScreenshot = findViewById(R.id.btnScreenshot);
 
         btnBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 ScoreActivity.this.onBackPressed();
-            }
-        });
-
-        btnScreenshot.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                final Dialog dialog = new Dialog(ScoreActivity.this);
-                dialog.setContentView(R.layout.screenshot_ask);
-                dialog.setTitle(R.string.screenshot_ask_title);
-
-                final EditText etName = dialog.findViewById(R.id.etYourName);
-                final Switch switchDate = dialog.findViewById(R.id.switchIncludeDate);
-
-                Button dialogButton = dialog.findViewById(R.id.btnOk);
-                dialogButton.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        dialog.dismiss();
-                    }
-                });
-
-                dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
-                    @Override
-                    public void onDismiss(DialogInterface dialog) {
-                        btnBack.setVisibility(View.INVISIBLE);
-                        btnScreenshot.setVisibility(View.INVISIBLE);
-                        if (switchDate.isChecked()){
-                            tvDate.setText(date);
-                        }
-                        String title = tvTitle.getText().toString();
-                        String name = etName.getText().toString().trim();
-                        tvTitle.setText(name);
-                        takeScreenshot();
-                        tvTitle.setText(title);
-                        tvDate.setText("");
-                        btnBack.setVisibility(View.VISIBLE);
-                        btnScreenshot.setVisibility(View.VISIBLE);
-                    }
-                });
-                dialog.show();
             }
         });
 
@@ -143,76 +97,18 @@ public class ScoreActivity extends AppCompatActivity {
                     IsHighScore task = new IsHighScore(score, user.email, mode, diff);
                     task.execute();
                     if (task.get(2, TimeUnit.SECONDS)){
-                        highScore = true;
                         TextView tvHS = findViewById(R.id.tvHighScore);
                         tvHS.setVisibility(View.VISIBLE);
                         SaveScoreMYSQL taskSave = new SaveScoreMYSQL(score, user.email, mode, diff, date.toString());
                         taskSave.execute();
-                    }else{
-                        highScore = false;
                     }
-                }catch (Exception e){}
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
             }
         }catch (NullPointerException e){
-        }
-    }
-
-    private void takeScreenshot() {
-        Date now = new Date();
-        CharSequence date = android.text.format.DateFormat.format("yyyy-MM-dd hh.mm.ss", now);
-
-        if (ContextCompat.checkSelfPermission(this,
-                Manifest.permission.READ_CONTACTS)
-                != PackageManager.PERMISSION_GRANTED) {
-
-            if (ActivityCompat.shouldShowRequestPermissionRationale(this,
-                    Manifest.permission.READ_CONTACTS)) {
-            } else {
-                ActivityCompat.requestPermissions(this,
-                        new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
-                         1);
-            }
-        }
-        /* */
-        try {
-            //String mPath = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES).toString() + "/" + now + ".jpg";
-            String mPath = Environment.getExternalStorageDirectory().toString() + "/screenshot (" + date + ").jpg";
-
-            View v1 = getWindow().getDecorView().getRootView();
-            v1.setDrawingCacheEnabled(true);
-            Bitmap bitmap = Bitmap.createBitmap(v1.getDrawingCache());
-            v1.setDrawingCacheEnabled(false);
-
-            File imageFile = new File(mPath);
-
-            FileOutputStream outputStream = new FileOutputStream(imageFile);
-            int quality = 100;
-            bitmap.compress(Bitmap.CompressFormat.JPEG, quality, outputStream);
-            outputStream.flush();
-            outputStream.close();
-
-            MediaStore.Images.Media.insertImage(getContentResolver(), bitmap, "image title", "image desc");
-
-            openScreenshot(imageFile);
-        } catch (Throwable e) {
             e.printStackTrace();
-            new AlertDialog.Builder(this)
-                    .setCancelable(true)
-                    .setTitle(R.string.screenshot_ask_error_title)
-                    .setMessage(getString(R.string.screenshot_ask_error_msg)+"\n"+e.getMessage())
-                    .show();
         }
-    }
-
-    private void openScreenshot(File imageFile) {
-        /* */
-        Intent intent = new Intent();
-        intent.setAction(Intent.ACTION_VIEW);
-        intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-        Uri photoURI = FileProvider.getUriForFile(this, "com.iesmurgi.cristichi", imageFile);
-        intent.setDataAndType(photoURI, "image/*");
-        startActivity(intent);
-        /* */
     }
 
     private static class SaveScoreMYSQL extends AsyncTask<Void, Void, Void> {

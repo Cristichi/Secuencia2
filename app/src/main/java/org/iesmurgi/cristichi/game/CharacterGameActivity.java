@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.os.Bundle;
+import android.support.v4.content.res.ResourcesCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.DisplayMetrics;
@@ -34,6 +35,8 @@ public class CharacterGameActivity extends AppCompatActivity {
     private int btnSize;
     private float charSize;
     private float charSizeTarget;
+    private int textColorPrimary;
+    private int textColorSecondary;
 
     private CharacterStylePack sp;
     private Difficulty diff;
@@ -49,6 +52,9 @@ public class CharacterGameActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
+
+        textColorPrimary =  ResourcesCompat.getColor(getResources(), R.color.primaryTextColor, getTheme());
+        textColorSecondary =  ResourcesCompat.getColor(getResources(), R.color.secondaryTextColor, getTheme());
 
         Display display = getWindowManager().getDefaultDisplay();
         DisplayMetrics outMetrics = new DisplayMetrics();
@@ -86,6 +92,7 @@ public class CharacterGameActivity extends AppCompatActivity {
                 }else{
                     tv.setTextSize(charSize);
                 }
+                tv.setTextColor(textColorSecondary);
                 tv.setText(car.toString());
                 tv.setPadding(5,5,5,5);
                 llSerialView.addView(tv);
@@ -171,6 +178,7 @@ public class CharacterGameActivity extends AppCompatActivity {
                         TextView tv = new TextView(CharacterGameActivity.this);
                         tv.setPadding(5,5,5,5);
                         tv.setTextSize(charSize);
+                        tv.setTextColor(textColorSecondary);
                         tv.setText(car.toString());
                         llSerialView.addView(tv);
                         scrollView.fullScroll(View.FOCUS_UP);

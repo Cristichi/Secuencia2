@@ -17,10 +17,17 @@ public enum ImageStylePack implements StylePack<Integer> {
     CATS(R.string.isp_cats_name, R.drawable.icon_isp_cats,
             R.drawable.isp_cats_1, R.drawable.isp_cats_2,
             R.drawable.isp_cats_3, R.drawable.isp_cats_4),
+
     FORMS(R.string.isp_forms_name, R.drawable.icon_isp_forms,
             R.drawable.isp_form_circle, R.drawable.isp_form_line_horizontal,
             R.drawable.isp_form_line_vertical, R.drawable.isp_form_square,
-            R.drawable.isp_form_star, R.drawable.isp_form_triangle)
+            R.drawable.isp_form_star, R.drawable.isp_form_triangle),
+
+    COLORS(R.string.isp_colors_name, R.drawable.icon_isp_colors,
+            R.drawable.isp_color_blue, R.drawable.isp_color_aqua,
+            R.drawable.isp_color_green, R.drawable.isp_color_orange,
+            R.drawable.isp_color_purple, R.drawable.isp_color_red,
+            R.drawable.isp_color_yellow)
     ;
     @StringRes
     protected int name;
@@ -30,7 +37,6 @@ public enum ImageStylePack implements StylePack<Integer> {
     protected int[] values;
 
     protected Random rng;
-
 
     ImageStylePack(int name, @DrawableRes int icon, @DrawableRes int... values){
         this.name = name;

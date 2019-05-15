@@ -13,8 +13,9 @@ import org.iesmurgi.cristichi.storage.StorageHelper;
 public class MainActivity extends AppCompatActivity {
 
     private Button btnPlay;
-    private Button btnOptions;
     private Button btnAccount;
+    private Button btnHighscores;
+    private Button btnOptions;
 
     private ImageView ivNewPoint;
 
@@ -35,16 +36,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        btnOptions = findViewById(R.id.btnOptions);
-        btnOptions.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intento = new Intent(MainActivity.this, SettingsActivity.class);
-                startActivity(intento);
-                //finish();
-            }
-        });
-
         btnAccount = findViewById(R.id.btnAccount);
         btnAccount.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -56,6 +47,25 @@ public class MainActivity extends AppCompatActivity {
                     Intent intento = new Intent(MainActivity.this, LoginActivity.class);
                     startActivity(intento);
                 }
+            }
+        });
+
+        btnHighscores = findViewById(R.id.btnHighScores);
+        btnHighscores.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intento = new Intent(MainActivity.this, HighscoresActivity.class);
+                startActivity(intento);
+            }
+        });
+
+        btnOptions = findViewById(R.id.btnOptions);
+        btnOptions.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intento = new Intent(MainActivity.this, SettingsActivity.class);
+                startActivity(intento);
+                //finish();
             }
         });
 

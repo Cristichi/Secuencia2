@@ -12,45 +12,38 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-
-        <activity android:name=".RegisterActivity"
+        <activity android:name=".HighscoresActivity"></activity>
+        <activity
+            android:name=".RegisterActivity"
             android:label="@string/register_title"
             android:theme="@style/AppTheme.WithBar" />
-
         <activity
             android:name=".AccountActivity"
             android:label="@string/account_title"
             android:theme="@style/AppTheme.WithBar" />
-
         <activity
             android:name=".LoginActivity"
             android:label="@string/login_title"
             android:theme="@style/AppTheme.WithBar" />
-
         <activity android:name=".ScoreActivity" />
         <activity
             android:name=".game.WordGameActivity"
             android:configChanges="orientation|keyboardHidden" />
-
         <activity
             android:name=".game.ImageGameActivity"
             android:configChanges="orientation|keyboardHidden" />
-
         <activity
             android:name=".game.CharacterGameActivity"
             android:configChanges="orientation|keyboardHidden" />
-
         <activity
             android:name=".TabbedMenuActivity"
             android:configChanges="orientation|keyboardHidden"
             android:label="@string/choose_gamemode" />
-
         <activity
             android:name=".SettingsActivity"
             android:configChanges="orientation|keyboardHidden"
             android:label="@string/settings"
             android:theme="@style/AppTheme.WithBar" />
-
         <activity
             android:name=".MainActivity"
             android:configChanges="orientation|keyboardHidden">

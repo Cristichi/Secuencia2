@@ -32,7 +32,7 @@
         android:hint="@string/login_email"
         android:inputType="textEmailAddress"
         android:textAppearance="@android:style/TextAppearance.Material.Medium"
-        android:textColor="@color/isp_forms_tint"
+        android:textColor="@color/primaryTextColor"
         app:layout_constraintBottom_toTopOf="@+id/etPassword"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"

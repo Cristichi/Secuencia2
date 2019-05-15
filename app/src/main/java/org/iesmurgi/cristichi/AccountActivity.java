@@ -1,7 +1,6 @@
 package org.iesmurgi.cristichi;
 
 import android.content.res.Resources;
-import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.AsyncTask;
 import android.support.annotation.NonNull;
@@ -10,15 +9,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import org.iesmurgi.cristichi.ddbb.DDBBConstraints;
 import org.iesmurgi.cristichi.ddbb.Session;
@@ -59,7 +54,7 @@ public class AccountActivity extends AppCompatActivity {
 
         btnLogout = findViewById(R.id.btnLogout);
 
-        rvHighScores = findViewById(R.id.recyclerViewHighScores);
+        rvHighScores = findViewById(R.id.rvAccountHighScores);
 
         tvNick.setText(user.nick);
         tvEmail.setText(user.email);
@@ -159,7 +154,7 @@ public class AccountActivity extends AppCompatActivity {
         @NonNull
         @Override
         public RecyclerViewHolders onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
-            View layoutView = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.item_highscore, viewGroup, false);
+            View layoutView = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.item_account_highscore, viewGroup, false);
             return new RecyclerViewHolders(layoutView, textColor, false);
         }
 

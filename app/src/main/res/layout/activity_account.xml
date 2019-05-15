@@ -65,7 +65,7 @@
         app:layout_constraintEnd_toEndOf="parent" />
 
     <android.support.v7.widget.RecyclerView
-        android:id="@+id/recyclerViewHighScores"
+        android:id="@+id/rvAccountHighScores"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginStart="8dp"
@@ -87,6 +87,6 @@
         android:textColor="@color/secondaryTextColor"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/recyclerViewHighScores" />
+        app:layout_constraintTop_toTopOf="@+id/rvAccountHighScores" />
 
 </android.support.constraint.ConstraintLayout>

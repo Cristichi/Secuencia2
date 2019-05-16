@@ -18,7 +18,7 @@ import android.widget.TextView;
 import org.iesmurgi.cristichi.ddbb.DDBBConstraints;
 import org.iesmurgi.cristichi.ddbb.Session;
 import org.iesmurgi.cristichi.ddbb.User;
-import org.iesmurgi.cristichi.storage.StorageHelper;
+import org.iesmurgi.cristichi.ddbb.LocalStorage;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -28,7 +28,6 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.Locale;
 
 public class AccountActivity extends AppCompatActivity {
 
@@ -62,7 +61,7 @@ public class AccountActivity extends AppCompatActivity {
         btnLogout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (StorageHelper.logout(AccountActivity.this))
+                if (LocalStorage.logout(AccountActivity.this))
                     finish();
             }
         });
@@ -86,10 +85,11 @@ public class AccountActivity extends AppCompatActivity {
             allBold = true;
         }
 
-        private HighScore(String gamemode, String diff, float score, Date date){
+        private HighScore(String gamemode, String diff, int score, Date date){
             this.gamemode = gamemode;
             this.diff = diff;
-            this.score = String.format(Locale.getDefault(), "%.3f", score);
+            //this.score = String.format(Locale.getDefault(), "%.3f", score);
+            this.score = score+"";
             this.date = android.text.format.DateFormat.format("dd/MM/yyyy", date).toString();
         }
     }
@@ -211,7 +211,7 @@ public class AccountActivity extends AppCompatActivity {
                 while (rs.next()) {
                     String gamemode = rs.getString(1);
                     String difficulty = rs.getString(2);
-                    float score = rs.getFloat(3);
+                    int score = rs.getInt(3);
                     Date scoredate = rs.getDate(4);
                     sol.add(new HighScore(gamemode, difficulty, score, scoredate));
                 }

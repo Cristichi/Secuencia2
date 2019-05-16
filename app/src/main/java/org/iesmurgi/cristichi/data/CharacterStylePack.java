@@ -1,11 +1,10 @@
-package org.iesmurgi.cristichi.stylePacks;
+package org.iesmurgi.cristichi.data;
 
 import android.content.Context;
 import android.support.annotation.DrawableRes;
 import android.support.annotation.StringRes;
 import android.widget.Button;
 
-import org.iesmurgi.cristichi.Difficulty;
 import org.iesmurgi.cristichi.R;
 
 import java.util.ArrayList;
@@ -88,10 +87,10 @@ public enum CharacterStylePack implements StylePack<Character> {
     public ArrayList<Button> getButtons(Context context) {
         ArrayList<Button> sol = new ArrayList<>(values.length);
 
-        for (int i = 0; i < values.length; i++) {
+        for (char car : values) {
             Button uno = new Button(context);
-            uno.setText(Character.toString(values[i]));
-            uno.setTag(values[i]);
+            uno.setText(Character.toString(car));
+            uno.setTag(car);
             sol.add(uno);
         }
         Collections.shuffle(sol);
@@ -106,11 +105,6 @@ public enum CharacterStylePack implements StylePack<Character> {
     @Override @StringRes
     public int getName() {
         return name;
-    }
-
-    @Override
-    public void setIcon(@DrawableRes int icon) {
-        this.icon = icon;
     }
 
     @Override

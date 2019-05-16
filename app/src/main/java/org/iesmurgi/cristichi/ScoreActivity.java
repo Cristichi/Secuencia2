@@ -55,7 +55,7 @@ public class ScoreActivity extends AppCompatActivity {
 
     private Button btnBack;
 
-    private double score;
+    private int score;
     private CharSequence date;
     private static final String DATE_FORMAT = "yyyy/MM/dd HH:mm";
 
@@ -81,11 +81,12 @@ public class ScoreActivity extends AppCompatActivity {
 
         try {
             Bundle extras = getIntent().getExtras();
-            score = extras.getDouble("score", 0);
+            score = extras.getInt("score", 0);
             int gamemode = extras.getInt("gamemode");
             int difficulty = extras.getInt("difficulty");
 
-            tvScore.setText(String.format(Locale.getDefault(), "%.3f", score));
+            //tvScore.setText(String.format(Locale.getDefault(), "%.3f", score));
+            tvScore.setText(score+"");
             tvGamemode.setText(gamemode);
             tvDifficulty.setText(difficulty);
 

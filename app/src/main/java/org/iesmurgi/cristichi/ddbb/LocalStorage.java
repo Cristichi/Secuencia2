@@ -1,8 +1,9 @@
-package org.iesmurgi.cristichi.storage;
+package org.iesmurgi.cristichi.ddbb;
 
 import android.content.Context;
 
 import org.iesmurgi.cristichi.LoginActivity;
+import org.iesmurgi.cristichi.ddbb.ReturnLogin;
 import org.iesmurgi.cristichi.ddbb.Session;
 import org.iesmurgi.cristichi.ddbb.User;
 
@@ -12,8 +13,9 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.concurrent.TimeUnit;
 
-public class StorageHelper {
+public class LocalStorage {
 
     private static final String FILE = "loggeduser.bin";
 
@@ -47,12 +49,8 @@ public class StorageHelper {
             String pass = br.readLine();
             LoginActivity.LoginTask loginTask = new LoginActivity.LoginTask(context, email, pass);
             loginTask.execute();
-            try {
-                loginTask.get();
-            }catch (Exception e){
-                e.printStackTrace();
-            }
-        }catch (IOException e){
+            loginTask.get();
+        }catch (Exception e){
             e.printStackTrace();
         }
     }

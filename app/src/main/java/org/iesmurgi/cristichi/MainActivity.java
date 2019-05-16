@@ -8,7 +8,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 
 import org.iesmurgi.cristichi.ddbb.Session;
-import org.iesmurgi.cristichi.storage.StorageHelper;
+import org.iesmurgi.cristichi.ddbb.LocalStorage;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -19,12 +19,12 @@ public class MainActivity extends AppCompatActivity {
 
     private ImageView ivNewPoint;
 
+    private boolean firstStart;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        StorageHelper.tryLoginFromFile(MainActivity.this);
 
         btnPlay = findViewById(R.id.btnPlay);
         btnPlay.setOnClickListener(new View.OnClickListener() {
@@ -70,19 +70,25 @@ public class MainActivity extends AppCompatActivity {
         });
 
         ivNewPoint = findViewById(R.id.ivNew);
+
+        firstStart = true;
     }
 
     @Override
     protected void onStart() {
         super.onStart();
-        if (Session.isLogged()){
-            //String str = getString(R.string.account) + " " + Session.getUser().nick;
-            String str = Session.getUser().nick;
-            btnAccount.setText(str);
-            ivNewPoint.setVisibility(View.INVISIBLE);
-        }else{
-            btnAccount.setText(R.string.login);
-            ivNewPoint.setVisibility(View.VISIBLE);
+        if (firstStart){
+            firstStart = false;
+            LocalStorage.tryLoginFromFile(MainActivity.this);
+            if (Session.isLogged()){
+                //String str = getString(R.string.account) + " " + Session.getUser().nick;
+                String str = Session.getUser().nick;
+                btnAccount.setText(str);
+                ivNewPoint.setVisibility(View.INVISIBLE);
+            }else{
+                btnAccount.setText(R.string.login);
+                ivNewPoint.setVisibility(View.VISIBLE);
+            }
         }
     }
 }

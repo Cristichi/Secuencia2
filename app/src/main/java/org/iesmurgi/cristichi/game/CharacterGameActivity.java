@@ -3,7 +3,6 @@ package org.iesmurgi.cristichi.game;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Configuration;
-import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.v4.content.res.ResourcesCompat;
 import android.support.v7.app.AlertDialog;
@@ -21,11 +20,10 @@ import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
 
-import org.iesmurgi.cristichi.Difficulty;
+import org.iesmurgi.cristichi.data.Difficulty;
 import org.iesmurgi.cristichi.R;
 import org.iesmurgi.cristichi.ScoreActivity;
-import org.iesmurgi.cristichi.stylePacks.CharacterStylePack;
-import org.w3c.dom.Text;
+import org.iesmurgi.cristichi.data.CharacterStylePack;
 
 import java.util.List;
 
@@ -163,7 +161,8 @@ public class CharacterGameActivity extends AppCompatActivity {
                         if (secuence.isEmpty()){
                             fin = System.currentTimeMillis();
                             double segundos = (fin-inicio)/1000;
-                            double score = secuenceInicial/segundos;
+                            double prescore = secuenceInicial/segundos*1000;
+                            int score = (int) prescore;
                             Intent intento = new Intent(CharacterGameActivity.this, ScoreActivity.class);
                             intento.putExtra("score", score);
                             intento.putExtra("difficulty", diff.getName());

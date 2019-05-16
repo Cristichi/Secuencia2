@@ -1,11 +1,8 @@
 package org.iesmurgi.cristichi.ddbb;
 
 import android.content.Context;
-import android.os.AsyncTask;
-import android.util.Log;
 
 import org.iesmurgi.cristichi.R;
-import org.iesmurgi.cristichi.storage.StorageHelper;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -46,7 +43,7 @@ public class Session {
                 String nickread = rs.getString(1);
                 String emailread = rs.getString(2);
                 sol.user = new User(nickread, emailread);
-                StorageHelper.saveUser(ctxt, sol.user, pass);
+                LocalStorage.saveUser(ctxt, sol.user, pass);
                 logged = true;
                 Session.user = sol.user;
             }else{
@@ -95,5 +92,11 @@ public class Session {
             e.printStackTrace();
         }
         return "";
+    }
+}
+
+class ServerException extends RuntimeException{
+    public ServerException(String msg) {
+        super(msg);
     }
 }

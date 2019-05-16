@@ -22,10 +22,10 @@ import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
 
-import org.iesmurgi.cristichi.Difficulty;
+import org.iesmurgi.cristichi.data.Difficulty;
 import org.iesmurgi.cristichi.R;
 import org.iesmurgi.cristichi.ScoreActivity;
-import org.iesmurgi.cristichi.stylePacks.WordStylePack;
+import org.iesmurgi.cristichi.data.WordStylePack;
 
 import java.util.List;
 
@@ -171,7 +171,8 @@ public class WordGameActivity extends AppCompatActivity {
                         if (secuence.isEmpty()){
                             fin = System.currentTimeMillis();
                             double segundos = (fin-inicio)/1000;
-                            double score = secuenceInicial/segundos;
+                            double prescore = secuenceInicial/segundos*1000;
+                            int score = (int) prescore;
                             Intent intento = new Intent(WordGameActivity.this, ScoreActivity.class);
                             intento.putExtra("score", score);
                             intento.putExtra("difficulty", diff.getName());

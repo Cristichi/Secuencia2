@@ -9,9 +9,9 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 
-import org.iesmurgi.cristichi.stylePacks.CharacterStylePack;
-import org.iesmurgi.cristichi.stylePacks.ImageStylePack;
-import org.iesmurgi.cristichi.stylePacks.WordStylePack;
+import org.iesmurgi.cristichi.data.CharacterStylePack;
+import org.iesmurgi.cristichi.data.ImageStylePack;
+import org.iesmurgi.cristichi.data.WordStylePack;
 
 import java.util.ArrayList;
 import java.util.List;

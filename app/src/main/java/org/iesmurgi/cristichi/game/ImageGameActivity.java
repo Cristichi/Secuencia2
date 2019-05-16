@@ -3,8 +3,6 @@ package org.iesmurgi.cristichi.game;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Configuration;
-import android.content.res.Resources;
-import android.media.Image;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -22,10 +20,10 @@ import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
 
-import org.iesmurgi.cristichi.Difficulty;
+import org.iesmurgi.cristichi.data.Difficulty;
 import org.iesmurgi.cristichi.R;
 import org.iesmurgi.cristichi.ScoreActivity;
-import org.iesmurgi.cristichi.stylePacks.ImageStylePack;
+import org.iesmurgi.cristichi.data.ImageStylePack;
 
 import java.util.List;
 
@@ -153,7 +151,8 @@ public class ImageGameActivity extends AppCompatActivity {
                         if (secuence.isEmpty()){
                             fin = System.currentTimeMillis();
                             double segundos = (fin-inicio)/1000;
-                            double score = secuenceInicial/segundos;
+                            double prescore = secuenceInicial/segundos*1000;
+                            int score = (int) prescore;
                             Intent intento = new Intent(ImageGameActivity.this, ScoreActivity.class);
                             intento.putExtra("score", score);
                             intento.putExtra("difficulty", diff.getName());

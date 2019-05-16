@@ -1,7 +1,5 @@
 package org.iesmurgi.cristichi;
 
-import android.content.res.Resources;
-import android.graphics.Typeface;
 import android.os.AsyncTask;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -14,19 +12,18 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import org.iesmurgi.cristichi.data.Difficulty;
 import org.iesmurgi.cristichi.ddbb.DDBBConstraints;
 import org.iesmurgi.cristichi.ddbb.Session;
 import org.iesmurgi.cristichi.ddbb.User;
-import org.iesmurgi.cristichi.game.CharacterGameActivity;
-import org.iesmurgi.cristichi.stylePacks.CharacterStylePack;
-import org.iesmurgi.cristichi.stylePacks.ImageStylePack;
-import org.iesmurgi.cristichi.stylePacks.StylePack;
-import org.iesmurgi.cristichi.stylePacks.WordStylePack;
+import org.iesmurgi.cristichi.data.CharacterStylePack;
+import org.iesmurgi.cristichi.data.ImageStylePack;
+import org.iesmurgi.cristichi.data.StylePack;
+import org.iesmurgi.cristichi.data.WordStylePack;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -36,7 +33,6 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.Locale;
 
 public class HighscoresActivity extends AppCompatActivity {
 
@@ -106,11 +102,12 @@ public class HighscoresActivity extends AppCompatActivity {
         String score;
         String date;
 
-        private HighScore(String user, String gamemode, String diff, float score, Date date){
+        private HighScore(String user, String gamemode, String diff, int score, Date date){
             this.user = user;
             this.gamemode = gamemode;
             this.diff = diff;
-            this.score = String.format(Locale.getDefault(), "%.3f", score);
+            //this.score = String.format(Locale.getDefault(), "%.3f", score);
+            this.score = score+"";
             this.date = android.text.format.DateFormat.format("dd/MM/yyyy", date).toString();
         }
     }
@@ -235,7 +232,7 @@ public class HighscoresActivity extends AppCompatActivity {
                     String nickname = rs.getString(1);
                     String gamemode = rs.getString(2);
                     String difficulty = rs.getString(3);
-                    float score = rs.getFloat(4);
+                    int score = rs.getInt(4);
                     Date scoredate = rs.getDate(5);
                     sol.add(new HighScore(nickname, gamemode, difficulty, score, scoredate));
                 }

@@ -1,5 +1,7 @@
 package org.iesmurgi.cristichi;
 
+import android.app.Activity;
+import android.content.Context;
 import android.os.AsyncTask;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -68,9 +70,7 @@ public class HighscoresActivity extends AppCompatActivity {
         for (StylePack csp : sps){
             stylePacksNames.add(getString(csp.getName()));
         }
-        spnGamemode.setAdapter(new ArrayAdapter<>
-                (this, android.R.layout.simple_spinner_item,
-                        stylePacksNames));
+        spnGamemode.setAdapter(new SpinnerStringAdapter(this, stylePacksNames));
 
         ArrayList<String> diffNames = new ArrayList<>();
         diffNames.add(getString(R.string.highscores_filter_all));
@@ -78,9 +78,7 @@ public class HighscoresActivity extends AppCompatActivity {
         for (Difficulty diff : diffs){
             diffNames.add(getString(diff.getName()));
         }
-        spnDifficulty.setAdapter(new ArrayAdapter<>
-                (this, android.R.layout.simple_spinner_item,
-                        diffNames));
+        spnDifficulty.setAdapter(new SpinnerStringAdapter(this, diffNames));
 
         btnFilter.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -140,10 +138,6 @@ public class HighscoresActivity extends AppCompatActivity {
 
         List<HighScore> highScores;
         int textColor;
-
-        RVHighScoresAdapter(){
-
-        }
 
         RVHighScoresAdapter(List<HighScore> highScores, int textColor){
             this.highScores = highScores;
@@ -247,12 +241,6 @@ public class HighscoresActivity extends AppCompatActivity {
                     e.printStackTrace();
                 }
             }
-            String a =
-                    "SELECT Nickname, Gamemode, Difficulty, Score, ScoreDate from HighScores, Users " +
-                            "where UserEmail='"+user.email+"' and Users.Email=HighScores.UserEmail " +
-                            (gamemode!=null?"and Gamemode='"+gamemode+"' ":"") +
-                            (difficulty!=null?"and Difficulty='"+difficulty+"' ":"") +
-                            "order by Score desc limit 20";
             return sol;
         }
 
@@ -263,7 +251,7 @@ public class HighscoresActivity extends AppCompatActivity {
             if (exception){
                 tvOutput.setText(R.string.error_net);
             } else if (list.isEmpty()){
-                tvOutput.setText(R.string.account_highscores_error_empty);
+                tvOutput.setText(R.string.highscores_error_empty);
             } else {
                 tvOutput.setText("");
                 if (rvAdapter==null)
@@ -275,5 +263,50 @@ public class HighscoresActivity extends AppCompatActivity {
                 rvHighscores.setLayoutManager(new LinearLayoutManager(HighscoresActivity.this));
             }
         }
+    }
+}
+
+class SpinnerStringAdapter extends ArrayAdapter<String> {
+
+    public SpinnerStringAdapter(Activity context, List<String> list){
+        super(context, android.R.layout.simple_spinner_item, list);
+    }
+
+    /* *
+    @Override
+    public View getView(int position, View convertView, ViewGroup parent) {
+        return rowview(convertView,position);
+    }
+    /* */
+
+    @Override
+    public View getDropDownView(int position, View convertView, ViewGroup parent) {
+        return rowview(position, convertView, parent);
+    }
+
+    private View rowview(int position, View convertView, ViewGroup parent){
+
+        String rowItem = getItem(position);
+
+        viewHolder holder ;
+        View rowview = convertView;
+        if (rowview==null) {
+
+            holder = new viewHolder();
+            LayoutInflater flater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            rowview = flater.inflate(R.layout.item_text_spinner, parent, false);
+
+            holder.tvText = rowview.findViewById(R.id.tvText);
+            rowview.setTag(holder);
+        }else{
+            holder = (viewHolder) rowview.getTag();
+        }
+        holder.tvText.setText(rowItem);
+
+        return rowview;
+    }
+
+    private class viewHolder{
+        TextView tvText;
     }
 }

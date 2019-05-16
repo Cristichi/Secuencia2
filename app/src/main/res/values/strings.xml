@@ -53,6 +53,7 @@
     <string name="highscores_title_difficulty">Difficulty</string>
     <string name="highscores_title_score">Score</string>
     <string name="highscores_title_date">Date</string>
+    <string name="highscores_error_empty">No scores were found</string>
 
     <string name="screenshot_ask_title">Take Screenshot</string>
     <string name="screenshot_ask_your_name">Your Name</string>

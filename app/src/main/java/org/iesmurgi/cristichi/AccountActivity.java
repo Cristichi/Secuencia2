@@ -100,7 +100,7 @@ public class AccountActivity extends AppCompatActivity {
         TextView tvScore;
         TextView tvDate;
 
-        RecyclerViewHolders(View itemView, int textColor, boolean allBold) {
+        RecyclerViewHolders(View itemView, int textColor) {
             super(itemView);
 
             tvGamemode = itemView.findViewById(R.id.tvGamemode);
@@ -112,26 +112,6 @@ public class AccountActivity extends AppCompatActivity {
             tvDifficulty.setTextColor(textColor);
             tvScore.setTextColor(textColor);
             tvDate.setTextColor(textColor);
-
-            if (allBold){
-                boldAll();
-            }
-        }
-
-        void boldAll(){
-            Typeface boldTypeface = Typeface.defaultFromStyle(Typeface.BOLD);
-            tvGamemode.setTypeface(boldTypeface);
-            tvDifficulty.setTypeface(boldTypeface);
-            tvScore.setTypeface(boldTypeface);
-            tvDate.setTypeface(boldTypeface);
-        }
-
-        void unboldAll(){
-            Typeface boldTypeface = Typeface.defaultFromStyle(Typeface.NORMAL);
-            tvGamemode.setTypeface(boldTypeface);
-            tvDifficulty.setTypeface(boldTypeface);
-            tvScore.setTypeface(boldTypeface);
-            tvDate.setTypeface(boldTypeface);
         }
     }
 
@@ -142,12 +122,6 @@ public class AccountActivity extends AppCompatActivity {
 
         RVHighScoresAdapter(List<HighScore> highScores, int textColor){
             this.highScores = highScores;
-            Resources res = AccountActivity.this.getResources();
-            String gamemode = res.getString(R.string.account_highscores_title_gamemode);
-            String difficulty = res.getString(R.string.account_highscores_title_difficulty);
-            String score = res.getString(R.string.account_highscores_title_score);
-            String date = res.getString(R.string.account_highscores_title_date);
-            this.highScores.add(0, new HighScore(gamemode, difficulty, score, date));
             this.textColor = textColor;
         }
 
@@ -155,7 +129,7 @@ public class AccountActivity extends AppCompatActivity {
         @Override
         public RecyclerViewHolders onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
             View layoutView = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.item_account_highscore, viewGroup, false);
-            return new RecyclerViewHolders(layoutView, textColor, false);
+            return new RecyclerViewHolders(layoutView, textColor);
         }
 
         @Override
@@ -165,11 +139,6 @@ public class AccountActivity extends AppCompatActivity {
             holder.tvDifficulty.setText(hs.diff);
             holder.tvScore.setText(hs.score);
             holder.tvDate.setText(hs.date);
-            if (position==0){
-                holder.boldAll();
-            }else{
-                holder.unboldAll();
-            }
         }
 
         @Override

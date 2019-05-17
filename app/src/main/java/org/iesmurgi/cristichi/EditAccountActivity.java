@@ -182,7 +182,12 @@ public class EditAccountActivity extends AppCompatActivity {
         protected void onPostExecute(ReturnLogin sol) {
             super.onPostExecute(sol);
             dial.dismiss();
-            EditAccountActivity.this.finish();
+            if (sol.e!=null){
+                new AlertDialog.Builder(EditAccountActivity.this)
+                        .setMessage(sol.e.getMessage())
+                        .show();
+            }else
+                EditAccountActivity.this.finish();
         }
     }
 }

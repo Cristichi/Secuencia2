@@ -53,6 +53,7 @@
     <string name="account_update_old_password_repeat">Repeat current password</string>
     <string name="account_update_new_password">New password</string>
     <string name="account_update_new_password_repeat">Repeat new password</string>
+    <string name="account_update_new_password_no_changes">(without change)</string>
     <string name="account_update_error_email_exists">This email is already registered</string>
     <string name="account_update_error_nick_exists">This nickname is already registered</string>
     <string name="account_update_error_no_pass">Please, enter your password to edit your profile</string>

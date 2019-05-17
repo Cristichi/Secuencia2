@@ -14,15 +14,16 @@
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="8dp"
+        android:autofillHints="name"
         android:ems="10"
         android:hint="@string/register_nickname"
         android:inputType="textPersonName"
+        android:maxLength="25"
         app:layout_constraintBottom_toTopOf="@+id/btnCancel"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.19999999"
-        android:autofillHints="name" />
+        app:layout_constraintVertical_bias="0.19999999" />
 
     <EditText
         android:id="@+id/etEmail"
@@ -31,13 +32,14 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
+        android:autofillHints="email_address"
         android:ems="10"
         android:hint="@string/register_email"
         android:inputType="textEmailAddress"
+        android:maxLength="50"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/etNick"
-        android:autofillHints="email_address"/>
+        app:layout_constraintTop_toBottomOf="@+id/etNick" />
 
     <EditText
         android:id="@+id/etOldPass1"
@@ -46,13 +48,14 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
+        android:autofillHints="password"
         android:ems="10"
         android:hint="@string/register_password1"
         android:inputType="textPassword"
+        android:maxLength="70"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/etEmail"
-        android:autofillHints="password"/>
+        app:layout_constraintTop_toBottomOf="@+id/etEmail" />
 
     <EditText
         android:id="@+id/etOldPass2"
@@ -63,11 +66,12 @@
         android:layout_marginEnd="8dp"
         android:ems="10"
         android:hint="@string/register_password2"
+        android:importantForAutofill="no"
         android:inputType="textPassword"
+        android:maxLength="70"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/etOldPass1"
-        android:importantForAutofill="no"/>
+        app:layout_constraintTop_toBottomOf="@+id/etOldPass1" />
 
     <Button
         android:id="@+id/btnRegister"

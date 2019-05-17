@@ -1,5 +1,6 @@
 package org.iesmurgi.cristichi;
 
+import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Typeface;
 import android.os.AsyncTask;
@@ -13,6 +14,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import org.iesmurgi.cristichi.ddbb.DDBBConstraints;
@@ -35,6 +37,7 @@ public class AccountActivity extends AppCompatActivity {
     private TextView tvEmail;
 
     private Button btnLogout;
+    private ImageButton btnEdit;
 
     private RecyclerView rvHighScores;
 
@@ -46,17 +49,15 @@ public class AccountActivity extends AppCompatActivity {
             finish();
             return;
         }
-        User user = Session.getUser();
 
         tvNick = findViewById(R.id.tvNickname);
         tvEmail = findViewById(R.id.tvEmail);
 
         btnLogout = findViewById(R.id.btnLogout);
+        btnEdit = findViewById(R.id.btnEdit);
 
         rvHighScores = findViewById(R.id.rvAccountHighScores);
 
-        tvNick.setText(user.nick);
-        tvEmail.setText(user.email);
 
         btnLogout.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -66,8 +67,25 @@ public class AccountActivity extends AppCompatActivity {
             }
         });
 
+        btnEdit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(AccountActivity.this, EditAccountActivity.class);
+                startActivity(intent);
+            }
+        });
+
         LoadHighScoresTask task = new LoadHighScoresTask();
         task.execute();
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+        User user = Session.getUser();
+        tvNick.setText(user.nick);
+        tvEmail.setText(user.email);
     }
 
     private class HighScore{

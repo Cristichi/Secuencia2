@@ -32,7 +32,7 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
 
         etEmail = findViewById(R.id.etEmail);
-        etPass = findViewById(R.id.etPassword);
+        etPass = findViewById(R.id.etOldPass1);
 
         tvError = findViewById(R.id.tvError);
 

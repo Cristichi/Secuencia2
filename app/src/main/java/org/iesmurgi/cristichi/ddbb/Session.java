@@ -93,10 +93,11 @@ public class Session {
         }
         return "";
     }
-}
 
-class ServerException extends RuntimeException{
-    public ServerException(String msg) {
-        super(msg);
+    public static class ServerException extends RuntimeException{
+        public ServerException(String msg) {
+            super(msg);
+        }
     }
 }
+

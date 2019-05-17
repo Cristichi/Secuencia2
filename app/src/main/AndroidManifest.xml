@@ -12,7 +12,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".HighscoresActivity"></activity>
+        <activity android:name=".EditAccountActivity"
+            android:label="@string/account_update_title"
+            android:theme="@style/AppTheme.WithBar" ></activity>
+        <activity android:name=".HighscoresActivity"
+            />
         <activity
             android:name=".RegisterActivity"
             android:label="@string/register_title"

@@ -80,15 +80,15 @@ public class MainActivity extends AppCompatActivity {
         if (firstStart){
             firstStart = false;
             LocalStorage.tryLoginFromFile(MainActivity.this);
-            if (Session.isLogged()){
-                //String str = getString(R.string.account) + " " + Session.getUser().nick;
-                String str = Session.getUser().nick;
-                btnAccount.setText(str);
-                ivNewPoint.setVisibility(View.INVISIBLE);
-            }else{
-                btnAccount.setText(R.string.login);
-                ivNewPoint.setVisibility(View.VISIBLE);
-            }
+        }
+        if (Session.isLogged()){
+            //String str = getString(R.string.account) + " " + Session.getUser().nick;
+            String str = Session.getUser().nick;
+            btnAccount.setText(str);
+            ivNewPoint.setVisibility(View.INVISIBLE);
+        }else{
+            btnAccount.setText(R.string.login);
+            ivNewPoint.setVisibility(View.VISIBLE);
         }
     }
 }

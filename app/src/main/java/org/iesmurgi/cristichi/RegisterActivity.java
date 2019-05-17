@@ -42,8 +42,8 @@ public class RegisterActivity extends AppCompatActivity {
 
         etNick = findViewById(R.id.etNick);
         etEmail = findViewById(R.id.etEmail);
-        etPass1 = findViewById(R.id.etPass1);
-        etPass2 = findViewById(R.id.etPass2);
+        etPass1 = findViewById(R.id.etOldPass1);
+        etPass2 = findViewById(R.id.etOldPass2);
 
         btnRegister = findViewById(R.id.btnRegister);
         btnRegister.setOnClickListener(new View.OnClickListener() {
@@ -136,12 +136,19 @@ public class RegisterActivity extends AppCompatActivity {
                         "select Email from Users where Email='"+email+"'");
 
                 if (rs.next()) {
-                    error = R.string.register_error_exists;
+                    error = R.string.register_error_email_exists;
                 }else{
                     Statement st2 = con.createStatement();
-                    st2.execute("insert into Users(Email, Nickname, Pass) values('" + email + "', '" +
-                            nick + "', '" + Session.encrypt(pass) + "')");
+                    ResultSet rs2 = st2.executeQuery(
+                            "select Email from Users where Nickname='"+nick+"'");
+                    if (rs2.next()) {
+                        error = R.string.register_error_nick_exists;
+                    }else{
+                        Statement st3 = con.createStatement();
+                        st3.execute("insert into Users(Email, Nickname, Pass) values('" + email + "', '" +
+                                nick + "', '" + Session.encrypt(pass) + "')");
                         sol = new User(nick, email);
+                    }
                 }
             } catch (Exception e) {
                 e.printStackTrace();

@@ -32,7 +32,8 @@
     <string name="register_error_email_empty">Please, enter your email to register</string>
     <string name="register_error_pass_empty">Please, a password for your account</string>
     <string name="register_error_pass_equal">Both passwords does not match</string>
-    <string name="register_error_exists">This email is already registered</string>
+    <string name="register_error_email_exists">This email is already registered</string>
+    <string name="register_error_nick_exists">This nickname is already registered</string>
     <string name="register_error_generic">Error trying to connect to server</string>
 
     <string name="account_title">Account</string>
@@ -44,6 +45,23 @@
     <string name="account_highscores_title_date">Date</string>
     <string name="account_highscores_loading">Loading your highscores&#8230;</string>
     <string name="account_highscores_error_empty">Play to save your scores online!</string>
+
+    <string name="account_update_title">Edit Account</string>
+    <string name="account_update_upload_changes">Upload changes</string>
+    <string name="account_update_back">Cancel</string>
+    <string name="account_update_old_password">Current password</string>
+    <string name="account_update_old_password_repeat">Repeat current password</string>
+    <string name="account_update_new_password">New password</string>
+    <string name="account_update_new_password_repeat">Repeat new password</string>
+    <string name="account_update_error_email_exists">This email is already registered</string>
+    <string name="account_update_error_nick_exists">This nickname is already registered</string>
+    <string name="account_update_error_no_pass">Please, enter your password to edit your profile</string>
+    <string name="account_update_error_wrong_pass">Wrong password</string>
+    <string name="account_update_error_no_changes">There is nothing to change</string>
+    <string name="account_update_error_old_pass_not_match">Your current password does not match</string>
+    <string name="account_update_error_new_pass_not_match">New passwords does not match</string>
+    <string name="account_update_loging_dial_title">Uploading changes</string>
+    <string name="account_update_loging_dial_msg">Connecting to the server, please wait&#8230;</string>
 
     <string name="highscores_loading">Loading highscores&#8230;</string>
     <string name="highscores_filter_all">Any</string>

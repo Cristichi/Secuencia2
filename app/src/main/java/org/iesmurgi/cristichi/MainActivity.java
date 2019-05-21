@@ -1,6 +1,7 @@
 package org.iesmurgi.cristichi;
 
 import android.content.Intent;
+import android.media.MediaPlayer;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -21,10 +22,16 @@ public class MainActivity extends AppCompatActivity {
 
     private boolean firstStart;
 
+    public MediaPlayer music;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        music = MediaPlayer.create(this, R.raw.background);
+        music.setLooping(true);
+        music.setVolume(.3f, .3f);
 
         btnPlay = findViewById(R.id.btnPlay);
         btnPlay.setOnClickListener(new View.OnClickListener() {
@@ -72,6 +79,8 @@ public class MainActivity extends AppCompatActivity {
         ivNewPoint = findViewById(R.id.ivNew);
 
         firstStart = true;
+        LocalStorage.tryLoginFromFile(MainActivity.this);
+        music.start();
     }
 
     @Override
@@ -79,7 +88,6 @@ public class MainActivity extends AppCompatActivity {
         super.onStart();
         if (firstStart){
             firstStart = false;
-            LocalStorage.tryLoginFromFile(MainActivity.this);
         }
         if (Session.isLogged()){
             //String str = getString(R.string.account) + " " + Session.getUser().nick;
@@ -90,5 +98,13 @@ public class MainActivity extends AppCompatActivity {
             btnAccount.setText(R.string.login);
             ivNewPoint.setVisibility(View.VISIBLE);
         }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        music.stop();
+        music.release();
+        music = null;
     }
 }

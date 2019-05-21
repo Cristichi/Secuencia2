@@ -207,9 +207,6 @@ public class AccountActivity extends AppCompatActivity {
                         df = R.string.highscores_unknown_difficulty;
                     }
                     sol.add(new HighScore(gm, df, score, scoredate));
-
-
-                    //TODO: USAR NUEVO CÓDIGO PARA COGER LOS NOMBRES
                 }
             }catch (Exception e) {
                 e.printStackTrace();

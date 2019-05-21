@@ -64,6 +64,7 @@
     <string name="account_update_loging_dial_title">Uploading changes</string>
     <string name="account_update_loging_dial_msg">Connecting to the server, please wait&#8230;</string>
 
+    <string name="highscores_title">Global Highscores</string>
     <string name="highscores_loading">Loading highscores&#8230;</string>
     <string name="highscores_filter_all">Any</string>
     <string name="highscores_filter">Filter</string>
@@ -73,6 +74,8 @@
     <string name="highscores_title_score">Score</string>
     <string name="highscores_title_date">Date</string>
     <string name="highscores_error_empty">No scores were found</string>
+    <string name="highscores_unknown_gamemode">Unknown</string>
+    <string name="highscores_unknown_difficulty">Unknown</string>
 
     <string name="screenshot_ask_title">Take Screenshot</string>
     <string name="screenshot_ask_your_name">Your Name</string>
@@ -126,7 +129,7 @@
     <string name="wsp_week_days_saturday">Saturday</string>
     <string name="wsp_week_days_sunday">Sunday</string>
 
-    <string name="wsp_erasmus_name">Erasmus Cities</string>
+    <string name="wsp_erasmus_name">Erasmus+ Cities</string>
     <string name="wsp_erasmus_greece">Serres</string>
     <string name="wsp_erasmus_italy">Modica</string>
     <string name="wsp_erasmus_turkey">Samsun</string>
@@ -136,7 +139,7 @@
     <!-- Difficulties -->
     <string name="diff_easiest">Shortest</string>
     <string name="diff_easy">Short</string>
-    <string name="diff_medium">Medium</string>
+    <string name="diff_medium">Competitive</string>
     <string name="diff_hard">Long</string>
     <string name="diff_extreme">Extreme</string>
 

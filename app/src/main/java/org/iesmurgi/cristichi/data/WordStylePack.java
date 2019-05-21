@@ -13,22 +13,23 @@ import java.util.List;
 import java.util.Random;
 
 public enum WordStylePack implements StylePack<Integer> {
-    DEADLY_SINS(R.string.wsp_deadly_sins_name, R.drawable.icon_wsp_deadly_sins,
+    DEADLY_SINS("SINS", R.string.wsp_deadly_sins_name, R.drawable.icon_wsp_deadly_sins,
             R.string.wsp_deadly_sins_envy, R.string.wsp_deadly_sins_gluttony,
             R.string.wsp_deadly_sins_greed, R.string.wsp_deadly_sins_lust,
             R.string.wsp_deadly_sins_pride, R.string.wsp_deadly_sins_sloth,
             R.string.wsp_deadly_sins_wrath),
-    ERASMUS(R.string.wsp_erasmus_name, R.drawable.icon_wsp_erasmus,
+    ERASMUS("ERASMUS", R.string.wsp_erasmus_name, R.drawable.icon_wsp_erasmus,
             R.string.wsp_erasmus_greece, R.string.wsp_erasmus_italy,
             R.string.wsp_erasmus_turkey, R.string.wsp_erasmus_poland,
             R.string.wsp_erasmus_spain),
-    WEEK_DAYS(R.string.wsp_week_days_name, R.drawable.icon_wsp_week_days,
+    WEEK_DAYS("WEEK_DAYS", R.string.wsp_week_days_name, R.drawable.icon_wsp_week_days,
             R.string.wsp_week_days_monday, R.string.wsp_week_days_tuesday,
             R.string.wsp_week_days_wednesday, R.string.wsp_week_days_thursday,
             R.string.wsp_week_days_friday, R.string.wsp_week_days_saturday,
             R.string.wsp_week_days_sunday),
     ;
 
+    protected String code;
     @StringRes
     protected int name;
     @DrawableRes
@@ -38,7 +39,11 @@ public enum WordStylePack implements StylePack<Integer> {
 
     protected Random rng;
 
-    WordStylePack(int name, int icon, @StringRes int... values) {
+    WordStylePack(String code, int name, int icon, @StringRes int... values) {
+        this.code = code;
+        if (code.length()>10){
+            throw new IllegalArgumentException("Gamemode's code cannot be more than 10");
+        }
         this.name = name;
         this.icon = icon;
         this.values = values;
@@ -59,6 +64,15 @@ public enum WordStylePack implements StylePack<Integer> {
         }
         Collections.shuffle(sol);
         return sol;
+    }
+
+    protected void setCode(String code) {
+        this.code = code;
+    }
+
+    @Override
+    public String getCode() {
+        return code;
     }
 
     @Override

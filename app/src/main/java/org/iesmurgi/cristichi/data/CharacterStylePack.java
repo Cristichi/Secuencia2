@@ -13,26 +13,26 @@ import java.util.List;
 import java.util.Random;
 
 public enum CharacterStylePack implements StylePack<Character> {
-    ALPHABET(R.string.csp_alphabet_name, R.drawable.icon_csp_alphabet,
+    ALPHABET("ABC_AZ", R.string.csp_alphabet_name, R.drawable.icon_csp_alphabet,
             'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I',
             'J', 'K', 'L', 'N', 'M', 'O', 'P', 'Q', 'R',
             'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'),
-    ALPHABET_1(R.string.csp_alphabet1_name, R.drawable.icon_csp_alphabet1,
+    ALPHABET_1("ABC_AI", R.string.csp_alphabet1_name, R.drawable.icon_csp_alphabet1,
             'A', 'B', 'C',
             'D', 'E', 'F',
             'G', 'H', 'I'),
-    ALPHABET_2(R.string.csp_alphabet2_name, R.drawable.icon_csp_alphabet2,
+    ALPHABET_2("ABC_JR", R.string.csp_alphabet2_name, R.drawable.icon_csp_alphabet2,
             'J', 'K', 'L',
             'N', 'M', 'O',
             'P', 'Q', 'R'),
-    ALPHABET_3(R.string.csp_alphabet3_name, R.drawable.icon_csp_alphabet3,
+    ALPHABET_3("ABC_SZ", R.string.csp_alphabet3_name, R.drawable.icon_csp_alphabet3,
             'S', 'T', 'U',
             'V', 'W', 'X',
             'Y', 'Z'),
-    GREEK(R.string.csp_greek_name, R.drawable.icon_csp_greek,
+    GREEK("GREEK", R.string.csp_greek_name, R.drawable.icon_csp_greek,
             '\u03b1', '\u03b2', '\u03b3',
             '\u03b4', '\u03b5', '\u03b6', '\u03b7'),
-    FORMULAS(R.string.ssp_formulas_name, R.drawable.icon_ssp_formulas,
+    FORMULAS("FORMULAS", R.string.ssp_formulas_name, R.drawable.icon_ssp_formulas,
             '0','1','2','3','4',
             '5','6','7','8','9',
             '+', '-', '*', '/'){
@@ -65,6 +65,7 @@ public enum CharacterStylePack implements StylePack<Character> {
     }
     ;
 
+    protected String code;
     @StringRes
     protected int name;
     @DrawableRes
@@ -73,7 +74,11 @@ public enum CharacterStylePack implements StylePack<Character> {
 
     protected Random rng;
 
-    CharacterStylePack(int name, int icon, char... values){
+    CharacterStylePack(String code, int name, int icon, char... values){
+        this.code = code;
+        if (code.length()>10){
+            throw new IllegalArgumentException("Gamemode's code cannot be more than 10");
+        }
         this.name = name;
         this.icon = icon;
         this.values = values;
@@ -95,6 +100,15 @@ public enum CharacterStylePack implements StylePack<Character> {
         }
         Collections.shuffle(sol);
         return sol;
+    }
+
+    protected void setCode(String code) {
+        this.code = code;
+    }
+
+    @Override
+    public String getCode() {
+        return code;
     }
 
     @Override

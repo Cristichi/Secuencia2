@@ -172,11 +172,12 @@ public class WordGameActivity extends AppCompatActivity {
                             fin = System.currentTimeMillis();
                             double segundos = (fin-inicio)/1000;
                             double prescore = secuenceInicial/segundos*1000;
-                            int score = (int) prescore;
                             Intent intento = new Intent(WordGameActivity.this, ScoreActivity.class);
-                            intento.putExtra("score", score);
-                            intento.putExtra("difficulty", diff.getName());
-                            intento.putExtra("gamemode", sp.getName());
+                            intento.putExtra("prescore", prescore);
+                            intento.putExtra("difficultyName", diff.getName());
+                            intento.putExtra("difficultyId", diff.getId());
+                            intento.putExtra("gamemodeName", sp.getName());
+                            intento.putExtra("gamemodeCode", sp.getCode());
                             WordGameActivity.this.startActivity(intento);
                             WordGameActivity.this.finish();
                         }else{

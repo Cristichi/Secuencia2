@@ -17,6 +17,8 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
+import org.iesmurgi.cristichi.data.Difficulty;
+import org.iesmurgi.cristichi.data.StylePackFinder;
 import org.iesmurgi.cristichi.ddbb.DDBBConstraints;
 import org.iesmurgi.cristichi.ddbb.Session;
 import org.iesmurgi.cristichi.ddbb.User;
@@ -89,24 +91,14 @@ public class AccountActivity extends AppCompatActivity {
     }
 
     private class HighScore{
-        String gamemode;
-        String diff;
+        int gamemode;
+        int diff;
         String score;
         String date;
-        boolean allBold = false;
 
-        private HighScore(String gamemode, String diff, String score, String date){
+        private HighScore(int gamemode, int diff, int score, Date date){
             this.gamemode = gamemode;
             this.diff = diff;
-            this.score = score;
-            this.date = date;
-            allBold = true;
-        }
-
-        private HighScore(String gamemode, String diff, int score, Date date){
-            this.gamemode = gamemode;
-            this.diff = diff;
-            //this.score = String.format(Locale.getDefault(), "%.3f", score);
             this.score = score+"";
             this.date = android.text.format.DateFormat.format("dd/MM/yyyy", date).toString();
         }
@@ -197,10 +189,27 @@ public class AccountActivity extends AppCompatActivity {
 
                 while (rs.next()) {
                     String gamemode = rs.getString(1);
-                    String difficulty = rs.getString(2);
+                    int difficulty = rs.getInt(2);
                     int score = rs.getInt(3);
                     Date scoredate = rs.getDate(4);
-                    sol.add(new HighScore(gamemode, difficulty, score, scoredate));
+
+                    int gm;
+                    try{
+                        gm = StylePackFinder.byCode(gamemode).getName();
+                    }catch (IllegalArgumentException e){
+                        gm = R.string.highscores_unknown_gamemode;
+                    }
+
+                    int df;
+                    try{
+                        df = Difficulty.getById(difficulty).getName();
+                    }catch (IllegalArgumentException e){
+                        df = R.string.highscores_unknown_difficulty;
+                    }
+                    sol.add(new HighScore(gm, df, score, scoredate));
+
+
+                    //TODO: USAR NUEVO CÓDIGO PARA COGER LOS NOMBRES
                 }
             }catch (Exception e) {
                 e.printStackTrace();

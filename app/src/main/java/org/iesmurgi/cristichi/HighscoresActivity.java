@@ -2,14 +2,17 @@ package org.iesmurgi.cristichi;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.annotation.StringRes;
 import android.support.v4.content.res.ResourcesCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,6 +22,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import org.iesmurgi.cristichi.data.Difficulty;
+import org.iesmurgi.cristichi.data.StylePackFinder;
 import org.iesmurgi.cristichi.ddbb.DDBBConstraints;
 import org.iesmurgi.cristichi.ddbb.Session;
 import org.iesmurgi.cristichi.ddbb.User;
@@ -53,41 +57,44 @@ public class HighscoresActivity extends AppCompatActivity {
         btnFilter = findViewById(R.id.btnFilter);
         rvHighscores = findViewById(R.id.rvHighScores);
 
-        LoadHighScoresTask task = new LoadHighScoresTask(null, null);
+        LoadHighScoresTask task = new LoadHighScoresTask(null, Difficulty.MEDIUM.getId());
         task.execute();
 
-        ArrayList<String> stylePacksNames = new ArrayList<>(15);
-        stylePacksNames.add(getString(R.string.highscores_filter_all));
+        ArrayList<SpinnerGamemodeItem> stylePacksNames = new ArrayList<>(15);
+        stylePacksNames.add(new SpinnerGamemodeItem(null, getString(R.string.highscores_filter_all)));
         StylePack[] sps = CharacterStylePack.values();
         for (StylePack sp : sps){
-            stylePacksNames.add(getString(sp.getName()));
+            stylePacksNames.add(new SpinnerGamemodeItem(sp, getString(sp.getName())));
         }
         sps = ImageStylePack.values();
-        for (StylePack csp : sps){
-            stylePacksNames.add(getString(csp.getName()));
+        for (StylePack isp : sps){
+            stylePacksNames.add(new SpinnerGamemodeItem(isp, getString(isp.getName())));
         }
         sps = WordStylePack.values();
-        for (StylePack csp : sps){
-            stylePacksNames.add(getString(csp.getName()));
+        for (StylePack wsp : sps){
+            stylePacksNames.add(new SpinnerGamemodeItem(wsp, getString(wsp.getName())));
         }
-        spnGamemode.setAdapter(new SpinnerStringAdapter(this, stylePacksNames));
+        spnGamemode.setAdapter(new SpinnerGamemodeAdapter(this, stylePacksNames));
 
-        ArrayList<String> diffNames = new ArrayList<>();
-        diffNames.add(getString(R.string.highscores_filter_all));
+        ArrayList<SpinnerDifficultyItem> diffNames = new ArrayList<>();
+        diffNames.add(new SpinnerDifficultyItem(null, getString(R.string.highscores_filter_all)));
         Difficulty[] diffs = Difficulty.values();
         for (Difficulty diff : diffs){
-            diffNames.add(getString(diff.getName()));
+            diffNames.add(new SpinnerDifficultyItem(diff, getString(diff.getName())));
         }
-        spnDifficulty.setAdapter(new SpinnerStringAdapter(this, diffNames));
+        spnDifficulty.setAdapter(new SpinnerDifficultyAdapter(this, diffNames));
+        spnDifficulty.setSelection(Difficulty.MEDIUM.ordinal()+1);
 
         btnFilter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String gm = spnGamemode.getSelectedItem().toString();
-                gm = (gm.equals(getString(R.string.highscores_filter_all)) ? null : gm);
-                String dif = spnDifficulty.getSelectedItem().toString();
-                dif = (dif.equals(getString(R.string.highscores_filter_all)) ? null : dif);
-                LoadHighScoresTask task = new LoadHighScoresTask(gm, dif);
+                SpinnerGamemodeItem sgi = ((SpinnerGamemodeItem)spnGamemode.getSelectedItem());
+                SpinnerDifficultyItem sdi = ((SpinnerDifficultyItem)spnDifficulty.getSelectedItem());
+                StylePack gm = sgi.gamemode;
+                Difficulty dif = sdi.difficulty;
+                LoadHighScoresTask task = new LoadHighScoresTask(
+                        (gm==null?null:gm.getCode()), (dif==null?null:dif.getId())
+                );
                 task.execute();
             }
         });
@@ -95,12 +102,12 @@ public class HighscoresActivity extends AppCompatActivity {
 
     private class HighScore{
         String user;
-        String gamemode;
-        String diff;
+        int gamemode;
+        int diff;
         String score;
         String date;
 
-        private HighScore(String user, String gamemode, String diff, int score, Date date){
+        private HighScore(String user, int gamemode, int diff, int score, Date date){
             this.user = user;
             this.gamemode = gamemode;
             this.diff = diff;
@@ -185,9 +192,9 @@ public class HighscoresActivity extends AppCompatActivity {
         private int textColor = ResourcesCompat.getColor(getResources(), R.color.secondaryTextColor, getTheme());
 
         private String gamemode;
-        private String difficulty;
+        private Integer difficulty;
 
-        private LoadHighScoresTask(@Nullable String gamemode, @Nullable String difficulty){
+        private LoadHighScoresTask(@Nullable String gamemode, @Nullable Integer difficulty){
             this.gamemode = gamemode;
             this.difficulty = difficulty;
         }
@@ -221,14 +228,33 @@ public class HighscoresActivity extends AppCompatActivity {
                                 (gamemode!=null?"and Gamemode='"+gamemode+"' ":"") +
                                 (difficulty!=null?"and Difficulty='"+difficulty+"' ":"") +
                                 "order by Score desc limit 20");
+                Log.d("CRISTICHIEX", "SELECT Nickname, Gamemode, Difficulty, Score, ScoreDate from HighScores, Users " +
+                                "where UserEmail='"+user.email+"' and Users.Email=HighScores.UserEmail " +
+                                (gamemode!=null?"and Gamemode='"+gamemode+"' ":"") +
+                                (difficulty!=null?"and Difficulty='"+difficulty+"' ":"") +
+                                "order by Score desc limit 20");
 
                 while (rs.next()) {
                     String nickname = rs.getString(1);
                     String gamemode = rs.getString(2);
-                    String difficulty = rs.getString(3);
+                    int difficulty = rs.getInt(3);
                     int score = rs.getInt(4);
                     Date scoredate = rs.getDate(5);
-                    sol.add(new HighScore(nickname, gamemode, difficulty, score, scoredate));
+
+                    int gm;
+                    try{
+                        gm = StylePackFinder.byCode(gamemode).getName();
+                    }catch (IllegalArgumentException e){
+                        gm = R.string.highscores_unknown_gamemode;
+                    }
+
+                    int df;
+                    try{
+                        df = Difficulty.getById(difficulty).getName();
+                    }catch (IllegalArgumentException e){
+                        df = R.string.highscores_unknown_difficulty;
+                    }
+                    sol.add(new HighScore(nickname, gm, df, score, scoredate));
                 }
             }catch (Exception e) {
                 e.printStackTrace();
@@ -266,9 +292,43 @@ public class HighscoresActivity extends AppCompatActivity {
     }
 }
 
-class SpinnerStringAdapter extends ArrayAdapter<String> {
+class SpinnerGamemodeItem {
+    @Nullable
+    public StylePack gamemode;
+    public String name;
 
-    public SpinnerStringAdapter(Activity context, List<String> list){
+    SpinnerGamemodeItem(@Nullable StylePack gamemode, String name){
+        this.gamemode = gamemode;
+        this.name = name;
+    }
+
+    @NonNull
+    @Override
+    public String toString() {
+        return name;
+    }
+}
+
+class SpinnerDifficultyItem {
+    @Nullable
+    public Difficulty difficulty;
+    public String name;
+
+    SpinnerDifficultyItem(@Nullable Difficulty difficulty, String name){
+        this.difficulty = difficulty;
+        this.name = name;
+    }
+
+    @NonNull
+    @Override
+    public String toString() {
+        return name;
+    }
+}
+
+class SpinnerGamemodeAdapter extends ArrayAdapter<SpinnerGamemodeItem> {
+
+    public SpinnerGamemodeAdapter(Activity context, List<SpinnerGamemodeItem> list){
         super(context, android.R.layout.simple_spinner_item, list);
     }
 
@@ -286,7 +346,52 @@ class SpinnerStringAdapter extends ArrayAdapter<String> {
 
     private View rowview(int position, View convertView, ViewGroup parent){
 
-        String rowItem = getItem(position);
+        String rowItem = getItem(position).name;
+
+        viewHolder holder ;
+        View rowview = convertView;
+        if (rowview==null) {
+
+            holder = new viewHolder();
+            LayoutInflater flater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            rowview = flater.inflate(R.layout.item_text_spinner, parent, false);
+
+            holder.tvText = rowview.findViewById(R.id.tvText);
+            rowview.setTag(holder);
+        }else{
+            holder = (viewHolder) rowview.getTag();
+        }
+        holder.tvText.setText(rowItem);
+
+        return rowview;
+    }
+
+    private class viewHolder{
+        TextView tvText;
+    }
+}
+
+class SpinnerDifficultyAdapter extends ArrayAdapter<SpinnerDifficultyItem> {
+
+    public SpinnerDifficultyAdapter(Activity context, List<SpinnerDifficultyItem> list){
+        super(context, android.R.layout.simple_spinner_item, list);
+    }
+
+    /* *
+    @Override
+    public View getView(int position, View convertView, ViewGroup parent) {
+        return rowview(convertView,position);
+    }
+    /* */
+
+    @Override
+    public View getDropDownView(int position, View convertView, ViewGroup parent) {
+        return rowview(position, convertView, parent);
+    }
+
+    private View rowview(int position, View convertView, ViewGroup parent){
+
+        String rowItem = getItem(position).name;
 
         viewHolder holder ;
         View rowview = convertView;

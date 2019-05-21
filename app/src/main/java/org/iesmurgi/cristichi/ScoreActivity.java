@@ -28,6 +28,7 @@ import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.iesmurgi.cristichi.data.Difficulty;
 import org.iesmurgi.cristichi.ddbb.DDBBConstraints;
 import org.iesmurgi.cristichi.ddbb.Session;
 import org.iesmurgi.cristichi.ddbb.User;
@@ -55,7 +56,7 @@ public class ScoreActivity extends AppCompatActivity {
 
     private Button btnBack;
 
-    private int score;
+    private double score;
     private CharSequence date;
     private static final String DATE_FORMAT = "yyyy/MM/dd HH:mm";
 
@@ -81,26 +82,26 @@ public class ScoreActivity extends AppCompatActivity {
 
         try {
             Bundle extras = getIntent().getExtras();
-            score = extras.getInt("score", 0);
-            int gamemode = extras.getInt("gamemode");
-            int difficulty = extras.getInt("difficulty");
+            score = extras.getDouble("prescore", 0);
+            int gamemodeName = extras.getInt("gamemodeName");
+            String gamemodeCode = extras.getString("gamemodeCode");
+            int difficultyName = extras.getInt("difficultyName");
+            int difficultyId = extras.getInt("difficultyId");
 
             //tvScore.setText(String.format(Locale.getDefault(), "%.3f", score));
-            tvScore.setText(score+"");
-            tvGamemode.setText(gamemode);
-            tvDifficulty.setText(difficulty);
+            tvScore.setText(String.format(Locale.getDefault(), "%d", (int) score));
+            tvGamemode.setText(gamemodeName);
+            tvDifficulty.setText(difficultyName);
 
             if (Session.isLogged()){
                 User user = Session.getUser();
-                String mode = getString(gamemode);
-                String diff = getString(difficulty);
                 try{
-                    IsHighScore task = new IsHighScore(score, user.email, mode, diff);
+                    IsHighScore task = new IsHighScore(score, user.email, gamemodeCode, difficultyId);
                     task.execute();
                     if (task.get(2, TimeUnit.SECONDS)){
                         TextView tvHS = findViewById(R.id.tvHighScore);
                         tvHS.setVisibility(View.VISIBLE);
-                        SaveScoreMYSQL taskSave = new SaveScoreMYSQL(score, user.email, mode, diff, date.toString());
+                        SaveScoreMYSQL taskSave = new SaveScoreMYSQL(score, user.email, gamemodeCode, difficultyId, date.toString());
                         taskSave.execute();
                     }
                 }catch (Exception e){
@@ -118,10 +119,10 @@ public class ScoreActivity extends AppCompatActivity {
         private double score;
         private String email;
         private String mode;
-        private String diff;
+        private int diff;
         private String date;
 
-        SaveScoreMYSQL(double score, String email, String mode, String diff, String date){
+        SaveScoreMYSQL(double score, String email, String mode, int diff, String date){
             ini = true;
             this.score = score;
             this.email = email;
@@ -147,8 +148,7 @@ public class ScoreActivity extends AppCompatActivity {
                 st.execute(
                         "delete from HighScores where UserEmail='"+email+"' and Gamemode='"+mode+"' and Difficulty='"+diff+"'");
                 Statement st2 = con.createStatement();
-                st2.execute(
-                        "insert into HighScores values('"+email+"', '"+mode+"', '"+diff+"', '"+score+"', '"+date+"')");
+                st2.execute("insert into HighScores values('"+email+"', '"+mode+"', "+diff+", "+score+", '"+date+"')");
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -169,9 +169,9 @@ public class ScoreActivity extends AppCompatActivity {
         private double score;
         private String email;
         private String mode;
-        private String diff;
+        private int diff;
 
-        IsHighScore(double score, String email, String mode, String diff){
+        IsHighScore(double score, String email, String mode, int diff){
             ini = true;
             this.score = score;
             this.email = email;
@@ -191,6 +191,7 @@ public class ScoreActivity extends AppCompatActivity {
                 Class.forName("com.mysql.jdbc.Driver");
                 con = DriverManager.getConnection(DDBBConstraints.URL_DDBB, DDBBConstraints.USER, DDBBConstraints.PASSWORD);
 
+                Log.d("CRISTICHIEX", "select max(Score) from HighScores where UserEmail='"+email+"' and Gamemode='"+mode+"' and Difficulty='"+diff+"'");
                 Statement st = con.createStatement();
                 ResultSet rs = st.executeQuery(
                         "select max(Score) from HighScores where UserEmail='"+email+"' and Gamemode='"+mode+"' and Difficulty='"+diff+"'");

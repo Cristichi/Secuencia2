@@ -14,21 +14,23 @@ import java.util.List;
 import java.util.Random;
 
 public enum ImageStylePack implements StylePack<Integer> {
-    CATS(R.string.isp_cats_name, R.drawable.icon_isp_cats,
+    CATS("CATS", R.string.isp_cats_name, R.drawable.icon_isp_cats,
             R.drawable.isp_cats_1, R.drawable.isp_cats_2,
             R.drawable.isp_cats_3, R.drawable.isp_cats_4),
 
-    FORMS(R.string.isp_forms_name, R.drawable.icon_isp_forms,
+    FORMS("FORMS", R.string.isp_forms_name, R.drawable.icon_isp_forms,
             R.drawable.isp_form_circle, R.drawable.isp_form_line_horizontal,
             R.drawable.isp_form_line_vertical, R.drawable.isp_form_square,
             R.drawable.isp_form_star, R.drawable.isp_form_triangle),
 
-    COLORS(R.string.isp_colors_name, R.drawable.icon_isp_colors,
+    COLORS("COLORS", R.string.isp_colors_name, R.drawable.icon_isp_colors,
             R.drawable.isp_color_blue, R.drawable.isp_color_aqua,
             R.drawable.isp_color_green, R.drawable.isp_color_orange,
             R.drawable.isp_color_purple, R.drawable.isp_color_red,
             R.drawable.isp_color_yellow)
     ;
+
+    protected String code;
     @StringRes
     protected int name;
     @DrawableRes
@@ -38,7 +40,11 @@ public enum ImageStylePack implements StylePack<Integer> {
 
     protected Random rng;
 
-    ImageStylePack(int name, @DrawableRes int icon, @DrawableRes int... values){
+    ImageStylePack(String code, int name, @DrawableRes int icon, @DrawableRes int... values){
+        this.code = code;
+        if (code.length()>10){
+            throw new IllegalArgumentException("Gamemode's code cannot be more than 10");
+        }
         this.name = name;
         this.icon = icon;
         this.values = values;
@@ -60,6 +66,15 @@ public enum ImageStylePack implements StylePack<Integer> {
         }
         Collections.shuffle(sol);
         return sol;
+    }
+
+    protected void setCode(String code) {
+        this.code = code;
+    }
+
+    @Override
+    public String getCode() {
+        return code;
     }
 
     @Override

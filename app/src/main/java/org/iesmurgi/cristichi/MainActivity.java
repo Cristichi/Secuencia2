@@ -5,6 +5,7 @@ import android.media.MediaPlayer;
 import android.os.PersistableBundle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -27,8 +28,6 @@ public class MainActivity extends ActivityWithMusic {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        SoundSystem.Init(this);
 
         btnPlay = findViewById(R.id.btnPlay);
         btnPlay.setOnClickListener(new View.OnClickListener() {
@@ -88,6 +87,8 @@ public class MainActivity extends ActivityWithMusic {
         super.onStart();
         if (firstStart){
             firstStart = false;
+            SoundSystem.Init(this);
+            SoundSystem.playMusicBackground();
         }
         if (Session.isLogged()){
             //String str = getString(R.string.account) + " " + Session.getUser().nick;

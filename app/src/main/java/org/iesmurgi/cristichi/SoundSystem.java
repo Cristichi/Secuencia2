@@ -10,10 +10,7 @@ public class SoundSystem {
 
     private static MediaPlayer background;
     private static MediaPlayer gameBackground;
-    private static SoundPool soundPool = new SoundPool.Builder().setAudioAttributes(new AudioAttributes.Builder()
-            .setUsage(AudioAttributes.USAGE_GAME)
-            .setContentType(AudioAttributes.CONTENT_TYPE_SONIFICATION)
-            .build()).build();
+    private static SoundPool soundPool;
 
     private static int soundIdCartoonPunch;
     private static int soundIdCartoonSlipFall;
@@ -30,6 +27,11 @@ public class SoundSystem {
         if (!destroyed){
             return;
         }
+        soundPool = new SoundPool.Builder().setAudioAttributes(new AudioAttributes.Builder()
+                .setUsage(AudioAttributes.USAGE_GAME)
+                .setContentType(AudioAttributes.CONTENT_TYPE_SONIFICATION)
+                .build()).build();
+
         background = MediaPlayer.create(context, R.raw.background);
         background.setLooping(true);
         background.setVolume(.08f, .08f);
@@ -130,6 +132,9 @@ public class SoundSystem {
     }
 
     public static void destroy(){
+        if (destroyed){
+            return;
+        }
         destroyed = true;
 
         background.stop();

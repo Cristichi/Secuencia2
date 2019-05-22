@@ -20,6 +20,7 @@ import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
 
+import org.iesmurgi.cristichi.SoundSystem;
 import org.iesmurgi.cristichi.data.Difficulty;
 import org.iesmurgi.cristichi.R;
 import org.iesmurgi.cristichi.ScoreActivity;
@@ -109,6 +110,18 @@ public class ImageGameActivity extends AppCompatActivity {
     }
 
     @Override
+    protected void onStart() {
+        super.onStart();
+        SoundSystem.playMusicBackgroundGame();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        SoundSystem.pauseMusicBackgroundGame();
+    }
+
+    @Override
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
 
@@ -146,6 +159,7 @@ public class ImageGameActivity extends AppCompatActivity {
                     }
                     Integer car = (int) v.getTag();
                     if (secuence.get(0).equals(car)){
+                        SoundSystem.playRecordedPop();
                         llSerialView.removeViewAt(0);
                         secuence.remove(0);
                         if (secuence.isEmpty()){
@@ -166,6 +180,7 @@ public class ImageGameActivity extends AppCompatActivity {
 
                         }
                     }else{
+                        SoundSystem.playCartoonHonkHorn();
                         secuence.add(car);
                         ImageView tv = new ImageView(ImageGameActivity.this);
                         tv.setImageResource(car);

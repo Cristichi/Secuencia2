@@ -16,7 +16,7 @@ import org.iesmurgi.cristichi.data.WordStylePack;
 import java.util.ArrayList;
 import java.util.List;
 
-public class TabbedMenuActivity extends AppCompatActivity {
+public class TabbedMenuActivity extends ActivityWithMusic {
 
     private Toolbar toolbar;
     private TabLayout tabLayout;

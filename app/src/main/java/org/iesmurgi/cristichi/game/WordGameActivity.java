@@ -22,6 +22,7 @@ import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
 
+import org.iesmurgi.cristichi.SoundSystem;
 import org.iesmurgi.cristichi.data.Difficulty;
 import org.iesmurgi.cristichi.R;
 import org.iesmurgi.cristichi.ScoreActivity;
@@ -129,6 +130,17 @@ public class WordGameActivity extends AppCompatActivity {
         }
     }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+        SoundSystem.playMusicBackgroundGame();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        SoundSystem.pauseMusicBackgroundGame();
+    }
 
     @Override
     public void onConfigurationChanged(Configuration newConfig) {
@@ -166,6 +178,7 @@ public class WordGameActivity extends AppCompatActivity {
                     }
                     Integer car = (int)v.getTag();
                     if (secuence.get(0).equals(car)){
+                        SoundSystem.playRecordedPop();
                         llSerialView.removeViewAt(0);
                         secuence.remove(0);
                         if (secuence.isEmpty()){
@@ -184,6 +197,7 @@ public class WordGameActivity extends AppCompatActivity {
                             ((TextView)llSerialView.getChildAt(0)).setTextSize(wordSizeTarget);
                         }
                     }else{
+                        SoundSystem.playCartoonHonkHorn();
                         secuence.add(car);
                         TextView tv = new TextView(WordGameActivity.this);
                         tv.setTextColor(textColorSecondary);

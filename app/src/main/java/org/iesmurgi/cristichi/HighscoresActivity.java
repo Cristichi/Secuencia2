@@ -40,7 +40,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class HighscoresActivity extends AppCompatActivity {
+public class HighscoresActivity extends ActivityWithMusic {
 
     private Spinner spnGamemode;
     private Spinner spnDifficulty;
@@ -224,12 +224,12 @@ public class HighscoresActivity extends AppCompatActivity {
                 Statement st = con.createStatement();
                 ResultSet rs = st.executeQuery(
                         "SELECT Nickname, Gamemode, Difficulty, Score, ScoreDate from HighScores, Users " +
-                                "where UserEmail='"+user.email+"' and Users.Email=HighScores.UserEmail " +
+                                "where Users.Email=HighScores.UserEmail " +
                                 (gamemode!=null?"and Gamemode='"+gamemode+"' ":"") +
                                 (difficulty!=null?"and Difficulty='"+difficulty+"' ":"") +
                                 "order by Score desc limit 20");
                 Log.d("CRISTICHIEX", "SELECT Nickname, Gamemode, Difficulty, Score, ScoreDate from HighScores, Users " +
-                                "where UserEmail='"+user.email+"' and Users.Email=HighScores.UserEmail " +
+                                "where Users.Email=HighScores.UserEmail " +
                                 (gamemode!=null?"and Gamemode='"+gamemode+"' ":"") +
                                 (difficulty!=null?"and Difficulty='"+difficulty+"' ":"") +
                                 "order by Score desc limit 20");

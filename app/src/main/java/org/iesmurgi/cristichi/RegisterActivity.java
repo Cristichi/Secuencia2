@@ -21,7 +21,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-public class RegisterActivity extends AppCompatActivity {
+public class RegisterActivity extends ActivityWithMusic {
 
     private TextView tvError;
 

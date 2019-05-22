@@ -49,7 +49,7 @@ public class LocalStorage {
             String pass = br.readLine();
             LoginActivity.LoginTask loginTask = new LoginActivity.LoginTask(context, email, pass);
             loginTask.execute();
-            loginTask.get(4, TimeUnit.SECONDS);
+            loginTask.get(2, TimeUnit.SECONDS);
         }catch (Exception e){
             e.printStackTrace();
         }

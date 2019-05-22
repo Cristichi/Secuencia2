@@ -48,7 +48,7 @@ import java.util.Date;
 import java.util.Locale;
 import java.util.concurrent.TimeUnit;
 
-public class ScoreActivity extends AppCompatActivity {
+public class ScoreActivity extends ActivityWithMusic {
 
     private TextView tvGamemode;
     private TextView tvDifficulty;

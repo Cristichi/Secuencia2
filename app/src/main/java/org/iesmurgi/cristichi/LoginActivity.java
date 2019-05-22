@@ -16,7 +16,7 @@ import android.widget.TextView;
 import org.iesmurgi.cristichi.ddbb.ReturnLogin;
 import org.iesmurgi.cristichi.ddbb.Session;
 
-public class LoginActivity extends AppCompatActivity {
+public class LoginActivity extends ActivityWithMusic {
 
     private EditText etEmail;
     private EditText etPass;

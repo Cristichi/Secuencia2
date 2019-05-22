@@ -2,6 +2,7 @@ package org.iesmurgi.cristichi;
 
 import android.content.Intent;
 import android.media.MediaPlayer;
+import android.os.PersistableBundle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -11,7 +12,7 @@ import android.widget.ImageView;
 import org.iesmurgi.cristichi.ddbb.Session;
 import org.iesmurgi.cristichi.ddbb.LocalStorage;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends ActivityWithMusic {
 
     private Button btnPlay;
     private Button btnAccount;
@@ -22,21 +23,18 @@ public class MainActivity extends AppCompatActivity {
 
     private boolean firstStart;
 
-    public MediaPlayer music;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        music = MediaPlayer.create(this, R.raw.background);
-        music.setLooping(true);
-        music.setVolume(.3f, .3f);
+        SoundSystem.Init(this);
 
         btnPlay = findViewById(R.id.btnPlay);
         btnPlay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                SoundSystem.playCartoonSlipUp();
                 Intent intento = new Intent(MainActivity.this, TabbedMenuActivity.class);
                 startActivity(intento);
                 //finish();
@@ -47,6 +45,7 @@ public class MainActivity extends AppCompatActivity {
         btnAccount.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                SoundSystem.playCartoonSlipFall();
                 if (Session.isLogged()){
                     Intent intento = new Intent(MainActivity.this, AccountActivity.class);
                     startActivity(intento);
@@ -61,6 +60,7 @@ public class MainActivity extends AppCompatActivity {
         btnHighscores.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                SoundSystem.playCartoonDrumRoll();
                 Intent intento = new Intent(MainActivity.this, HighscoresActivity.class);
                 startActivity(intento);
             }
@@ -70,6 +70,7 @@ public class MainActivity extends AppCompatActivity {
         btnOptions.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                SoundSystem.playRecordedCluk();
                 Intent intento = new Intent(MainActivity.this, SettingsActivity.class);
                 startActivity(intento);
                 //finish();
@@ -80,7 +81,6 @@ public class MainActivity extends AppCompatActivity {
 
         firstStart = true;
         LocalStorage.tryLoginFromFile(MainActivity.this);
-        music.start();
     }
 
     @Override
@@ -101,10 +101,12 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
+    protected void onStop() {
+        super.onStop();
+    }
+
+    @Override
     protected void onDestroy() {
         super.onDestroy();
-        music.stop();
-        music.release();
-        music = null;
     }
 }

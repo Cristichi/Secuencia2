@@ -3,7 +3,7 @@ package org.iesmurgi.cristichi;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
-public class SettingsActivity extends AppCompatActivity {
+public class SettingsActivity extends ActivityWithMusic {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

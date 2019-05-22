@@ -64,6 +64,7 @@ public class AccountActivity extends ActivityWithMusic {
         btnLogout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                SoundSystem.playCartoonPunch();
                 if (LocalStorage.logout(AccountActivity.this))
                     finish();
             }
@@ -72,6 +73,7 @@ public class AccountActivity extends ActivityWithMusic {
         btnEdit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                SoundSystem.playCartoonSlipUp();
                 Intent intent = new Intent(AccountActivity.this, EditAccountActivity.class);
                 startActivity(intent);
             }

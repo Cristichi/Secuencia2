@@ -22,6 +22,7 @@ import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
 
+import org.iesmurgi.cristichi.ActivityGameWithMusic;
 import org.iesmurgi.cristichi.SoundSystem;
 import org.iesmurgi.cristichi.data.Difficulty;
 import org.iesmurgi.cristichi.R;
@@ -30,7 +31,7 @@ import org.iesmurgi.cristichi.data.WordStylePack;
 
 import java.util.List;
 
-public class WordGameActivity extends AppCompatActivity {
+public class WordGameActivity extends ActivityGameWithMusic {
 
     private int screenWidth;
     private int btnSize;
@@ -131,18 +132,6 @@ public class WordGameActivity extends AppCompatActivity {
     }
 
     @Override
-    protected void onStart() {
-        super.onStart();
-        SoundSystem.playMusicBackgroundGame();
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-        SoundSystem.pauseMusicBackgroundGame();
-    }
-
-    @Override
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
 
@@ -152,7 +141,6 @@ public class WordGameActivity extends AppCompatActivity {
         screenWidth = outMetrics.widthPixels;
 
         randomizeBtns();
-        Log.d("CRISTICHIEX", "RANDOMIZANDO");
     }
 
     private boolean empezado = false;

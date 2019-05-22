@@ -20,6 +20,7 @@ import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
 
+import org.iesmurgi.cristichi.ActivityGameWithMusic;
 import org.iesmurgi.cristichi.SoundSystem;
 import org.iesmurgi.cristichi.data.Difficulty;
 import org.iesmurgi.cristichi.R;
@@ -28,7 +29,7 @@ import org.iesmurgi.cristichi.data.ImageStylePack;
 
 import java.util.List;
 
-public class ImageGameActivity extends AppCompatActivity {
+public class ImageGameActivity extends ActivityGameWithMusic {
 
     private float screenWidth;
     private float btnSize;
@@ -94,8 +95,6 @@ public class ImageGameActivity extends AppCompatActivity {
 
             randomizeBtns();
         }catch (NullPointerException | IndexOutOfBoundsException e){
-            Log.e("CRISTICHIEX", e.toString());
-            Log.getStackTraceString(e);
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
             builder.setTitle(R.string.error_access_game_tit);
             builder.setMessage(R.string.error_access_game_msg);
@@ -110,18 +109,6 @@ public class ImageGameActivity extends AppCompatActivity {
     }
 
     @Override
-    protected void onStart() {
-        super.onStart();
-        SoundSystem.playMusicBackgroundGame();
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-        SoundSystem.pauseMusicBackgroundGame();
-    }
-
-    @Override
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
 
@@ -131,7 +118,6 @@ public class ImageGameActivity extends AppCompatActivity {
         screenWidth = outMetrics.widthPixels;
 
         randomizeBtns();
-        Log.d("CRISTICHIEX", "RANDOMIZANDO");
     }
 
     private boolean empezado = false;
@@ -195,7 +181,6 @@ public class ImageGameActivity extends AppCompatActivity {
             });
             rowWidth+=btnSize;
             if (rowWidth + 40 > screenWidth){
-                //Log.d("CRISTICHIEX", "IF btn btnSize="+btnSize+", rowWidth="+rowWidth+", screenWidth="+ screenWidth +", realBtnSize="+btn.getWidth()+", i="+i);
                 tlButtons.addView(row);
                 row = new TableRow(this);
                 row.setGravity(Gravity.CENTER);
@@ -203,7 +188,6 @@ public class ImageGameActivity extends AppCompatActivity {
 
                 rowWidth=btnSize;
             }else{
-                //Log.d("CRISTICHIEX", "ELSE btn btnSize="+btnSize+", rowWidth="+rowWidth+", screenWidth="+ screenWidth +", realBtnSize="+btn.getWidth()+", i="+i);
                 row.addView(btn);
             }
             ViewGroup.LayoutParams lp = btn.getLayoutParams();

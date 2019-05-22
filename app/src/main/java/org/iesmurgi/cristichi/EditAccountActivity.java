@@ -57,6 +57,7 @@ public class EditAccountActivity extends ActivityWithMusic {
             btnUpdate.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    SoundSystem.playRecordedCluk();
                     String newEmail, newNick,
                             oldPass1, oldPass2,
                             newPass1, newPass2;

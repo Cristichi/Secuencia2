@@ -29,11 +29,11 @@ public class SoundSystem {
     public static void Init(MainActivity context){
         background = MediaPlayer.create(context, R.raw.background);
         background.setLooping(true);
-        background.setVolume(.2f, .2f);
+        background.setVolume(.08f, .08f);
 
         gameBackground = MediaPlayer.create(context, R.raw.background_game);
         gameBackground.setLooping(true);
-        gameBackground.setVolume(.2f, .2f);
+        gameBackground.setVolume(.1f, .1f);
 
         soundIdCartoonPunch  = soundPool.load(context, R.raw.cartoon_punch_1, 1);
         soundIdCartoonSlipFall  = soundPool.load(context, R.raw.cartoon_slip_fall_impact, 1);
@@ -57,12 +57,6 @@ public class SoundSystem {
         }
     }
 
-    public static void stopMusicBackground(){
-        if (!destroyed) {
-            background.stop();
-        }
-    }
-
     public static void playMusicBackgroundGame(){
         if (!destroyed) {
             gameBackground.start();
@@ -77,7 +71,8 @@ public class SoundSystem {
 
     public static void stopMusicBackgroundGame(){
         if (!destroyed) {
-            gameBackground.stop();
+            gameBackground.pause();
+            gameBackground.seekTo(0);
         }
     }
 

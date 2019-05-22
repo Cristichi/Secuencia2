@@ -20,6 +20,7 @@ import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
 
+import org.iesmurgi.cristichi.ActivityGameWithMusic;
 import org.iesmurgi.cristichi.SoundSystem;
 import org.iesmurgi.cristichi.data.Difficulty;
 import org.iesmurgi.cristichi.R;
@@ -28,7 +29,7 @@ import org.iesmurgi.cristichi.data.CharacterStylePack;
 
 import java.util.List;
 
-public class CharacterGameActivity extends AppCompatActivity {
+public class CharacterGameActivity extends ActivityGameWithMusic {
 
     private int screenWidth;
     private int btnSize;
@@ -116,18 +117,6 @@ public class CharacterGameActivity extends AppCompatActivity {
             });
             builder.show();
         }
-    }
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-        SoundSystem.playMusicBackgroundGame();
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-        SoundSystem.pauseMusicBackgroundGame();
     }
 
     @Override

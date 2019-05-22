@@ -100,5 +100,4 @@ public class TabbedMenuActivity extends ActivityWithMusic {
             return mFragmentTitleList.get(position);
         }
     }
-
 }

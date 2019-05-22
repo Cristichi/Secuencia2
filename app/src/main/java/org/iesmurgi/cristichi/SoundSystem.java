@@ -24,9 +24,12 @@ public class SoundSystem {
     private static int soundIdRecordedCluk;
     private static int soundIdRecordedPop;
 
-    private static boolean destroyed = false;
+    private static boolean destroyed = true;
 
     public static void Init(MainActivity context){
+        if (!destroyed){
+            return;
+        }
         background = MediaPlayer.create(context, R.raw.background);
         background.setLooping(true);
         background.setVolume(.08f, .08f);
@@ -43,6 +46,8 @@ public class SoundSystem {
         soundIdCartoonHonkHorn  = soundPool.load(context, R.raw.cartoon_honk_horn, 1);
         soundIdRecordedCluk  = soundPool.load(context, R.raw.recorded_cluck, 1);
         soundIdRecordedPop  = soundPool.load(context, R.raw.recorded_pop, 1);
+
+        destroyed = false;
     }
 
     public static void playMusicBackground(){
@@ -78,49 +83,49 @@ public class SoundSystem {
 
     public static void playCartoonPunch(){
         if (!destroyed){
-            soundPool.play(soundIdCartoonPunch, 1, 1, 0, 0, 1);
+            soundPool.play(soundIdCartoonPunch, 0.2f, 0.2f, 0, 0, 1);
         }
     }
 
     public static void playCartoonSlipFall(){
         if (!destroyed){
-            soundPool.play(soundIdCartoonSlipFall, 1, 1, 0, 0, 1);
+            soundPool.play(soundIdCartoonSlipFall, 0.2f, 0.2f, 0, 0, 1);
         }
     }
 
     public static void playCartoonSlipUp(){
         if (!destroyed){
-            soundPool.play(soundIdCartoonSlipUp, 1, 1, 0, 0, 1);
+            soundPool.play(soundIdCartoonSlipUp, 0.2f, 0.2f, 0, 0, 1);
         }
     }
 
     public static void playCartoonDrumRoll(){
         if (!destroyed){
-            soundPool.play(soundIdCartoonDrumRoll, 1, 1, 0, 0, 1);
+            soundPool.play(soundIdCartoonDrumRoll, 0.2f, 0.2f, 0, 0, 1);
         }
     }
 
     public static void playCartoonFail(){
         if (!destroyed){
-            soundPool.play(soundIdCartoonFail, 1, 1, 0, 0, 1);
+            soundPool.play(soundIdCartoonFail, 0.2f, 0.2f, 0, 0, 1);
         }
     }
 
     public static void playCartoonHonkHorn(){
         if (!destroyed){
-            soundPool.play(soundIdCartoonHonkHorn, 1, 1, 0, 0, 1);
+            soundPool.play(soundIdCartoonHonkHorn, 0.2f, 0.2f, 0, 0, 1);
         }
     }
 
     public static void playRecordedCluk(){
         if (!destroyed){
-            soundPool.play(soundIdRecordedCluk, 1, 1, 0, 0, 1);
+            soundPool.play(soundIdRecordedCluk, 0.2f, 0.2f, 0, 0, 1);
         }
     }
 
     public static void playRecordedPop(){
         if (!destroyed){
-            soundPool.play(soundIdRecordedPop, 1, 1, 0, 0, 1);
+            soundPool.play(soundIdRecordedPop, 0.2f, 0.2f, 0, 0, 1);
         }
     }
 

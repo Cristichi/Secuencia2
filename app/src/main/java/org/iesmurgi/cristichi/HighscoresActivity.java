@@ -88,6 +88,7 @@ public class HighscoresActivity extends ActivityWithMusic {
         btnFilter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                SoundSystem.playCartoonPunch();
                 SpinnerGamemodeItem sgi = ((SpinnerGamemodeItem)spnGamemode.getSelectedItem());
                 SpinnerDifficultyItem sdi = ((SpinnerDifficultyItem)spnDifficulty.getSelectedItem());
                 StylePack gm = sgi.gamemode;

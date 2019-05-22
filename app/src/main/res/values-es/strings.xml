@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="back">Volver</string>
+    <string name="play">Jugar</string>
+    <string name="account">Perfil</string>
+    <string name="login">Iniciar Sesión</string>
+    <string name="settings">Ajustes</string>
+    <string name="highscores">Marcadores</string>
+
+    <string name="error_login">Correo o contraseña incorrectos</string>
+    <string name="error_net">Error al conectar al servidor</string>
+
+    <string name="login_title">Iniciar sesión</string>
+    <string name="login_email">Correo</string>
+    <string name="login_password">Contraseña</string>
+    <string name="login_login">Iniciar Sesión</string>
+    <string name="login_register">Nueva Cuenta</string>
+    <string name="login_loging_dial_title">Iniciando Sesión</string>
+    <string name="login_loging_dial_msg">Conectando, espere por favor&#8230;</string>
+    <string name="login_error_empty">Por favor, rellene todos los campos</string>
+
+    <string name="register_title">Registro</string>
+    <string name="register_nickname">Nombre de usuario</string>
+    <string name="register_email">Correo</string>
+    <string name="register_password1">Contraseña</string>
+    <string name="register_password2">Repita la Contraseña</string>
+    <string name="register_btn_register">Crear Cuenta</string>
+    <string name="register_btn_back">Cancelar</string>
+    <string name="register_registered">Cuenta Registrada</string>
+    <string name="register_error_nick_empty">Su nombre de usuario no puede estar vacío</string>
+    <string name="register_error_email_empty">Por favor, introduzca su email para registrarse</string>
+    <string name="register_error_pass_empty">Por favor, introduzca una contraseña para su cuenta</string>
+    <string name="register_error_pass_equal">Las contraseñas deben coincidir</string>
+    <string name="register_error_email_exists">Este correo ya está registrado</string>
+    <string name="register_error_nick_exists">Este nombre de usuario ya está registrado</string>
+    <string name="register_error_generic">Error al conectar al servidor</string>
+
+    <string name="account_title">Perfil</string>
+    <string name="account_logout">Cerrar Sesión</string>
+    <string name="account_highscores_title">Tus Puntuaciones</string>
+    <string name="account_highscores_title_gamemode">Modo de Juego</string>
+    <string name="account_highscores_title_difficulty">Dificultad</string>
+    <string name="account_highscores_title_score">Puntuación</string>
+    <string name="account_highscores_title_date">Fecha</string>
+    <string name="account_highscores_loading">Cargando sus puntuaciones&#8230;</string>
+    <string name="account_highscores_error_empty">¡Juega para guardar sus puntuaciones online!</string>
+
+    <string name="account_update_title">Editar Perfil</string>
+    <string name="account_update_upload_changes">Subir Cambios</string>
+    <string name="account_update_back">Cancelar</string>
+    <string name="account_update_old_password">Contraseña actual</string>
+    <string name="account_update_old_password_repeat">Repita su contraseña actual</string>
+    <string name="account_update_new_password">Nueva contraseña</string>
+    <string name="account_update_new_password_repeat">Repita su nueva contraseña</string>
+    <string name="account_update_new_password_no_changes">(sin cambios)</string>
+    <string name="account_update_error_email_exists">Este correo ya está registrado</string>
+    <string name="account_update_error_nick_exists">Este nombre de usuario ya está registrado</string>
+    <string name="account_update_error_no_pass">Por favor, introduzca su contraseña para editar su perfil</string>
+    <string name="account_update_error_wrong_pass">Contraseña incorrecta</string>
+    <string name="account_update_error_no_changes">No hay nada que actualizar</string>
+    <string name="account_update_error_old_pass_not_match">Sus contraseñas actuales no coinciden</string>
+    <string name="account_update_error_new_pass_not_match">Sus nuevas contraseñas no coinciden</string>
+    <string name="account_update_loging_dial_title">Subiendo cambios</string>
+    <string name="account_update_loging_dial_msg">Conectando al servidor, por favor espere&#8230;</string>
+
+    <string name="highscores_title">Marcador Global</string>
+    <string name="highscores_loading">Cargando puntuaciones&#8230;</string>
+    <string name="highscores_filter_all">Cualquiera</string>
+    <string name="highscores_filter">Filtrar</string>
+    <string name="highscores_title_email">Usuario</string>
+    <string name="highscores_title_gamemode">Modo de Juego</string>
+    <string name="highscores_title_difficulty">Dificultad</string>
+    <string name="highscores_title_score">Puntuación</string>
+    <string name="highscores_title_date">Fecha</string>
+    <string name="highscores_error_empty">No se encontraron puntuaciones</string>
+    <string name="highscores_unknown_gamemode">Desconocido</string>
+    <string name="highscores_unknown_difficulty">Desconocida</string>
+
+    <string name="error_access_game_tit">Error accediendo a los datos de la partida</string>
+    <string name="error_access_game_msg">Quizás accediste de forma extraña a esta pantalla</string>
+
+    <string name="choose_gamemode">Elige un Modo de Juego</string>
+    <string name="choose_csp">Paquetes de Caracteres</string>
+    <string name="choose_isp">Paquetes de Imágenes</string>
+    <string name="choose_wsp">Paquetes de Palabras</string>
+
+    <string name="end_game_title">Puntuación</string>
+    <string name="score_highscore">¡NUEVO RÉCORD!</string>
+    <string name="end_game_message">Tu Puntuación en %1Ss (%2Ss) es %3$f</string>
+
+    <string name="csp_alphabet_name">Alfabeto</string>
+    <string name="csp_alphabet1_name">Alfabetp A-I</string>
+    <string name="csp_alphabet2_name">Alfabeto J-R</string>
+    <string name="csp_alphabet3_name">Alfabeto S-Z</string>
+    <string name="csp_greek_name">Letras Griegas</string>
+    <string name="ssp_formulas_name">Fórmulas</string>
+
+    <string name="isp_forms_name">Formas</string>
+    <string name="isp_cats_name">Gatos</string>
+    <string name="isp_colors_name">Colores</string>
+
+    <string name="wsp_deadly_sins_name">Pecados Capitales</string>
+    <string name="wsp_deadly_sins_lust">Lujuria</string>
+    <string name="wsp_deadly_sins_gluttony">Gula</string>
+    <string name="wsp_deadly_sins_greed">Avaricia</string>
+    <string name="wsp_deadly_sins_sloth">Pereza</string>
+    <string name="wsp_deadly_sins_wrath">Ira</string>
+    <string name="wsp_deadly_sins_envy">Envidia</string>
+    <string name="wsp_deadly_sins_pride">Orgullo</string>
+
+    <string name="wsp_week_days_name">Días de la Semana</string>
+    <string name="wsp_week_days_monday">Lunes</string>
+    <string name="wsp_week_days_tuesday">Martes</string>
+    <string name="wsp_week_days_wednesday">Miércoles</string>
+    <string name="wsp_week_days_thursday">Jueves</string>
+    <string name="wsp_week_days_friday">Viernes</string>
+    <string name="wsp_week_days_saturday">Sábado</string>
+    <string name="wsp_week_days_sunday">Domingo</string>
+
+    <string name="wsp_erasmus_name">Ciudades Erasmus+</string>
+    <string name="wsp_erasmus_greece">Serres</string>
+    <string name="wsp_erasmus_italy">Módica</string>
+    <string name="wsp_erasmus_turkey">Samsun</string>
+    <string name="wsp_erasmus_poland">Slupsk</string>
+    <string name="wsp_erasmus_spain">El Ejido</string>
+
+    <string name="diff_easiest">Muy Corto</string>
+    <string name="diff_easy">Corto</string>
+    <string name="diff_medium">Competitivo</string>
+    <string name="diff_hard">Largo</string>
+    <string name="diff_extreme">Extremo</string>
+
+    <string name="pick_diff">Elige una dificultad para</string>
+</resources>

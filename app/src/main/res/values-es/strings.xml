@@ -88,10 +88,10 @@
     <string name="score_highscore">¡NUEVO RÉCORD!</string>
     <string name="end_game_message">Tu Puntuación en %1Ss (%2Ss) es %3$f</string>
 
-    <string name="csp_alphabet_name">Alfabeto</string>
-    <string name="csp_alphabet1_name">Alfabetp A-I</string>
-    <string name="csp_alphabet2_name">Alfabeto J-R</string>
-    <string name="csp_alphabet3_name">Alfabeto S-Z</string>
+    <string name="csp_alphabet_name">Abecedario</string>
+    <string name="csp_alphabet1_name">Abecedario A-I</string>
+    <string name="csp_alphabet2_name">Abecedario J-R</string>
+    <string name="csp_alphabet3_name">Abecedario S-Z</string>
     <string name="csp_greek_name">Letras Griegas</string>
     <string name="ssp_formulas_name">Fórmulas</string>
 

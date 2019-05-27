@@ -4,10 +4,8 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
-import android.util.Log;
 import android.view.Display;
 import android.view.Gravity;
 import android.view.View;
@@ -25,7 +23,7 @@ import org.iesmurgi.cristichi.SoundSystem;
 import org.iesmurgi.cristichi.data.Difficulty;
 import org.iesmurgi.cristichi.R;
 import org.iesmurgi.cristichi.ScoreActivity;
-import org.iesmurgi.cristichi.data.ImageStylePack;
+import org.iesmurgi.cristichi.data.ImageGamemode;
 
 import java.util.List;
 
@@ -36,7 +34,7 @@ public class ImageGameActivity extends ActivityGameWithMusic {
     private float imageSize;
     private float imageSizeTarget;
 
-    private ImageStylePack sp;
+    private ImageGamemode sp;
     private Difficulty diff;
 
     private ScrollView scrollView;
@@ -61,7 +59,7 @@ public class ImageGameActivity extends ActivityGameWithMusic {
 
         try{
             Bundle extras = getIntent().getExtras();
-            sp = ImageStylePack.values()[extras.getInt("stylePack", -1)];
+            sp = ImageGamemode.values()[extras.getInt("stylePack", -1)];
             diff = Difficulty.values()[extras.getInt("difficulty", -1)];
 
             btnSize = getResources().getDimension(R.dimen.btn_image_width);

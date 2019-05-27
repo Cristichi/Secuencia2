@@ -7,7 +7,6 @@ import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.v4.content.res.ResourcesCompat;
 import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Display;
@@ -27,7 +26,7 @@ import org.iesmurgi.cristichi.SoundSystem;
 import org.iesmurgi.cristichi.data.Difficulty;
 import org.iesmurgi.cristichi.R;
 import org.iesmurgi.cristichi.ScoreActivity;
-import org.iesmurgi.cristichi.data.WordStylePack;
+import org.iesmurgi.cristichi.data.WordGamemode;
 
 import java.util.List;
 
@@ -40,7 +39,7 @@ public class WordGameActivity extends ActivityGameWithMusic {
     private int textColorPrimary;
     private int textColorSecondary;
 
-    private WordStylePack sp;
+    private WordGamemode sp;
     private Difficulty diff;
 
     private ScrollView scrollView;
@@ -73,7 +72,7 @@ public class WordGameActivity extends ActivityGameWithMusic {
 
         try{
             Bundle extras = getIntent().getExtras();
-            sp = WordStylePack.values()[extras.getInt("stylePack", -1)];
+            sp = WordGamemode.values()[extras.getInt("stylePack", -1)];
             diff = Difficulty.values()[extras.getInt("difficulty", -1)];
 
             TextView title = findViewById(R.id.tvTitle);

@@ -12,23 +12,21 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
-public enum ImageStylePack implements StylePack<Integer> {
-    CATS("CATS", R.string.isp_cats_name, R.drawable.icon_isp_cats,
-            R.drawable.isp_cats_1, R.drawable.isp_cats_2,
-            R.drawable.isp_cats_3, R.drawable.isp_cats_4),
-
-    /* *
-    FORMS("FORMS", R.string.isp_forms_name, R.drawable.icon_isp_forms,
-            R.drawable.isp_form_circle, R.drawable.isp_form_line_horizontal,
-            R.drawable.isp_form_line_vertical, R.drawable.isp_form_square,
-            R.drawable.isp_form_star, R.drawable.isp_form_triangle),
-    /* */
-
-    COLORS("COLORS", R.string.isp_colors_name, R.drawable.icon_isp_colors,
-            R.drawable.isp_color_blue, R.drawable.isp_color_aqua,
-            R.drawable.isp_color_green, R.drawable.isp_color_orange,
-            R.drawable.isp_color_purple, R.drawable.isp_color_red,
-            R.drawable.isp_color_yellow)
+public enum WordGamemode implements Gamemode<Integer> {
+    ERASMUS("ERASMUS", R.string.wsp_erasmus_name, R.drawable.icon_wsp_erasmus,
+            R.string.wsp_erasmus_greece, R.string.wsp_erasmus_italy,
+            R.string.wsp_erasmus_turkey, R.string.wsp_erasmus_poland,
+            R.string.wsp_erasmus_spain),
+    DEADLY_SINS("SINS", R.string.wsp_deadly_sins_name, R.drawable.icon_wsp_deadly_sins,
+            R.string.wsp_deadly_sins_envy, R.string.wsp_deadly_sins_gluttony,
+            R.string.wsp_deadly_sins_greed, R.string.wsp_deadly_sins_lust,
+            R.string.wsp_deadly_sins_pride, R.string.wsp_deadly_sins_sloth,
+            R.string.wsp_deadly_sins_wrath),
+    WEEK_DAYS("WEEK_DAYS", R.string.wsp_week_days_name, R.drawable.icon_wsp_week_days,
+            R.string.wsp_week_days_monday, R.string.wsp_week_days_tuesday,
+            R.string.wsp_week_days_wednesday, R.string.wsp_week_days_thursday,
+            R.string.wsp_week_days_friday, R.string.wsp_week_days_saturday,
+            R.string.wsp_week_days_sunday),
     ;
 
     protected String code;
@@ -36,12 +34,12 @@ public enum ImageStylePack implements StylePack<Integer> {
     protected int name;
     @DrawableRes
     protected int icon;
-    @DrawableRes
+    @StringRes
     protected int[] values;
 
     protected Random rng;
 
-    ImageStylePack(String code, int name, @DrawableRes int icon, @DrawableRes int... values){
+    WordGamemode(String code, int name, int icon, @StringRes int... values) {
         this.code = code;
         if (code.length()>10){
             throw new IllegalArgumentException("Gamemode's code cannot be more than 10");
@@ -50,7 +48,7 @@ public enum ImageStylePack implements StylePack<Integer> {
         this.icon = icon;
         this.values = values;
         rng = new Random();
-        if (this.values.length==0){
+        if (values.length==0){
             throw new IllegalArgumentException("Available values can't be empty");
         }
     }
@@ -58,11 +56,10 @@ public enum ImageStylePack implements StylePack<Integer> {
     @Override
     public ArrayList<Button> getButtons(Context context) {
         ArrayList<Button> sol = new ArrayList<>(values.length);
-
-        for (int num : values) {
+        for (int value : values) {
             Button uno = new Button(context);
-            uno.setBackground(context.getResources().getDrawable(num));
-            uno.setTag(num);
+            uno.setText(value);
+            uno.setTag(value);
             sol.add(uno);
         }
         Collections.shuffle(sol);
@@ -78,20 +75,21 @@ public enum ImageStylePack implements StylePack<Integer> {
         return code;
     }
 
-    @Override
     public void setName(@StringRes int name) {
         this.name = name;
     }
 
-    @Override @StringRes
+    @Override
+    @StringRes
     public int getName() {
         return name;
     }
 
-    @Override @DrawableRes
+    @Override
     public int getIcon() {
         return icon;
     }
+
 
     @Override
     public List<Integer> generateRandomSentence(Difficulty difficulty) {
@@ -99,8 +97,8 @@ public enum ImageStylePack implements StylePack<Integer> {
         elementos += (rng.nextBoolean() ? 1 : -1) * rng.nextInt(Math.max(elementos / 4, 1));
         ArrayList<Integer> sol = new ArrayList<>(elementos);
         for (int i = 0; i < elementos; i++) {
-            int imagen = values[rng.nextInt(values.length)];
-            sol.add(imagen);
+            int word = values[rng.nextInt(values.length)];
+            sol.add(word);
         }
         return sol;
     }

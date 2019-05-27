@@ -6,6 +6,7 @@
     <string name="login">Iniciar Sesión</string>
     <string name="settings">Ajustes</string>
     <string name="highscores">Marcadores</string>
+    <string name="custom">Modos Personalizados</string>
 
     <string name="error_login">Correo o contraseña incorrectos</string>
     <string name="error_net">Error al conectar al servidor</string>
@@ -80,9 +81,12 @@
     <string name="error_access_game_msg">Quizás accediste de forma extraña a esta pantalla</string>
 
     <string name="choose_gamemode">Elige un Modo de Juego</string>
-    <string name="choose_csp">Paquetes de Caracteres</string>
-    <string name="choose_isp">Paquetes de Imágenes</string>
-    <string name="choose_wsp">Paquetes de Palabras</string>
+    <string name="choose_csp">Modos de Caracteres</string>
+    <string name="choose_isp">Modos de Imágenes</string>
+    <string name="choose_wsp">Modos de Palabras</string>
+    <string name="choose_customsp">Modos Personalizados</string>
+    <string name="download_custom_gamemodes">Recargar Modos Personalizados</string>
+    <string name="item_custom_by_email">Por %s</string>
 
     <string name="end_game_title">Puntuación</string>
     <string name="score_highscore">¡NUEVO RÉCORD!</string>

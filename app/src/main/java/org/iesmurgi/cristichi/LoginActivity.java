@@ -39,13 +39,6 @@ public class LoginActivity extends ActivityWithMusic {
         btnLogin = findViewById(R.id.btnLogin);
         btnRegister = findViewById(R.id.btnRegister);
 
-        int color = ResourcesCompat.getColor(getResources(), R.color.primaryTextColor, getTheme());
-        int colorHint = ResourcesCompat.getColor(getResources(), R.color.primaryHintTextColor, getTheme());
-        etEmail.setTextColor(color);
-        etEmail.setHintTextColor(colorHint);
-        etPass.setTextColor(color);
-        etPass.setHintTextColor(colorHint);
-
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

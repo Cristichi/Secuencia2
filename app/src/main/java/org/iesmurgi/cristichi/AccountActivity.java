@@ -1,12 +1,8 @@
 package org.iesmurgi.cristichi;
 
 import android.content.Intent;
-import android.content.res.Resources;
-import android.graphics.Typeface;
 import android.os.AsyncTask;
 import android.support.annotation.NonNull;
-import android.support.v4.content.res.ResourcesCompat;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -18,7 +14,7 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 import org.iesmurgi.cristichi.data.Difficulty;
-import org.iesmurgi.cristichi.data.StylePackFinder;
+import org.iesmurgi.cristichi.data.GamemodeFinder;
 import org.iesmurgi.cristichi.ddbb.DDBBConstraints;
 import org.iesmurgi.cristichi.ddbb.Session;
 import org.iesmurgi.cristichi.ddbb.User;
@@ -112,36 +108,29 @@ public class AccountActivity extends ActivityWithMusic {
         TextView tvScore;
         TextView tvDate;
 
-        RecyclerViewHolders(View itemView, int textColor) {
+        RecyclerViewHolders(View itemView) {
             super(itemView);
 
             tvGamemode = itemView.findViewById(R.id.tvGamemode);
             tvDifficulty = itemView.findViewById(R.id.tvDifficulty);
             tvScore = itemView.findViewById(R.id.tvScore);
             tvDate = itemView.findViewById(R.id.tvDate);
-
-            tvGamemode.setTextColor(textColor);
-            tvDifficulty.setTextColor(textColor);
-            tvScore.setTextColor(textColor);
-            tvDate.setTextColor(textColor);
         }
     }
 
     private class RVHighScoresAdapter extends RecyclerView.Adapter<RecyclerViewHolders>{
 
         List<HighScore> highScores;
-        int textColor;
 
-        RVHighScoresAdapter(List<HighScore> highScores, int textColor){
+        RVHighScoresAdapter(List<HighScore> highScores){
             this.highScores = highScores;
-            this.textColor = textColor;
         }
 
         @NonNull
         @Override
         public RecyclerViewHolders onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
             View layoutView = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.item_account_highscore, viewGroup, false);
-            return new RecyclerViewHolders(layoutView, textColor);
+            return new RecyclerViewHolders(layoutView);
         }
 
         @Override
@@ -162,7 +151,6 @@ public class AccountActivity extends ActivityWithMusic {
     private class LoadHighScoresTask extends AsyncTask<Void, Void, List<HighScore>>{
         private TextView tvOutput;
         private boolean exception;
-        int textColor = ResourcesCompat.getColor(getResources(), R.color.secondaryTextColor, getTheme());
 
         private LoadHighScoresTask(){
         }
@@ -172,7 +160,6 @@ public class AccountActivity extends ActivityWithMusic {
             super.onPreExecute();
             tvOutput = findViewById(R.id.tvOutput);
             tvOutput.setText(R.string.account_highscores_loading);
-            tvOutput.setTextColor(textColor);
         }
 
         @Override
@@ -187,7 +174,7 @@ public class AccountActivity extends ActivityWithMusic {
 
                 Statement st = con.createStatement();
                 ResultSet rs = st.executeQuery("SELECT Gamemode, Difficulty, Score, ScoreDate from HighScores where " +
-                        "UserEmail='"+user.email+"' order by Difficulty, Gamemode");
+                        "UserEmail='"+user.email+"' order by Score");
 
                 while (rs.next()) {
                     String gamemode = rs.getString(1);
@@ -197,7 +184,7 @@ public class AccountActivity extends ActivityWithMusic {
 
                     int gm;
                     try{
-                        gm = StylePackFinder.byCode(gamemode).getName();
+                        gm = GamemodeFinder.byCode(gamemode).getName();
                     }catch (IllegalArgumentException e){
                         gm = R.string.highscores_unknown_gamemode;
                     }
@@ -233,7 +220,7 @@ public class AccountActivity extends ActivityWithMusic {
                 tvOutput.setText(R.string.account_highscores_error_empty);
             } else {
                 tvOutput.setText("");
-                rvHighScores.setAdapter(new RVHighScoresAdapter(list, textColor));
+                rvHighScores.setAdapter(new RVHighScoresAdapter(list));
                 rvHighScores.setLayoutManager(new LinearLayoutManager(AccountActivity.this));
             }
         }

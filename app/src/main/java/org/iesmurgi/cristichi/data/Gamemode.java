@@ -10,13 +10,12 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public interface StylePack<E> extends Serializable {
+public interface Gamemode<E> extends Serializable {
 
     ArrayList<Button> getButtons(Context ctxt);
 
     String getCode();
 
-    void setName(@StringRes int name);
     @StringRes
     int getName();
 

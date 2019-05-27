@@ -2,16 +2,19 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@drawable/background_gradient_second_border"
+    android:background="@drawable/background_primary_gradient_border"
+    android:gravity="center_vertical"
     android:orientation="horizontal"
-    android:padding="2dp">
+    android:padding="3dp">
 
     <TextView
         android:id="@+id/tvGamemode"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
+        android:gravity="center"
         android:textAlignment="center"
+        android:textColor="@color/secondaryTextColor"
         android:textSize="18sp" />
 
     <TextView
@@ -19,7 +22,9 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
+        android:gravity="center"
         android:textAlignment="center"
+        android:textColor="@color/secondaryTextColor"
         android:textSize="18sp" />
 
     <TextView
@@ -27,7 +32,9 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
+        android:gravity="center"
         android:textAlignment="center"
+        android:textColor="@color/secondaryTextColor"
         android:textSize="18sp" />
 
     <TextView
@@ -35,6 +42,8 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
+        android:gravity="center"
         android:textAlignment="center"
+        android:textColor="@color/secondaryTextColor"
         android:textSize="18sp" />
 </LinearLayout>

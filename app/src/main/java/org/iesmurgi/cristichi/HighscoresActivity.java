@@ -2,13 +2,9 @@ package org.iesmurgi.cristichi;
 
 import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
 import android.os.AsyncTask;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.annotation.StringRes;
-import android.support.v4.content.res.ResourcesCompat;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -22,14 +18,14 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import org.iesmurgi.cristichi.data.Difficulty;
-import org.iesmurgi.cristichi.data.StylePackFinder;
+import org.iesmurgi.cristichi.data.GamemodeFinder;
 import org.iesmurgi.cristichi.ddbb.DDBBConstraints;
 import org.iesmurgi.cristichi.ddbb.Session;
 import org.iesmurgi.cristichi.ddbb.User;
-import org.iesmurgi.cristichi.data.CharacterStylePack;
-import org.iesmurgi.cristichi.data.ImageStylePack;
-import org.iesmurgi.cristichi.data.StylePack;
-import org.iesmurgi.cristichi.data.WordStylePack;
+import org.iesmurgi.cristichi.data.CharacterGamemode;
+import org.iesmurgi.cristichi.data.ImageGamemode;
+import org.iesmurgi.cristichi.data.Gamemode;
+import org.iesmurgi.cristichi.data.WordGamemode;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -62,16 +58,16 @@ public class HighscoresActivity extends ActivityWithMusic {
 
         ArrayList<SpinnerGamemodeItem> stylePacksNames = new ArrayList<>(15);
         stylePacksNames.add(new SpinnerGamemodeItem(null, getString(R.string.highscores_filter_all)));
-        StylePack[] sps = CharacterStylePack.values();
-        for (StylePack sp : sps){
+        Gamemode[] sps = CharacterGamemode.values();
+        for (Gamemode sp : sps){
             stylePacksNames.add(new SpinnerGamemodeItem(sp, getString(sp.getName())));
         }
-        sps = ImageStylePack.values();
-        for (StylePack isp : sps){
+        sps = ImageGamemode.values();
+        for (Gamemode isp : sps){
             stylePacksNames.add(new SpinnerGamemodeItem(isp, getString(isp.getName())));
         }
-        sps = WordStylePack.values();
-        for (StylePack wsp : sps){
+        sps = WordGamemode.values();
+        for (Gamemode wsp : sps){
             stylePacksNames.add(new SpinnerGamemodeItem(wsp, getString(wsp.getName())));
         }
         spnGamemode.setAdapter(new SpinnerGamemodeAdapter(this, stylePacksNames));
@@ -91,7 +87,7 @@ public class HighscoresActivity extends ActivityWithMusic {
                 SoundSystem.playCartoonPunch();
                 SpinnerGamemodeItem sgi = ((SpinnerGamemodeItem)spnGamemode.getSelectedItem());
                 SpinnerDifficultyItem sdi = ((SpinnerDifficultyItem)spnDifficulty.getSelectedItem());
-                StylePack gm = sgi.gamemode;
+                Gamemode gm = sgi.gamemode;
                 Difficulty dif = sdi.difficulty;
                 LoadHighScoresTask task = new LoadHighScoresTask(
                         (gm==null?null:gm.getCode()), (dif==null?null:dif.getId())
@@ -125,7 +121,7 @@ public class HighscoresActivity extends ActivityWithMusic {
         TextView tvScore;
         TextView tvDate;
 
-        RecyclerViewHolder(View itemView, int textColor) {
+        RecyclerViewHolder(View itemView) {
             super(itemView);
 
             tvUser = itemView.findViewById(R.id.tvEmail);
@@ -133,28 +129,19 @@ public class HighscoresActivity extends ActivityWithMusic {
             tvDifficulty = itemView.findViewById(R.id.tvDifficulty);
             tvScore = itemView.findViewById(R.id.tvScore);
             tvDate = itemView.findViewById(R.id.tvDate);
-
-            tvUser.setTextColor(textColor);
-            tvGamemode.setTextColor(textColor);
-            tvDifficulty.setTextColor(textColor);
-            tvScore.setTextColor(textColor);
-            tvDate.setTextColor(textColor);
         }
     }
 
     private class RVHighScoresAdapter extends RecyclerView.Adapter<RecyclerViewHolder>{
 
         List<HighScore> highScores;
-        int textColor;
 
-        RVHighScoresAdapter(List<HighScore> highScores, int textColor){
+        RVHighScoresAdapter(List<HighScore> highScores){
             this.highScores = highScores;
-            this.textColor = textColor;
         }
 
-        public void setValues(List<HighScore> highScores, int textColor){
+        public void setValues(List<HighScore> highScores){
             this.highScores = highScores;
-            this.textColor = textColor;
             notifyDataSetChanged();
         }
 
@@ -162,7 +149,7 @@ public class HighscoresActivity extends ActivityWithMusic {
         @Override
         public RecyclerViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
             View layoutView = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.item_highscore, viewGroup, false);
-            return new RecyclerViewHolder(layoutView, textColor);
+            return new RecyclerViewHolder(layoutView);
         }
 
         @Override
@@ -190,7 +177,6 @@ public class HighscoresActivity extends ActivityWithMusic {
     private class LoadHighScoresTask extends AsyncTask<Void, Void, List<HighScore>> {
         private TextView tvOutput;
         private boolean exception;
-        private int textColor = ResourcesCompat.getColor(getResources(), R.color.secondaryTextColor, getTheme());
 
         private String gamemode;
         private Integer difficulty;
@@ -206,7 +192,6 @@ public class HighscoresActivity extends ActivityWithMusic {
             btnFilter.setEnabled(false);
             tvOutput = findViewById(R.id.tvOutput);
             tvOutput.setText(R.string.highscores_loading);
-            tvOutput.setTextColor(textColor);
             if (rvAdapter!=null){
                 rvAdapter.clear();
             }
@@ -244,7 +229,7 @@ public class HighscoresActivity extends ActivityWithMusic {
 
                     int gm;
                     try{
-                        gm = StylePackFinder.byCode(gamemode).getName();
+                        gm = GamemodeFinder.byCode(gamemode).getName();
                     }catch (IllegalArgumentException e){
                         gm = R.string.highscores_unknown_gamemode;
                     }
@@ -282,9 +267,9 @@ public class HighscoresActivity extends ActivityWithMusic {
             } else {
                 tvOutput.setText("");
                 if (rvAdapter==null)
-                    rvAdapter = new RVHighScoresAdapter(list, textColor);
+                    rvAdapter = new RVHighScoresAdapter(list);
                 else {
-                    rvAdapter.setValues(list, textColor);
+                    rvAdapter.setValues(list);
                 }
                 rvHighscores.setAdapter(rvAdapter);
                 rvHighscores.setLayoutManager(new LinearLayoutManager(HighscoresActivity.this));
@@ -295,10 +280,10 @@ public class HighscoresActivity extends ActivityWithMusic {
 
 class SpinnerGamemodeItem {
     @Nullable
-    public StylePack gamemode;
+    public Gamemode gamemode;
     public String name;
 
-    SpinnerGamemodeItem(@Nullable StylePack gamemode, String name){
+    SpinnerGamemodeItem(@Nullable Gamemode gamemode, String name){
         this.gamemode = gamemode;
         this.name = name;
     }

@@ -15,11 +15,11 @@
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         android:textAppearance="@android:style/TextAppearance.Material.Title"
-        android:textColor="@color/primaryTextColor"
+        android:textColor="@color/backgroundText"
         android:textSize="36sp"
         android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/btnEdit"
+        app:layout_constraintStart_toEndOf="@+id/btnLogout"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
@@ -29,10 +29,10 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
-        android:textColor="@color/primaryTextColor"
+        android:textColor="@color/backgroundText"
         android:textSize="18sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/btnEdit"
+        app:layout_constraintStart_toEndOf="@+id/btnLogout"
         app:layout_constraintTop_toBottomOf="@+id/tvNickname" />
 
     <TextView
@@ -42,7 +42,7 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
-        android:background="@drawable/background_gradient_second_border"
+        android:background="@drawable/background_primary_gradient_border"
         android:text="@string/account_highscores_title"
         android:textAlignment="center"
         android:textAllCaps="true"
@@ -57,14 +57,15 @@
         android:id="@+id/btnLogout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
         android:background="@drawable/logout_button"
         android:elevation="8dp"
+        android:padding="3dp"
         android:text="@string/account_logout"
         android:textColor="@color/secondaryTextColor"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <LinearLayout
         android:id="@+id/linearLayout2"
@@ -72,7 +73,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
-        android:background="@drawable/background_gradient_second_border"
+        android:background="@drawable/background_primary_gradient_border"
         android:orientation="horizontal"
         android:padding="2dp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -128,7 +129,7 @@
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="24dp"
-        android:background="@drawable/background_gradient_second_border"
+        android:background="@drawable/background_primary_gradient_border"
         android:scrollbars="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

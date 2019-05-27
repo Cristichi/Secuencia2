@@ -1,18 +1,18 @@
 package org.iesmurgi.cristichi.data;
 
-public class StylePackFinder {
-    public static StylePack byCode(String code){
-        for (CharacterStylePack csp : CharacterStylePack.values()) {
+public class GamemodeFinder {
+    public static Gamemode byCode(String code){
+        for (CharacterGamemode csp : CharacterGamemode.values()) {
             if (csp.getCode().equals(code)){
                 return csp;
             }
         }
-        for (ImageStylePack isp : ImageStylePack.values()) {
+        for (ImageGamemode isp : ImageGamemode.values()) {
             if (isp.getCode().equals(code)){
                 return isp;
             }
         }
-        for (WordStylePack wsp : WordStylePack.values()) {
+        for (WordGamemode wsp : WordGamemode.values()) {
             if (wsp.getCode().equals(code)){
                 return wsp;
             }

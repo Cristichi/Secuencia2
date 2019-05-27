@@ -12,7 +12,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
-public enum CharacterStylePack implements StylePack<Character> {
+public enum CharacterGamemode implements Gamemode<Character> {
     ALPHABET("ABC_AZ", R.string.csp_alphabet_name, R.drawable.icon_csp_alphabet,
             'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I',
             'J', 'K', 'L', 'N', 'M', 'O', 'P', 'Q', 'R',
@@ -45,18 +45,32 @@ public enum CharacterStylePack implements StylePack<Character> {
             int elementos = difficulty.getNumElementos();
             elementos+= (rng.nextBoolean()?1:-1) * rng.nextInt(Math.max(elementos / 4, 1));
             ArrayList<Character> sol = new ArrayList<>(elementos);
-            boolean operacion = false;
+            final int maxDigits = 4;
+            int contDigits = 0;
+            boolean operation = false;
+            boolean lastWasOp = true;
             for (int i = 0; i < elementos; i++) {
                 if (i==elementos-1){
-                    operacion= false;
+                    operation= false;
                 }
                 char car;
-                if (operacion){
+                if (operation){
                     car = operations[rng.nextInt(operations.length)];
-                    operacion = false;
+                    lastWasOp = true;
+                    operation = false;
                 }else{
-                    car = numbers[rng.nextInt(numbers.length)];
-                    operacion = rng.nextBoolean();
+                    if (lastWasOp){
+                        car = numbers[rng.nextInt(numbers.length-1)+1];
+                    }else{
+                        car = numbers[rng.nextInt(numbers.length)];
+                    }
+                    operation = rng.nextBoolean();
+                    lastWasOp = false;
+                    contDigits++;
+                    if (contDigits>=maxDigits){
+                        contDigits = 0;
+                        operation = true;
+                    }
                 }
                 sol.add(car);
             }
@@ -74,7 +88,7 @@ public enum CharacterStylePack implements StylePack<Character> {
 
     protected Random rng;
 
-    CharacterStylePack(String code, int name, int icon, char... values){
+    CharacterGamemode(String code, int name, int icon, char... values){
         this.code = code;
         if (code.length()>10){
             throw new IllegalArgumentException("Gamemode's code cannot be more than 10");
@@ -111,7 +125,6 @@ public enum CharacterStylePack implements StylePack<Character> {
         return code;
     }
 
-    @Override
     public void setName(@StringRes int name) {
         this.name = name;
     }

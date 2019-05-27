@@ -16,6 +16,8 @@
 
 -->
 
+    <!--
+
     <color name="primaryColor">#5c6bc0</color>
     <color name="primaryLightColor">#8e99f3</color>
     <color name="primaryDarkColor">#26418f</color>
@@ -29,6 +31,25 @@
 
     <color name="primaryHintTextColor">#CCCCCC</color>
     <color name="secondaryHintTextColor">#CCCCCC</color>
+
+    -->
+
+    <color name="primaryColor">#5b6abf</color>
+    <color name="primaryLightColor">#8d98f2</color>
+    <color name="primaryDarkColor">#25408e</color>
+    <color name="secondaryColor">#76ff03</color>
+    <color name="secondaryLightColor">#b0ff57</color>
+    <color name="secondaryDarkColor">#32cb00</color>
+    <color name="primaryTextColor">#ffffff</color>
+    <color name="secondaryTextColor">#000000</color>
+
+    <color name="primaryHintTextColor">#444444</color>
+    <color name="secondaryHintTextColor">#444444</color>
+
+    <color name="background">#ffffff</color>
+    <color name="backgroundText">#333333</color>
+    <color name="backgroundHintText">#555555</color>
+    <color name="error">#FF0000</color>
 
     <color name="isp_colors_red">#EE0000</color>
     <color name="isp_colors_orange">#EE7700</color>

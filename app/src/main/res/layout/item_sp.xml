@@ -17,18 +17,21 @@
         android:contentDescription="@string/app_name"
         android:scaleType="centerCrop"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/tvSPName"
+        app:layout_constraintEnd_toStartOf="@+id/tvName"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:srcCompat="@tools:sample/avatars" />
 
     <TextView
-        android:id="@+id/tvSPName"
+        android:id="@+id/tvName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:textAlignment="center"
+        android:text="Abecedario"
+        android:textAllCaps="false"
         android:textAppearance="@style/TextAppearance.MaterialComponents.Headline4"
+        android:textColor="@color/backgroundText"
+        android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="@+id/ivSPLogo"
         app:layout_constraintStart_toEndOf="@+id/ivSPLogo"
         app:layout_constraintTop_toTopOf="@+id/ivSPLogo" />

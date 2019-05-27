@@ -1,5 +1,6 @@
 package org.iesmurgi.cristichi.game;
 
+import android.annotation.SuppressLint;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Configuration;
@@ -10,6 +11,7 @@ import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Display;
 import android.view.Gravity;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -20,33 +22,35 @@ import android.widget.TableRow;
 import android.widget.TextView;
 
 import org.iesmurgi.cristichi.ActivityGameWithMusic;
-import org.iesmurgi.cristichi.SoundSystem;
-import org.iesmurgi.cristichi.data.Difficulty;
 import org.iesmurgi.cristichi.R;
 import org.iesmurgi.cristichi.ScoreActivity;
-import org.iesmurgi.cristichi.data.CharacterGamemode;
+import org.iesmurgi.cristichi.SoundSystem;
+import org.iesmurgi.cristichi.data.CustomGamemode;
+import org.iesmurgi.cristichi.data.Difficulty;
+import org.iesmurgi.cristichi.data.WordGamemode;
 
 import java.util.List;
 
-public class CharacterGameActivity extends ActivityGameWithMusic {
+public class CustomGameActivity extends ActivityGameWithMusic {
 
     private int screenWidth;
     private int btnSize;
-    private float charSize;
-    private float charSizeTarget;
+    private float wordSize;
+    private float wordSizeTarget;
     private int textColorPrimary;
     private int textColorSecondary;
 
-    private CharacterGamemode sp;
+    private CustomGamemode sp;
     private Difficulty diff;
 
     private ScrollView scrollView;
     private LinearLayout llSerialView;
     private TableLayout tlButtons;
 
-    private List<Character> secuence;
+    private List<String> secuence;
     private int secuenceInicial;
 
+    @SuppressLint("ClickableViewAccessibility")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -63,47 +67,51 @@ public class CharacterGameActivity extends ActivityGameWithMusic {
         //screenWidth = outMetrics.widthPixels / density;
         screenWidth = outMetrics.widthPixels;
 
-        btnSize = (int) getResources().getDimension(R.dimen.btn_char_width);
-        charSize = getResources().getDimension(R.dimen.char_size)/density;
-        charSizeTarget = getResources().getDimension(R.dimen.char_size_target)/density;
+        btnSize = (int) getResources().getDimension(R.dimen.btn_word_width);
+        wordSize = getResources().getDimension(R.dimen.word_size)/density;
+        wordSizeTarget = getResources().getDimension(R.dimen.word_size_target)/density;
 
         try{
             Bundle extras = getIntent().getExtras();
-            sp = CharacterGamemode.values()[extras.getInt("stylePack", -1)];
+            sp = new CustomGamemode(extras.getInt("id"), extras.getString("email"), extras.getString("name"), extras.getString("values"));
             diff = Difficulty.values()[extras.getInt("difficulty", -1)];
 
             TextView title = findViewById(R.id.tvTitle);
             title.setText(sp.getName());
 
             scrollView = findViewById(R.id.svSerial);
+            scrollView.setOnTouchListener(new View.OnTouchListener() {
+                @Override
+                public boolean onTouch(View v, MotionEvent event) {
+                    return true;
+                }
+            });
 
             llSerialView = findViewById(R.id.llSerialView);
+
             tlButtons = findViewById(R.id.tlButtons);
 
             secuence = sp.generateRandomSentence(diff);
             secuenceInicial = secuence.size();
             boolean first = true;
-            for(Character car : secuence){
+            for(String car : secuence){
                 TextView tv = new TextView(this);
+                tv.setTextColor(textColorSecondary);
+                tv.setText(car);
+                tv.setPadding(5,5,10,5);
+                llSerialView.addView(tv);
                 if (first){
-                    tv.setTextSize(charSizeTarget);
+                    tv.setTextSize(wordSizeTarget);
+                    tv.measure(0,0);
+                    scrollView.getLayoutParams().height = tv.getMeasuredHeight();
                     first = false;
                 }else{
-                    tv.setTextSize(charSize);
+                    tv.setTextSize(wordSize);
                 }
-                tv.setTextColor(textColorSecondary);
-                tv.setText(car.toString());
-                tv.setPadding(5,5,5,5);
-                llSerialView.addView(tv);
             }
 
             randomizeBtns();
         }catch (NullPointerException | IndexOutOfBoundsException e){
-            Log.e("CRISTICHIEX", "Error: "+e);
-            Log.e("CRISTICHIEX", "Error: "+e);
-            Log.e("CRISTICHIEX", "Error: "+e);
-            Log.e("CRISTICHIEX", "Error: "+e);
-            Log.e("CRISTICHIEX", "Error: "+e);
             e.printStackTrace();
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
             builder.setTitle(R.string.error_access_game_tit);
@@ -111,7 +119,7 @@ public class CharacterGameActivity extends ActivityGameWithMusic {
             builder.setOnCancelListener(new DialogInterface.OnCancelListener() {
                 @Override
                 public void onCancel(DialogInterface dialog) {
-                    CharacterGameActivity.this.finish();
+                    CustomGameActivity.this.finish();
                 }
             });
             builder.show();
@@ -137,14 +145,11 @@ public class CharacterGameActivity extends ActivityGameWithMusic {
     private void randomizeBtns(){
         List<Button> buttons = sp.getButtons(this);
         tlButtons.removeAllViews();
-
         TableRow row = new TableRow(this);
         row.setGravity(Gravity.CENTER);
-
         float rowWidth = 0;
         for(int i=0; i<buttons.size(); i++){
             Button btn = buttons.get(i);
-            btn.setPadding(5,5,5,5);
             btn.setWidth(btnSize);
             btn.setAllCaps(false);
             btn.setOnClickListener(new View.OnClickListener() {
@@ -154,7 +159,7 @@ public class CharacterGameActivity extends ActivityGameWithMusic {
                         empezado = true;
                         inicio = System.currentTimeMillis();
                     }
-                    Character car = (char)v.getTag();
+                    String car = v.getTag().toString();
                     if (secuence.get(0).equals(car)){
                         SoundSystem.playRecordedPop();
                         llSerialView.removeViewAt(0);
@@ -163,25 +168,24 @@ public class CharacterGameActivity extends ActivityGameWithMusic {
                             fin = System.currentTimeMillis();
                             double segundos = (fin-inicio)/1000;
                             double prescore = secuenceInicial/segundos*1000;
-                            Intent intento = new Intent(CharacterGameActivity.this, ScoreActivity.class);
+                            Intent intento = new Intent(CustomGameActivity.this, ScoreActivity.class);
                             intento.putExtra("prescore", prescore);
                             intento.putExtra("difficultyName", diff.getName());
                             intento.putExtra("difficultyId", diff.getId());
-                            intento.putExtra("gamemodeName", sp.getName());
-                            intento.putExtra("gamemodeCode", sp.getCode());
-                            CharacterGameActivity.this.startActivity(intento);
-                            CharacterGameActivity.this.finish();
+                            intento.putExtra("customGamemodeId", sp.getId());
+                            CustomGameActivity.this.startActivity(intento);
+                            CustomGameActivity.this.finish();
                         }else{
-                            ((TextView)llSerialView.getChildAt(0)).setTextSize(charSizeTarget);
+                            ((TextView)llSerialView.getChildAt(0)).setTextSize(wordSizeTarget);
                         }
                     }else{
                         SoundSystem.playCartoonHonkHorn();
                         secuence.add(car);
-                        TextView tv = new TextView(CharacterGameActivity.this);
-                        tv.setPadding(5,5,5,5);
-                        tv.setTextSize(charSize);
+                        TextView tv = new TextView(CustomGameActivity.this);
                         tv.setTextColor(textColorSecondary);
-                        tv.setText(car.toString());
+                        tv.setText(car);
+                        tv.setTextSize(wordSize);
+                        tv.setPadding(5,5,10,5);
                         llSerialView.addView(tv);
                         scrollView.fullScroll(View.FOCUS_UP);
                     }
@@ -190,6 +194,7 @@ public class CharacterGameActivity extends ActivityGameWithMusic {
             });
             rowWidth+=btnSize;
             if (rowWidth> screenWidth){
+                btn.requestLayout();
                 //Log.d("CRISTICHIEX", "btn screenWidth="+btnSize+", row screenWidth="+rowWidth+", screen screenWidth="+ screenWidth +", i="+i+", getMaxWidth="+btn.getMaxWidth());
                 tlButtons.addView(row);
                 row = new TableRow(this);
@@ -204,7 +209,7 @@ public class CharacterGameActivity extends ActivityGameWithMusic {
             btn.setMaxWidth(btnSize);
             btn.setMaxHeight(btnSize);
             ViewGroup.LayoutParams lp = btn.getLayoutParams();
-            lp.width = btnSize;
+            //lp.width = btnSize;
         }
         tlButtons.addView(row);
     }

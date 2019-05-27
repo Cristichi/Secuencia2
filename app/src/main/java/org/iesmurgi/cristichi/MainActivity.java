@@ -18,7 +18,7 @@ public class MainActivity extends ActivityWithMusic {
     private Button btnPlay;
     private Button btnAccount;
     private Button btnHighscores;
-    private Button btnOptions;
+    private Button btnCustom;
 
     private ImageView ivNewPoint;
 
@@ -65,12 +65,12 @@ public class MainActivity extends ActivityWithMusic {
             }
         });
 
-        btnOptions = findViewById(R.id.btnOptions);
-        btnOptions.setOnClickListener(new View.OnClickListener() {
+        btnCustom = findViewById(R.id.btnCustom);
+        btnCustom.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 SoundSystem.playRecordedCluk();
-                Intent intento = new Intent(MainActivity.this, SettingsActivity.class);
+                Intent intento = new Intent(MainActivity.this, CustomMenuActivity.class);
                 startActivity(intento);
                 //finish();
             }

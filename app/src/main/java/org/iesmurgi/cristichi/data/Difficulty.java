@@ -5,11 +5,11 @@ import android.support.annotation.StringRes;
 import org.iesmurgi.cristichi.R;
 
 public enum  Difficulty {
-    EASIEST(0, R.string.diff_easiest, 4),
-    EASY(1, R.string.diff_easy, 8),
-    MEDIUM(2, R.string.diff_medium, 14),
+    EASIEST(0, R.string.diff_easiest, 2),
+    EASY(1, R.string.diff_easy, 5),
+    MEDIUM(2, R.string.diff_medium, 10),
     HARD(3, R.string.diff_hard, 17),
-    EXTREME(4, R.string.diff_extreme, 20);
+    EXTREME(4, R.string.diff_extreme, 25);
 
     public static Difficulty getById(int id){
         for(Difficulty dif : values()){

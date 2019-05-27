@@ -5,7 +5,6 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
@@ -21,26 +20,26 @@ import org.iesmurgi.cristichi.data.Difficulty;
 import org.iesmurgi.cristichi.game.CharacterGameActivity;
 import org.iesmurgi.cristichi.game.ImageGameActivity;
 import org.iesmurgi.cristichi.game.WordGameActivity;
-import org.iesmurgi.cristichi.data.CharacterStylePack;
-import org.iesmurgi.cristichi.data.ImageStylePack;
-import org.iesmurgi.cristichi.data.StylePack;
-import org.iesmurgi.cristichi.data.WordStylePack;
+import org.iesmurgi.cristichi.data.CharacterGamemode;
+import org.iesmurgi.cristichi.data.ImageGamemode;
+import org.iesmurgi.cristichi.data.Gamemode;
+import org.iesmurgi.cristichi.data.WordGamemode;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
-public class FragmentStylePacks extends Fragment {
+public class FragmentGamemodes extends Fragment {
 
-    private ArrayList<StylePack> packs;
+    private ArrayList<Gamemode> packs;
 
-    public FragmentStylePacks(){
+    public FragmentGamemodes(){
         packs = new ArrayList<>();
     }
 
-    public void setPacks(StylePack... packs) {
+    public void setPacks(Gamemode... packs) {
         this.packs = new ArrayList<>(packs.length);
-        for (int i=0; i<packs.length; i++)
-            this.packs.add(packs[i]);
+        this.packs.addAll(Arrays.asList(packs));
     }
 
     @Override
@@ -49,7 +48,7 @@ public class FragmentStylePacks extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View sol = inflater.inflate(R.layout.fragment_sp, container, false);
@@ -61,10 +60,10 @@ public class FragmentStylePacks extends Fragment {
 }
 
 class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewHolders> {
-    private List<StylePack> itemList;
+    private List<Gamemode> itemList;
     private Context context;
 
-    public RecyclerViewAdapter(Context context, List<StylePack> itemList) {
+    public RecyclerViewAdapter(Context context, List<Gamemode> itemList) {
         this.itemList = itemList;
         this.context = context;
     }
@@ -78,7 +77,7 @@ class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewHolders> {
             final int contado = cont++;
             @Override
             public void onClick(View v) {
-                final StylePack este = itemList.get(contado);
+                final Gamemode este = itemList.get(contado);
                 String[] diffs = new String[Difficulty.values().length];
                 for (int i=0; i<diffs.length; i++){
                     diffs[i] = context.getString(Difficulty.values()[i].getName());
@@ -90,11 +89,11 @@ class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewHolders> {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         Intent intento = null;
-                        if (este instanceof CharacterStylePack){
+                        if (este instanceof CharacterGamemode){
                             intento = new Intent(context, CharacterGameActivity.class);
-                        } else if (este instanceof WordStylePack){
+                        } else if (este instanceof WordGamemode){
                             intento = new Intent(context, WordGameActivity.class);
-                        } else if (este instanceof ImageStylePack){
+                        } else if (este instanceof ImageGamemode){
                             intento = new Intent(context, ImageGameActivity.class);
                         }
                         intento.putExtra("stylePack", contado);
@@ -116,7 +115,7 @@ class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewHolders> {
     public void onBindViewHolder(@NonNull RecyclerViewHolders holder, int position) {
         holder.tvName.setText(itemList.get(position).getName());
         holder.ivPhoto.setImageResource(itemList.get(position).getIcon());
-        holder.ivPhoto.setColorFilter(Color.RED);
+        holder.ivPhoto.setColorFilter(holder.ivPhoto.getContext().getResources().getColor(R.color.secondaryDarkColor));
     }
 
     @Override
@@ -127,13 +126,13 @@ class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewHolders> {
 
 class RecyclerViewHolders extends RecyclerView.ViewHolder {
 
-    public ImageView ivPhoto;
-    public TextView tvName;
+    ImageView ivPhoto;
+    TextView tvName;
 
-    public RecyclerViewHolders(View itemView) {
+    RecyclerViewHolders(View itemView) {
         super(itemView);
 
         ivPhoto = itemView.findViewById(R.id.ivSPLogo);
-        tvName = itemView.findViewById(R.id.tvSPName);
+        tvName = itemView.findViewById(R.id.tvName);
     }
 }

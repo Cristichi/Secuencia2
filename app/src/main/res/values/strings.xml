@@ -7,7 +7,7 @@
     <string name="login">Login</string>
     <string name="settings">Settings</string>
     <string name="highscores">Highscores</string>
-    <string name="custom">Custom Gamemodes</string>
+    <string name="custom">Community Gamemodes</string>
 
     <string name="error_login">Email or password are incorrect</string>
     <string name="error_net">Error trying to connect to server</string>
@@ -85,13 +85,15 @@
     <string name="choose_csp">Character Modes</string>
     <string name="choose_isp">Image Modes</string>
     <string name="choose_wsp">Word Modes</string>
-    <string name="choose_customsp">Custom Modes</string>
-    <string name="download_custom_gamemodes">Update Custom Gamemodes</string>
+    <string name="choose_customsp">Community Modes</string>
+    <string name="download_custom_gamemodes">Update Community Gamemodes</string>
     <string name="item_custom_by_email">By %s</string>
 
     <string name="end_game_title">Final Score</string>
     <string name="score_highscore">NEW HIGHSCORE!</string>
     <string name="end_game_message">Your Score in %1$s (%2$s) is %3$f</string>
+
+    <string name="custom_title">Community Gamemodes</string>
 
     <!-- STYLE PACKS -->
 

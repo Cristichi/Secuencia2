@@ -8,6 +8,6 @@ public class CustomMenuActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_custom_high_scores_menu);
+        setContentView(R.layout.activity_custom_menu);
     }
 }

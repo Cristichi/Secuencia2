@@ -6,7 +6,7 @@
     <string name="login">Iniciar Sesión</string>
     <string name="settings">Ajustes</string>
     <string name="highscores">Marcadores</string>
-    <string name="custom">Modos Personalizados</string>
+    <string name="custom">Modos de la Comunidad</string>
 
     <string name="error_login">Correo o contraseña incorrectos</string>
     <string name="error_net">Error al conectar al servidor</string>
@@ -84,13 +84,15 @@
     <string name="choose_csp">Modos de Caracteres</string>
     <string name="choose_isp">Modos de Imágenes</string>
     <string name="choose_wsp">Modos de Palabras</string>
-    <string name="choose_customsp">Modos Personalizados</string>
-    <string name="download_custom_gamemodes">Recargar Modos Personalizados</string>
+    <string name="choose_customsp">Modos de la Comunidad</string>
+    <string name="download_custom_gamemodes">Recargar Modos de la Comunidad</string>
     <string name="item_custom_by_email">Por %s</string>
 
     <string name="end_game_title">Puntuación</string>
     <string name="score_highscore">¡NUEVO RÉCORD!</string>
     <string name="end_game_message">Tu Puntuación en %1Ss (%2Ss) es %3$f</string>
+
+    <string name="custom_title">Modos de la Comunidad</string>
 
     <string name="csp_alphabet_name">Abecedario</string>
     <string name="csp_alphabet1_name">Abecedario A-I</string>

@@ -12,6 +12,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageButton;
+import android.widget.SearchView;
 import android.widget.TextView;
 
 import org.iesmurgi.cristichi.data.CustomGamemode;
@@ -22,11 +24,13 @@ import org.iesmurgi.cristichi.data.LoadInfoCustomGamemodes;
 import org.iesmurgi.cristichi.game.CustomGameActivity;
 
 import java.sql.Time;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 public class FragmentCustomGamemode extends FragmentGamemodes {
 
+    private List<InfoCustomGamemode> infos;
 
     public FragmentCustomGamemode(){
     }
@@ -44,12 +48,11 @@ public class FragmentCustomGamemode extends FragmentGamemodes {
         final RecyclerView rv = sol.findViewById(R.id.recyclerView);
         rv.setLayoutManager(new LinearLayoutManager(inflater.getContext()));
 
-        final Button btnReload = sol.findViewById(R.id.btnDownload);
-        btnReload.setOnClickListener(new View.OnClickListener() {
+        final SearchView searchView = sol.findViewById(R.id.searchView);
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
-            public void onClick(View v) {
-                v.setEnabled(false);
-                LoadInfoCustomGamemodes task = new LoadInfoCustomGamemodes(){
+            public boolean onQueryTextSubmit(String query) {
+                LoadInfoCustomGamemodes task = new LoadInfoCustomGamemodes((query.trim().equals("")?null:query)){
                     @Override
                     protected void onPostExecute(List<InfoCustomGamemode> infoCustomGamemodes) {
                         super.onPostExecute(infoCustomGamemodes);
@@ -60,9 +63,32 @@ public class FragmentCustomGamemode extends FragmentGamemodes {
                 try {
                     task.get(2, TimeUnit.SECONDS);
                 }catch (Exception e){}
-                v.setEnabled(true);
+                return true;
+            }
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                newText = newText.trim().toLowerCase();
+                List<InfoCustomGamemode> newInfos = new ArrayList<>(infos.size());
+                for(InfoCustomGamemode info : infos){
+                    if (info.getName().toLowerCase().contains(newText) || info.getUserEmail().toLowerCase().contains(newText)){
+                        newInfos.add(info);
+                    }
+                }
+                rv.setAdapter(new RecyclerViewCustomGamemodeAdapter(inflater.getContext(), newInfos));
+                return false;
             }
         });
+        searchView.setEnabled(false);
+        LoadInfoCustomGamemodes task = new LoadInfoCustomGamemodes(null){
+            @Override
+            protected void onPostExecute(List<InfoCustomGamemode> infoCustomGamemodes) {
+                super.onPostExecute(infoCustomGamemodes);
+                infos = infoCustomGamemodes;
+                rv.setAdapter(new RecyclerViewCustomGamemodeAdapter(inflater.getContext(), infoCustomGamemodes));
+                searchView.setEnabled(true);
+            }
+        };
+        task.execute();
         return sol;
     }
 }

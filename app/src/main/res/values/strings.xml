@@ -87,6 +87,7 @@
     <string name="choose_wsp">Word Modes</string>
     <string name="choose_customsp">Community Modes</string>
     <string name="download_custom_gamemodes">Update Community Gamemodes</string>
+    <string name="search_custom_gamemodes">Search Community Gamemodes</string>
     <string name="item_custom_by_email">By %s</string>
 
     <string name="end_game_title">Final Score</string>
@@ -94,6 +95,8 @@
     <string name="end_game_message">Your Score in %1$s (%2$s) is %3$f</string>
 
     <string name="custom_title">Community Gamemodes</string>
+    <string name="custom_highscores">HighScores</string>
+    <string name="custom_creator">Gamemode Creator</string>
 
     <!-- STYLE PACKS -->
 

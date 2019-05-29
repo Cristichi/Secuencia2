@@ -1,6 +1,7 @@
 package org.iesmurgi.cristichi.data;
 
 import android.os.AsyncTask;
+import android.support.annotation.Nullable;
 
 import org.iesmurgi.cristichi.ddbb.DDBBConstraints;
 
@@ -14,6 +15,12 @@ import java.util.List;
 
 public class LoadInfoCustomGamemodes extends AsyncTask<Void, Void, List<InfoCustomGamemode>> {
     private boolean exception;
+
+    private String search;
+
+    public LoadInfoCustomGamemodes(@Nullable String search){
+        this.search = search;
+    }
 
     @Override
     protected void onPreExecute() {
@@ -30,7 +37,7 @@ public class LoadInfoCustomGamemodes extends AsyncTask<Void, Void, List<InfoCust
             con = DriverManager.getConnection(DDBBConstraints.URL_DDBB, DDBBConstraints.USER, DDBBConstraints.PASSWORD);
 
             Statement st = con.createStatement();
-            ResultSet rs = st.executeQuery("SELECT Id, UserEmail, Name from CustomGamemodes order by Downloads");
+            ResultSet rs = st.executeQuery("SELECT Id, UserEmail, Name from CustomGamemodes "+(search==null?"":"where Name like \"%"+search+"%\" or UserEmail like \"%"+search+"%\" ")+"order by Downloads"+(search==null?" limit 50":""));
 
             while (rs.next()) {
                 int id = rs.getInt(1);

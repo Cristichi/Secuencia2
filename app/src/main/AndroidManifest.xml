@@ -12,8 +12,13 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".CustomMenuActivity"
-            android:label="@string/custom_title"
+        <activity android:name=".MyCustomGamemodesActivity"
+            android:label="@string/custom_menu_title"
+            android:theme="@style/AppTheme.WithBar"
+            />
+        <activity
+            android:name=".CustomMenuActivity"
+            android:label="@string/custom_menu_title"
             android:theme="@style/AppTheme.WithBar" />
         <activity
             android:name=".EditAccountActivity"
@@ -35,8 +40,7 @@
             android:name=".LoginActivity"
             android:label="@string/login_title"
             android:theme="@style/AppTheme.WithBar" />
-        <activity android:name=".ScoreActivity"
-            />
+        <activity android:name=".ScoreActivity" />
         <activity
             android:name=".game.WordGameActivity"
             android:configChanges="orientation|keyboardHidden" />

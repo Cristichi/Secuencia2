@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -52,6 +53,7 @@ public class FragmentCustomGamemode extends FragmentGamemodes {
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
+                Log.d("CRISTICHIEX", "NEPEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE");
                 LoadInfoCustomGamemodes task = new LoadInfoCustomGamemodes((query.trim().equals("")?null:query)){
                     @Override
                     protected void onPostExecute(List<InfoCustomGamemode> infoCustomGamemodes) {
@@ -67,15 +69,19 @@ public class FragmentCustomGamemode extends FragmentGamemodes {
             }
             @Override
             public boolean onQueryTextChange(String newText) {
-                newText = newText.trim().toLowerCase();
-                List<InfoCustomGamemode> newInfos = new ArrayList<>(infos.size());
-                for(InfoCustomGamemode info : infos){
-                    if (info.getName().toLowerCase().contains(newText) || info.getUserEmail().toLowerCase().contains(newText)){
-                        newInfos.add(info);
+                if(newText.equals("")){
+                    this.onQueryTextSubmit("");
+                }else{
+                    newText = newText.trim().toLowerCase();
+                    List<InfoCustomGamemode> newInfos = new ArrayList<>(infos.size());
+                    for(InfoCustomGamemode info : infos){
+                        if (info.getName().toLowerCase().contains(newText) || info.getUserEmail().toLowerCase().contains(newText)){
+                            newInfos.add(info);
+                        }
                     }
+                    rv.setAdapter(new RecyclerViewCustomGamemodeAdapter(inflater.getContext(), newInfos));
                 }
-                rv.setAdapter(new RecyclerViewCustomGamemodeAdapter(inflater.getContext(), newInfos));
-                return false;
+                return true;
             }
         });
         searchView.setEnabled(false);
@@ -131,8 +137,9 @@ class RecyclerViewCustomGamemodeAdapter extends RecyclerView.Adapter<CustomGamem
 
                                 alert =  new AlertDialog.Builder(context)
                                         .setCancelable(false)
-                                        .setTitle(context.getString(R.string.pick_diff)+" "+este.getName())
+                                        .setTitle(context.getString(R.string.downloading_custom_gamemode))
                                         .show();
+                                alert.setTitle(context.getString(R.string.downloading_custom_gamemode));
                             }
 
                             @Override

@@ -88,15 +88,19 @@
     <string name="choose_customsp">Community Modes</string>
     <string name="download_custom_gamemodes">Update Community Gamemodes</string>
     <string name="search_custom_gamemodes">Search Community Gamemodes</string>
+    <string name="downloading_custom_gamemode">Downloading, please wait&#8230;</string>
     <string name="item_custom_by_email">By %s</string>
 
     <string name="end_game_title">Final Score</string>
     <string name="score_highscore">NEW HIGHSCORE!</string>
     <string name="end_game_message">Your Score in %1$s (%2$s) is %3$f</string>
 
-    <string name="custom_title">Community Gamemodes</string>
-    <string name="custom_highscores">HighScores</string>
-    <string name="custom_creator">Gamemode Creator</string>
+    <string name="custom_menu_title">Community Gamemodes</string>
+    <string name="custom_menu_highscores">HighScores</string>
+    <string name="custom_menu_list">My Custom Gamemodes</string>
+
+    <string name="custom_list_title">My Custom Gamemodes</string>
+    <string name="custom_list_add">Create Custom Gamemodes</string>
 
     <!-- STYLE PACKS -->
 

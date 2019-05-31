@@ -73,7 +73,7 @@ public class CustomGameActivity extends ActivityGameWithMusic {
 
         try{
             Bundle extras = getIntent().getExtras();
-            sp = new CustomGamemode(extras.getInt("id"), extras.getString("email"), extras.getString("name"), extras.getString("values"));
+            sp = new CustomGamemode(extras.getInt("id"), extras.getString("email"), extras.getString("name"), extras.getString("values"), -1);
             diff = Difficulty.values()[extras.getInt("difficulty", -1)];
 
             TextView title = findViewById(R.id.tvTitle);

@@ -39,13 +39,15 @@ public class LoadCustomGamemode extends AsyncTask<Void, Void, CustomGamemode> {
 
             Statement st = con.createStatement();
             st.setQueryTimeout(2);
-            ResultSet rs = st.executeQuery("SELECT UserEmail, Name, GameValues from CustomGamemodes where Id='"+id+"'");
+            ResultSet rs = st.executeQuery("SELECT UserEmail, Name, GameValues, Downloads from CustomGamemodes where Id='"+id+"'");
 
             if (rs.next()) {
                 String userEmail = rs.getString(1);
                 String name = rs.getString(2);
                 String values = rs.getString(3);
-                sol = new CustomGamemode(id, userEmail, name, values);
+                int downs = rs.getInt(4);
+                sol = new CustomGamemode(id, userEmail, name, values, downs);
+                st.executeUpdate("update CustomGamemodes set Downloads = Downloads+1 where Id="+id);
             }else{
                 exception = true;
             }

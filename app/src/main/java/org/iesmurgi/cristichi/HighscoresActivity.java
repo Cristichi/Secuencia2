@@ -133,7 +133,6 @@ public class HighscoresActivity extends ActivityWithMusic {
     }
 
     private class RVHighScoresAdapter extends RecyclerView.Adapter<RecyclerViewHolder>{
-
         List<HighScore> highScores;
 
         RVHighScoresAdapter(List<HighScore> highScores){

@@ -16,15 +16,17 @@ public class CustomGamemode {
     private String userEmail;
     private String name;
     private String valuesString;
+    private int downloads;
     private String[] values;
 
     private Random rng;
 
-    public CustomGamemode(int id, String userEmail, String name, String values) {
+    public CustomGamemode(int id, String userEmail, String name, String values, int downloads) {
         rng = new Random();
         this.id = id;
         this.userEmail = userEmail;
         this.name = name;
+        this.downloads = downloads;
         this.valuesString = values;
 
         StringTokenizer st = new StringTokenizer(values, DELIM);
@@ -48,6 +50,10 @@ public class CustomGamemode {
 
     public String getValuesString() {
         return valuesString;
+    }
+
+    public int getDownloads() {
+        return downloads;
     }
 
     public ArrayList<Button> getButtons(Context context) {

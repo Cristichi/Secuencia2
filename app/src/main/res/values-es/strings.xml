@@ -100,6 +100,22 @@
 
     <string name="custom_list_title">Mis Modos de Juego</string>
     <string name="custom_list_add">Crear un Modo de Juego</string>
+    <string name="custom_list_ask_delete_message">¿Borrar %1$s?</string>
+    <string name="custom_list_ask_delete_ok">Sí, estoy seguro</string>
+    <string name="custom_list_ask_delete_cancel">Cancelar</string>
+    <string name="custom_list_delete_title">Borrando</string>
+    <string name="custom_list_delete_message">Conectando al servidor, espere por favor&#8230;</string>
+    <string name="custom_list_delete_good">Has borrado tu modo de juego</string>
+    <string name="custom_list_delete_bad">Error. Comprueba tu conexión a Internet</string>
+
+    <string name="custom_editor_name">Mi Modo Personalizado</string>
+    <string name="custom_editor_add_string">Añadir nuevo valor</string>
+    <string name="custom_editor_error_empty_name">Pon un nombre a tu Modo de Juego</string>
+    <string name="custom_editor_error_not_enough_values">Por favor, introduce al menos 3 valores</string>
+    <string name="custom_editor_uploading_title">Publicando</string>
+    <string name="custom_editor_uploading_message">Conectando al servidor, espere por favor&#8230;</string>
+    <string name="custom_editor_uploading_good">¡Has publicado tu modo de juego!</string>
+    <string name="custom_editor_uploading_bad">Error. Quizás ya tenías un Modo de Juego con ese nombre</string>
 
     <!-- STYLE PACKS -->
 

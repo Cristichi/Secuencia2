@@ -91,7 +91,7 @@ public class MainActivity extends ActivityWithMusic {
             SoundSystem.playMusicBackground();
         }
         if (Session.isLogged()){
-            //String str = getString(R.string.account) + " " + Session.getUser().nick;
+            //String str = getString(R.stringList.account) + " " + Session.getUser().nick;
             String str = Session.getUser().nick;
             btnAccount.setText(str);
             ivNewPoint.setVisibility(View.INVISIBLE);

@@ -101,6 +101,22 @@
 
     <string name="custom_list_title">My Custom Gamemodes</string>
     <string name="custom_list_add">Create Custom Gamemodes</string>
+    <string name="custom_list_ask_delete_message">Delete %1$s?</string>
+    <string name="custom_list_ask_delete_ok">Yes, I\'m sure</string>
+    <string name="custom_list_ask_delete_cancel">Cancel</string>
+    <string name="custom_list_delete_title">Deleting</string>
+    <string name="custom_list_delete_message">Connecting to the server, please wait&#8230;</string>
+    <string name="custom_list_delete_good">Your gamemode was delete successfully</string>
+    <string name="custom_list_delete_bad">Error. Check your Internet connection</string>
+
+    <string name="custom_editor_name">My Custom Mode</string>
+    <string name="custom_editor_add_string">Add new value</string>
+    <string name="custom_editor_error_empty_name">Enter a name for your gamemode</string>
+    <string name="custom_editor_error_not_enough_values">Enter at least 3 values</string>
+    <string name="custom_editor_uploading_title">Uploading</string>
+    <string name="custom_editor_uploading_message">Connecting to the server, please wait&#8230;</string>
+    <string name="custom_editor_uploading_good">Your gamemode was uploaded successfully!</string>
+    <string name="custom_editor_uploading_bad">Error. Maybe you already have a Gamemode with the same name</string>
 
     <!-- STYLE PACKS -->
 

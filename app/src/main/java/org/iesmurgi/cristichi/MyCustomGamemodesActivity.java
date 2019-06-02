@@ -1,5 +1,8 @@
 package org.iesmurgi.cristichi;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
@@ -11,9 +14,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import org.iesmurgi.cristichi.data.CustomGamemode;
+import org.iesmurgi.cristichi.data.DeleteCustomGamemode;
 import org.iesmurgi.cristichi.ddbb.DDBBConstraints;
 import org.iesmurgi.cristichi.ddbb.Session;
 
@@ -42,25 +47,32 @@ public class MyCustomGamemodesActivity extends AppCompatActivity {
         btnAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Intent intent = new Intent(MyCustomGamemodesActivity.this, CustomEditorActivity.class);
+                startActivity(intent);
             }
         });
 
         rv = findViewById(R.id.recyclerView);
         rv.setLayoutManager(new LinearLayoutManager(this));
+    }
 
-        LoadMyCustomGamemode task = new LoadMyCustomGamemode(rv, Session.getUser().email);
+    @Override
+    protected void onStart() {
+        super.onStart();
+        LoadMyCustomGamemodes task = new LoadMyCustomGamemodes(rv, Session.getUser().email);
         task.execute();
     }
 
     private static class RecyclerViewHolder extends RecyclerView.ViewHolder {
         TextView tvName;
         TextView tvDownloads;
+        ImageButton btnRemove;
 
         RecyclerViewHolder(View itemView) {
             super(itemView);
-
             tvName = itemView.findViewById(R.id.tvName);
             tvDownloads = itemView.findViewById(R.id.tvDownloads);
+            btnRemove = itemView.findViewById(R.id.btnRemove);
         }
     }
 
@@ -84,10 +96,41 @@ public class MyCustomGamemodesActivity extends AppCompatActivity {
         }
 
         @Override
-        public void onBindViewHolder(@NonNull RecyclerViewHolder holder, int position) {
-            CustomGamemode gm = gamemodes.get(position);
+        public void onBindViewHolder(@NonNull RecyclerViewHolder holder, final int position) {
+            final CustomGamemode gm = gamemodes.get(position);
             holder.tvName.setText(gm.getName());
             holder.tvDownloads.setText(gm.getDownloads()+"");
+            holder.btnRemove.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    new AlertDialog.Builder(MyCustomGamemodesActivity.this)
+                            .setMessage(String.format(getString(R.string.custom_list_ask_delete_message), gm.getName()))
+                            .setPositiveButton(R.string.custom_list_ask_delete_ok, new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    dialog.cancel();
+                                    DeleteCustomGamemode task = new DeleteCustomGamemode(MyCustomGamemodesActivity.this, gm.getId()){
+                                        @Override
+                                        protected void onPostExecute(Boolean aBoolean) {
+                                            super.onPostExecute(aBoolean);
+                                            if (aBoolean){
+                                                RecyclerAdapter.this.gamemodes.remove(gm);
+                                                RecyclerAdapter.this.notifyDataSetChanged();
+                                            }
+                                        }
+                                    };
+                                    task.execute();
+                                }
+                            })
+                            .setNegativeButton(R.string.custom_list_ask_delete_cancel, new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    dialog.cancel();
+                                }
+                            })
+                            .show();
+                }
+            });
         }
 
         @Override
@@ -101,13 +144,13 @@ public class MyCustomGamemodesActivity extends AppCompatActivity {
         }
     }
 
-    private class LoadMyCustomGamemode extends AsyncTask<Void, Void, List<CustomGamemode>> {
+    private class LoadMyCustomGamemodes extends AsyncTask<Void, Void, List<CustomGamemode>> {
         private boolean exception;
 
         private String userEmail;
         private RecyclerView rv;
 
-        public LoadMyCustomGamemode(RecyclerView rv, String userEmail){
+        public LoadMyCustomGamemodes(RecyclerView rv, String userEmail){
             this.userEmail = userEmail;
             this.rv = rv;
         }
@@ -134,11 +177,13 @@ public class MyCustomGamemodesActivity extends AppCompatActivity {
                 ResultSet rs = st.executeQuery("SELECT Id, Name, GameValues, Downloads from CustomGamemodes where UserEmail='"+userEmail+"'");
 
                 if (rs.next()) {
-                    int id = rs.getInt(1);
-                    String name = rs.getString(2);
-                    String values = rs.getString(3);
-                    int downs = rs.getInt(4);
-                    sol.add(new CustomGamemode(id, userEmail, name, values, downs));
+                    do{
+                        int id = rs.getInt(1);
+                        String name = rs.getString(2);
+                        String values = rs.getString(3);
+                        int downs = rs.getInt(4);
+                        sol.add(new CustomGamemode(id, userEmail, name, values, downs));
+                    }while (rs.next());
                 }else{
                     exception = true;
                 }
@@ -159,7 +204,8 @@ public class MyCustomGamemodesActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(List<CustomGamemode> customGamemodes) {
             super.onPostExecute(customGamemodes);
-            rv.setAdapter(new RecyclerAdapter(customGamemodes));
+            if (!exception)
+                rv.setAdapter(new RecyclerAdapter(customGamemodes));
         }
     }
 }

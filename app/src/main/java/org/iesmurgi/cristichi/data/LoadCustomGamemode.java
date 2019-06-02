@@ -21,11 +21,6 @@ public class LoadCustomGamemode extends AsyncTask<Void, Void, CustomGamemode> {
     }
 
     @Override
-    protected void onPreExecute() {
-        super.onPreExecute();
-    }
-
-    @Override
     protected CustomGamemode doInBackground(Void... voids) {
         CustomGamemode sol = null;
         Connection con = null;

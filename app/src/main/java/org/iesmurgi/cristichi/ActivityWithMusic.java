@@ -15,4 +15,10 @@ public class ActivityWithMusic extends AppCompatActivity {
         super.onPause();
         SoundSystem.pauseMusicBackground();
     }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        SoundSystem.playCartoonSlipFall();
+    }
 }

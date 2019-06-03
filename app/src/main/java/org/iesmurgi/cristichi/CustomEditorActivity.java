@@ -24,7 +24,7 @@ import org.iesmurgi.cristichi.data.UploadCustomGamemode;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CustomEditorActivity extends AppCompatActivity {
+public class CustomEditorActivity extends ActivityWithMusic {
 
     private RecyclerAdapter adapter;
 
@@ -44,6 +44,7 @@ public class CustomEditorActivity extends AppCompatActivity {
         btnAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                SoundSystem.playRecordedCluk();
                 new CustomDialogAsk(CustomEditorActivity.this, adapter).show();
             }
         });
@@ -52,6 +53,7 @@ public class CustomEditorActivity extends AppCompatActivity {
         btnUpload.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                SoundSystem.playCartoonSlipUp();
                 String title = etName.getText().toString().trim();
                 if (title.isEmpty()){
                     new AlertDialog.Builder(CustomEditorActivity.this).setMessage(R.string.custom_editor_error_empty_name).show();
@@ -93,6 +95,7 @@ public class CustomEditorActivity extends AppCompatActivity {
             btnOk.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    SoundSystem.playRecordedPop();
                     String str = et.getText().toString();
                     if (str.isEmpty()){
                         return;

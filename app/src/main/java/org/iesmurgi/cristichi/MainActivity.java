@@ -70,9 +70,8 @@ public class MainActivity extends ActivityWithMusic {
             @Override
             public void onClick(View v) {
                 SoundSystem.playRecordedCluk();
-                Intent intento = new Intent(MainActivity.this, CustomMenuActivity.class);
+                Intent intento = new Intent(MainActivity.this, MyCustomGamemodesActivity.class);
                 startActivity(intento);
-                //finish();
             }
         });
 

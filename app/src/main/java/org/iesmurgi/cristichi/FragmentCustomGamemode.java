@@ -117,6 +117,7 @@ class RecyclerViewCustomGamemodeAdapter extends RecyclerView.Adapter<CustomGamem
             final int contado = cont++;
             @Override
             public void onClick(View v) {
+                SoundSystem.playRecordedPop();
                 final InfoCustomGamemode este = itemList.get(contado);
 
                 String[] diffs = new String[Difficulty.values().length];

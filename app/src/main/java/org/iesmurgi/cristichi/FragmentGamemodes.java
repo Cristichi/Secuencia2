@@ -77,6 +77,7 @@ class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewHolders> {
             final int contado = cont++;
             @Override
             public void onClick(View v) {
+                SoundSystem.playRecordedPop();
                 final Gamemode este = itemList.get(contado);
                 String[] diffs = new String[Difficulty.values().length];
                 for (int i=0; i<diffs.length; i++){

@@ -30,7 +30,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MyCustomGamemodesActivity extends AppCompatActivity {
+public class MyCustomGamemodesActivity extends ActivityWithMusic {
 
     private RecyclerView rv;
 
@@ -47,6 +47,7 @@ public class MyCustomGamemodesActivity extends AppCompatActivity {
         btnAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                SoundSystem.playCartoonSlipUp();
                 Intent intent = new Intent(MyCustomGamemodesActivity.this, CustomEditorActivity.class);
                 startActivity(intent);
             }
@@ -103,6 +104,7 @@ public class MyCustomGamemodesActivity extends AppCompatActivity {
             holder.btnRemove.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    SoundSystem.playRecordedPop();
                     new AlertDialog.Builder(MyCustomGamemodesActivity.this)
                             .setMessage(String.format(getString(R.string.custom_list_ask_delete_message), gm.getName()))
                             .setPositiveButton(R.string.custom_list_ask_delete_ok, new DialogInterface.OnClickListener() {
@@ -114,6 +116,7 @@ public class MyCustomGamemodesActivity extends AppCompatActivity {
                                         protected void onPostExecute(Boolean aBoolean) {
                                             super.onPostExecute(aBoolean);
                                             if (aBoolean){
+                                                SoundSystem.playCartoonSlipFall();
                                                 RecyclerAdapter.this.gamemodes.remove(gm);
                                                 RecyclerAdapter.this.notifyDataSetChanged();
                                             }

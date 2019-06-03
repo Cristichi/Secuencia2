@@ -21,4 +21,10 @@ public class ActivityGameWithMusic extends AppCompatActivity {
         super.onDestroy();
         SoundSystem.stopMusicBackgroundGame();
     }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        SoundSystem.playCartoonFail();
+    }
 }

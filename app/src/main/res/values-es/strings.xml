@@ -6,7 +6,7 @@
     <string name="login">Iniciar Sesión</string>
     <string name="settings">Ajustes</string>
     <string name="highscores">Marcadores</string>
-    <string name="custom">Modos de la Comunidad</string>
+    <string name="custom">Mis Modos Personalizados</string>
 
     <string name="error_login">Correo o contraseña incorrectos</string>
     <string name="error_net">Error al conectar al servidor</string>

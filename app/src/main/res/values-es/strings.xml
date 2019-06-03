@@ -94,7 +94,7 @@
     <string name="score_highscore">¡NUEVO RÉCORD!</string>
     <string name="end_game_message">Tu Puntuación en %1Ss (%2Ss) es %3$f</string>
 
-    <string name="custom_menu_title">Modos de la Comunidad</string>
+    <string name="custom_menu_title">Mis Modos de Juego</string>
     <string name="custom_menu_highscores">Marcadores</string>
     <string name="custom_menu_list">Mis Modos de Juego</string>
 

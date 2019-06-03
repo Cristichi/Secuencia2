@@ -95,7 +95,7 @@
     <string name="score_highscore">NEW HIGHSCORE!</string>
     <string name="end_game_message">Your Score in %1$s (%2$s) is %3$f</string>
 
-    <string name="custom_menu_title">Community Gamemodes</string>
+    <string name="custom_menu_title">My Gamemodes</string>
     <string name="custom_menu_highscores">HighScores</string>
     <string name="custom_menu_list">My Custom Gamemodes</string>
 

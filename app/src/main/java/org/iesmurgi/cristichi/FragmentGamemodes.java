@@ -10,6 +10,7 @@ import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -115,6 +116,7 @@ class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewHolders> {
     @Override
     public void onBindViewHolder(@NonNull RecyclerViewHolders holder, int position) {
         holder.tvName.setText(itemList.get(position).getName());
+        Log.d("CRISTICHIEX", itemList.get(position).getCode()+": "+itemList.get(position).getIcon());
         holder.ivPhoto.setImageResource(itemList.get(position).getIcon());
         holder.ivPhoto.setColorFilter(holder.ivPhoto.getContext().getResources().getColor(R.color.secondaryDarkColor));
     }

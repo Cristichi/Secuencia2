@@ -94,9 +94,11 @@ public class MainActivity extends ActivityWithMusic {
             String str = Session.getUser().nick;
             btnAccount.setText(str);
             ivNewPoint.setVisibility(View.INVISIBLE);
+            btnCustom.setVisibility(View.VISIBLE);
         }else{
             btnAccount.setText(R.string.login);
             ivNewPoint.setVisibility(View.VISIBLE);
+            btnCustom.setVisibility(View.INVISIBLE);
         }
     }
 

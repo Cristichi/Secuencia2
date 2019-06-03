@@ -44,10 +44,14 @@ public class LoginActivity extends ActivityWithMusic {
             public void onClick(View v) {
                 SoundSystem.playRecordedCluk();
                 tvError.setText("");
-                InputMethodManager inputManager = (InputMethodManager)
-                        getSystemService(Context.INPUT_METHOD_SERVICE);
-                inputManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(),
-                        InputMethodManager.HIDE_NOT_ALWAYS);
+                try{
+                    InputMethodManager inputManager = (InputMethodManager)
+                            getSystemService(Context.INPUT_METHOD_SERVICE);
+                    inputManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(),
+                            InputMethodManager.HIDE_NOT_ALWAYS);
+                }catch (NullPointerException e){
+
+                }
                 final String email = etEmail.getText().toString(),
                         pass = etPass.getText().toString();
                 if (email.isEmpty() || pass.isEmpty()){

@@ -17,6 +17,7 @@
         android:ems="10"
         android:hint="@string/custom_editor_name"
         android:inputType="textPersonName"
+        android:maxLength="25"
         android:textAlignment="center"
         android:textStyle="italic"
         app:layout_constraintEnd_toEndOf="parent"

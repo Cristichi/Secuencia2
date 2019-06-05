@@ -22,7 +22,8 @@
         <activity
             android:name=".EditAccountActivity"
             android:label="@string/account_update_title"
-            android:theme="@style/AppTheme.WithBar" />
+            android:theme="@style/AppTheme.WithBar"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".HighscoresActivity"
             android:label="@string/highscores_title"

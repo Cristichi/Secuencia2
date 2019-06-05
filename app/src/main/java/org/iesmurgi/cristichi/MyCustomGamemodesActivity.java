@@ -100,7 +100,7 @@ public class MyCustomGamemodesActivity extends ActivityWithMusic {
         public void onBindViewHolder(@NonNull RecyclerViewHolder holder, final int position) {
             final CustomGamemode gm = gamemodes.get(position);
             holder.tvName.setText(gm.getName());
-            holder.tvDownloads.setText(gm.getDownloads()+"");
+            holder.tvDownloads.setText(String.valueOf(gm.getDownloads()));
             holder.btnRemove.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -139,11 +139,6 @@ public class MyCustomGamemodesActivity extends ActivityWithMusic {
         @Override
         public int getItemCount() {
             return gamemodes.size();
-        }
-
-        public void clear(){
-            gamemodes.clear();
-            notifyDataSetChanged();
         }
     }
 

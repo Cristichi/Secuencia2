@@ -173,6 +173,7 @@ public class CustomGameActivity extends ActivityGameWithMusic {
                             intento.putExtra("difficultyName", diff.getName());
                             intento.putExtra("difficultyId", diff.getId());
                             intento.putExtra("customGamemodeId", sp.getId());
+                            intento.putExtra("gamemodeName", sp.getName());
                             CustomGameActivity.this.startActivity(intento);
                             CustomGameActivity.this.finish();
                         }else{

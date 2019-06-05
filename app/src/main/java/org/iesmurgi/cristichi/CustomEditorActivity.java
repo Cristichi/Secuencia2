@@ -96,7 +96,7 @@ public class CustomEditorActivity extends ActivityWithMusic {
                 @Override
                 public void onClick(View v) {
                     SoundSystem.playRecordedPop();
-                    String str = et.getText().toString();
+                    String str = et.getText().toString().trim();
                     if (str.isEmpty()){
                         return;
                     }
@@ -142,12 +142,12 @@ public class CustomEditorActivity extends ActivityWithMusic {
         }
 
         @Override
-        public void onBindViewHolder(@NonNull RecyclerViewHolder holder, final int position) {
+        public void onBindViewHolder(@NonNull final RecyclerViewHolder holder, final int position) {
             holder.tvValue.setText(stringList.get(position));
             holder.btnRemove.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    removeItem(position);
+                    removeItem(holder.getAdapterPosition());
                 }
             });
         }

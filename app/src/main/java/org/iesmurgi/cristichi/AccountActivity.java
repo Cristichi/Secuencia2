@@ -174,7 +174,7 @@ public class AccountActivity extends ActivityWithMusic {
 
                 Statement st = con.createStatement();
                 ResultSet rs = st.executeQuery("SELECT Gamemode, Difficulty, Score, ScoreDate from HighScores where " +
-                        "UserEmail='"+user.email+"' order by Score");
+                        "UserEmail='"+user.email+"' order by Score desc");
 
                 while (rs.next()) {
                     String gamemode = rs.getString(1);

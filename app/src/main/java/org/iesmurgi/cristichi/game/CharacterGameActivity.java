@@ -34,7 +34,6 @@ public class CharacterGameActivity extends ActivityGameWithMusic {
     private int btnSize;
     private float charSize;
     private float charSizeTarget;
-    private int textColorPrimary;
     private int textColorSecondary;
 
     private CharacterGamemode sp;
@@ -52,7 +51,6 @@ public class CharacterGameActivity extends ActivityGameWithMusic {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
 
-        textColorPrimary =  ResourcesCompat.getColor(getResources(), R.color.primaryTextColor, getTheme());
         textColorSecondary =  ResourcesCompat.getColor(getResources(), R.color.secondaryTextColor, getTheme());
 
         Display display = getWindowManager().getDefaultDisplay();
@@ -80,7 +78,7 @@ public class CharacterGameActivity extends ActivityGameWithMusic {
             llSerialView = findViewById(R.id.llSerialView);
             tlButtons = findViewById(R.id.tlButtons);
 
-            secuence = sp.generateRandomSentence(diff);
+            secuence = sp.generateRandomSecuence(diff);
             secuenceInicial = secuence.size();
             boolean first = true;
             for(Character car : secuence){

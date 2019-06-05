@@ -94,6 +94,7 @@ public class ScoreActivity extends ActivityWithMusic {
             if (gamemodeName!=-1)
                 tvGamemode.setText(gamemodeName);
             else
+                //tvGamemode.setText(extras.getString("gamemodeName"));
                 tvGamemode.setText(extras.getString("gamemodeName"));
             tvDifficulty.setText(difficultyName);
 
@@ -104,18 +105,24 @@ public class ScoreActivity extends ActivityWithMusic {
                         int gamemodeId = extras.getInt("customGamemodeId");
                         IsCustomHighScore task = new IsCustomHighScore(score, user.email, gamemodeId, difficultyId);
                         task.execute();
-                        if (task.get(2, TimeUnit.SECONDS)){
+                        IsHighScoreResult result = task.get(2, TimeUnit.SECONDS);
+                        if (result.isGlobalHighScore()){
                             TextView tvHS = findViewById(R.id.tvHighScore);
                             tvHS.setVisibility(View.VISIBLE);
+                        }
+                        if (result.isPersonalHighScore()) {
                             SaveCustomScoreMYSQL taskSave = new SaveCustomScoreMYSQL(score, user.email, gamemodeId, difficultyId, date.toString());
                             taskSave.execute();
                         }
                     }else{
                         IsHighScore task = new IsHighScore(score, user.email, gamemodeCode, difficultyId);
                         task.execute();
-                        if (task.get(2, TimeUnit.SECONDS)){
+                        IsHighScoreResult result = task.get(2, TimeUnit.SECONDS);
+                        if (result.isGlobalHighScore()){
                             TextView tvHS = findViewById(R.id.tvHighScore);
                             tvHS.setVisibility(View.VISIBLE);
+                        }
+                        if (result.isPersonalHighScore()) {
                             SaveScoreMYSQL taskSave = new SaveScoreMYSQL(score, user.email, gamemodeCode, difficultyId, date.toString());
                             taskSave.execute();
                         }
@@ -129,7 +136,7 @@ public class ScoreActivity extends ActivityWithMusic {
         }
     }
 
-    private static class SaveScoreMYSQL extends AsyncTask<Void, Void, Void> {
+    private class SaveScoreMYSQL extends AsyncTask<Void, Void, Boolean> {
         private boolean ini;
 
         private double score;
@@ -148,11 +155,11 @@ public class ScoreActivity extends ActivityWithMusic {
         }
 
         @Override
-        protected Void doInBackground(Void... params) {
+        protected Boolean doInBackground(Void... params) {
             if (!ini){
-                return null;
+                return false;
             }
-
+            boolean sol = false;
             Connection con = null;
             try {
                 Log.d("CRISTICHIEX", "delete from HighScores where UserEmail='"+email+"' and Gamemode='"+mode+"' and Difficulty='"+diff+"'");
@@ -165,6 +172,7 @@ public class ScoreActivity extends ActivityWithMusic {
                         "delete from HighScores where UserEmail='"+email+"' and Gamemode='"+mode+"' and Difficulty='"+diff+"'");
                 Statement st2 = con.createStatement();
                 st2.execute("insert into HighScores values('"+email+"', '"+mode+"', "+diff+", "+score+", '"+date+"')");
+                sol = true;
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -175,11 +183,37 @@ public class ScoreActivity extends ActivityWithMusic {
                     e.printStackTrace();
                 }
             }
-            return null;
+            return sol;
         }
     }
 
-    private static class IsHighScore extends AsyncTask<Void, Void, Boolean> {
+    private static class IsHighScoreResult{
+        private boolean globalHighScore;
+        private boolean personalHighScore;
+
+        IsHighScoreResult(boolean globalHighScore, boolean personalHighScore){
+            this.globalHighScore = globalHighScore;
+            this.personalHighScore = personalHighScore;
+        }
+
+        void setGlobalHighScore(boolean globalHighScore) {
+            this.globalHighScore = globalHighScore;
+        }
+
+        boolean isGlobalHighScore() {
+            return globalHighScore;
+        }
+
+        void setPersonalHighScore(boolean personalHighScore) {
+            this.personalHighScore = personalHighScore;
+        }
+
+        boolean isPersonalHighScore() {
+            return personalHighScore;
+        }
+    }
+
+    private static class IsHighScore extends AsyncTask<Void, Void, IsHighScoreResult> {
         private boolean ini;
 
         private double score;
@@ -196,12 +230,12 @@ public class ScoreActivity extends ActivityWithMusic {
         }
 
         @Override
-        protected Boolean doInBackground(Void... params) {
+        protected IsHighScoreResult doInBackground(Void... params) {
             if (!ini){
-                return false;
+                return new IsHighScoreResult(false, false);
             }
 
-            boolean sol = false;
+            IsHighScoreResult sol = new IsHighScoreResult(false, false);
             Connection con = null;
             try {
                 Class.forName("com.mysql.jdbc.Driver");
@@ -214,16 +248,34 @@ public class ScoreActivity extends ActivityWithMusic {
                 if (rs.next()) {
                     try{
                         float f = rs.getFloat(1);
-                        Log.d("CRISTICHIEX", ""+f+"<"+score+"=="+(f<score));
+                        Log.d("CRISTICHIEX", "(global) "+f+"<"+score+"=="+(f<score));
                         if (f<score){
-                            sol = true;
+                            sol.setGlobalHighScore(true);
                         }
                     }catch (Exception e){
                         e.printStackTrace();
-                        sol = true;
+                        sol.setGlobalHighScore(true);
                     }
                 }else{
-                    sol = true;
+                    sol.setGlobalHighScore(true);
+                }
+
+                ResultSet rs2 = st.executeQuery(
+                        "select max(Score) from HighScores where Gamemode='"+mode+"' and Difficulty='"+diff+"' and UserEmail='"+email+"'");
+
+                if (rs2.next()) {
+                    try{
+                        float f = rs2.getFloat(1);
+                        Log.d("CRISTICHIEX", "(personal) "+f+"<"+score+"=="+(f<score));
+                        if (f<score){
+                            sol.setPersonalHighScore(true);
+                        }
+                    }catch (Exception e){
+                        e.printStackTrace();
+                        sol.setPersonalHighScore(true);
+                    }
+                }else{
+                    sol.setPersonalHighScore(true);
                 }
             } catch (Exception e) {
                 e.printStackTrace();
@@ -287,7 +339,7 @@ public class ScoreActivity extends ActivityWithMusic {
         }
     }
 
-    private static class IsCustomHighScore extends AsyncTask<Void, Void, Boolean> {
+    private static class IsCustomHighScore extends AsyncTask<Void, Void, IsHighScoreResult> {
         private boolean ini;
 
         private double score;
@@ -304,12 +356,12 @@ public class ScoreActivity extends ActivityWithMusic {
         }
 
         @Override
-        protected Boolean doInBackground(Void... params) {
+        protected IsHighScoreResult doInBackground(Void... params) {
             if (!ini){
-                return false;
+                return new IsHighScoreResult(false, false);
             }
 
-            boolean sol = false;
+            IsHighScoreResult sol = new IsHighScoreResult(false, false);
             Connection con = null;
             try {
                 Class.forName("com.mysql.jdbc.Driver");
@@ -324,14 +376,32 @@ public class ScoreActivity extends ActivityWithMusic {
                     try{
                         float f = rs.getFloat(1);
                         if (f<score){
-                            sol = true;
+                            sol.setGlobalHighScore(true);
                         }
                     }catch (Exception e){
                         e.printStackTrace();
-                        sol = true;
+                        sol.setGlobalHighScore(true);
                     }
                 }else{
-                    sol = true;
+                    sol.setGlobalHighScore(true);
+                }
+
+                ResultSet rs2 = st.executeQuery(
+                        "select max(Score) from CustomHighScores where CustomGamemode='"+
+                                gamemodeId+"' and Difficulty='"+diff+"' and UserEmail='"+email+"'");
+
+                if (rs2.next()) {
+                    try{
+                        float f = rs2.getFloat(1);
+                        if (f<score){
+                            sol.setPersonalHighScore(true);
+                        }
+                    }catch (Exception e){
+                        e.printStackTrace();
+                        sol.setPersonalHighScore(true);
+                    }
+                }else{
+                    sol.setPersonalHighScore(true);
                 }
             } catch (Exception e) {
                 e.printStackTrace();

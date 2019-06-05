@@ -74,7 +74,7 @@ public class ImageGameActivity extends ActivityGameWithMusic {
             llSerialView = findViewById(R.id.llSerialView);
             tlButtons = findViewById(R.id.tlButtons);
 
-            secuence = sp.generateRandomSentence(diff);
+            secuence = sp.generateRandomSecuence(diff);
             secuenceInicial = secuence.size();
             boolean first = true;
             for(Integer img : secuence){

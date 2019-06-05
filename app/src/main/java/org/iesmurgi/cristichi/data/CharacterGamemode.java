@@ -41,7 +41,7 @@ public enum CharacterGamemode implements Gamemode<Character> {
         char[] operations = new char[]{'+', '-', '*', '/'};
 
         @Override
-        public List<Character> generateRandomSentence(Difficulty difficulty) {
+        public List<Character> generateRandomSecuence(Difficulty difficulty) {
             int elementos = difficulty.getNumElementos();
             elementos+= (rng.nextBoolean()?1:-1) * rng.nextInt(Math.max(elementos / 4, 1));
             ArrayList<Character> sol = new ArrayList<>(elementos);
@@ -144,7 +144,7 @@ public enum CharacterGamemode implements Gamemode<Character> {
     }
 
     @Override
-    public List<Character> generateRandomSentence(Difficulty difficulty) {
+    public List<Character> generateRandomSecuence(Difficulty difficulty) {
         int elementos = difficulty.getNumElementos();
         elementos+= (rng.nextBoolean()?1:-1) * rng.nextInt(Math.max(elementos / 4, 1));
         ArrayList<Character> sol = new ArrayList<>(elementos);

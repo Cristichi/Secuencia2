@@ -12,7 +12,7 @@ import java.util.List;
 
 public interface Gamemode<E> extends Serializable {
 
-    ArrayList<Button> getButtons(Context ctxt);
+    List<Button> getButtons(Context ctxt);
 
     String getCode();
 
@@ -22,5 +22,5 @@ public interface Gamemode<E> extends Serializable {
     @DrawableRes
     int getIcon();
 
-    List<E> generateRandomSentence(Difficulty difficulty);
+    List<E> generateRandomSecuence(Difficulty difficulty);
 }

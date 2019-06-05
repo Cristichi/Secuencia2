@@ -92,7 +92,7 @@ public enum WordGamemode implements Gamemode<Integer> {
 
 
     @Override
-    public List<Integer> generateRandomSentence(Difficulty difficulty) {
+    public List<Integer> generateRandomSecuence(Difficulty difficulty) {
         int elementos = difficulty.getNumElementos();
         elementos += (rng.nextBoolean() ? 1 : -1) * rng.nextInt(Math.max(elementos / 4, 1));
         ArrayList<Integer> sol = new ArrayList<>(elementos);

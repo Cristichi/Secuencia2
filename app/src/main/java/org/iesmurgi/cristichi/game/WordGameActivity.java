@@ -90,7 +90,7 @@ public class WordGameActivity extends ActivityGameWithMusic {
 
             tlButtons = findViewById(R.id.tlButtons);
 
-            secuence = sp.generateRandomSentence(diff);
+            secuence = sp.generateRandomSecuence(diff);
             secuenceInicial = secuence.size();
             boolean first = true;
             for(Integer car : secuence){

@@ -14,19 +14,37 @@ import java.sql.Statement;
 
 import javax.security.auth.login.LoginException;
 
+/**
+ * Clase que representa la sesión de un Usuario e informa de su estado.
+ */
 public class Session {
 
     private static boolean logged = false;
     private static User user;
 
+    /**
+     *
+     * @return True, si un Usuario tiene la sesión iniciada; false en otro caso.
+     */
     public static boolean isLogged() {
         return logged;
     }
 
+    /**
+     *
+     * @return El Usuario que ha iniciado sesión o null.
+     */
     public static User getUser() {
         return user;
     }
 
+    /**
+     * Intenta iniciar sesión. Se debe usar en una tarea asíncrona.
+     * @param ctxt Contexto de la actividad que ejecuta el método.
+     * @param email Email del Usuario.
+     * @param pass Contraseña del Usuario, sin encriptar.
+     * @return Un objeto ReturnLogin con un error o un usuario.
+     */
     public static ReturnLogin login(Context ctxt, String email, String pass){
         ReturnLogin sol = new ReturnLogin();
 
@@ -43,7 +61,7 @@ public class Session {
                 String nickread = rs.getString(1);
                 String emailread = rs.getString(2);
                 sol.user = new User(nickread, emailread);
-                LocalStorage.saveUser(ctxt, sol.user, pass);
+                LocalStorage.trySaveUser(ctxt, sol.user, pass);
                 logged = true;
                 Session.user = sol.user;
             }else{
@@ -64,11 +82,19 @@ public class Session {
         return sol;
     }
 
+    /**
+     * Cierra la sesión actual, si la hay.
+     */
     public static void logout(){
         logged = false;
         user = null;
     }
 
+    /**
+     * Encripta una cadena de texto.
+     * @param s Cadena de texto
+     * @return La misma cadena de texto, encriptada
+     */
     public static String encrypt(final String s) {
         final String MD5 = "MD5";
         try {
@@ -94,6 +120,9 @@ public class Session {
         return "";
     }
 
+    /**
+     * Excepción que representa un fallo por parte del servidor.
+     */
     public static class ServerException extends RuntimeException{
         public ServerException(String msg) {
             super(msg);

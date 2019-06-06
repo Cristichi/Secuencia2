@@ -1,5 +1,8 @@
 package org.iesmurgi.cristichi.ddbb;
 
+/**
+ * Almacena los datos de un Usuario
+ */
 public class User {
     public String nick;
     public String email;

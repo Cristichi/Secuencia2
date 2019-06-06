@@ -15,12 +15,15 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Statement;
 
+/**
+ * Tarea asíncrona para borrar un Modo de Juego personalizado dado por su Id
+ */
 public class DeleteCustomGamemode extends AsyncTask<Void, Void, Boolean> {
     private Activity ctxt;
     private AlertDialog dialog;
     private int id;
 
-    public DeleteCustomGamemode(Activity ctxt, int id){
+    protected DeleteCustomGamemode(Activity ctxt, int id){
         this.ctxt = ctxt;
         this.id = id;
     }

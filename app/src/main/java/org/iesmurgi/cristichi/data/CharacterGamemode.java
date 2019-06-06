@@ -12,6 +12,9 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
+/**
+ * Modos de Juego oficiales que funcionan por caracteres individuales
+ */
 public enum CharacterGamemode implements Gamemode<Character> {
     ALPHABET("ABC_AZ", R.string.csp_alphabet_name, R.drawable.icon_csp_alphabet,
             'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I',
@@ -116,17 +119,9 @@ public enum CharacterGamemode implements Gamemode<Character> {
         return sol;
     }
 
-    protected void setCode(String code) {
-        this.code = code;
-    }
-
     @Override
     public String getCode() {
         return code;
-    }
-
-    public void setName(@StringRes int name) {
-        this.name = name;
     }
 
     @Override @StringRes
@@ -137,10 +132,6 @@ public enum CharacterGamemode implements Gamemode<Character> {
     @Override
     public int getIcon() {
         return icon;
-    }
-
-    public char[] getValues() {
-        return values;
     }
 
     @Override

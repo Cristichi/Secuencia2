@@ -15,11 +15,21 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 
+/**
+ * Clase que engloba diferentes métodos que acceden a un archivo local donde se guardan
+ * las credenciales de 1 Usuario.
+ */
 public class LocalStorage {
 
     private static final String FILE = "loggeduser.bin";
 
-    public static boolean saveUser(Context context, User user, String pass){
+    /**
+     * Intenta guardar las credenciales de un Usuario en un archivo local.
+     * @param context Contexto de la actividad que ejecuta este método.
+     * @param user Usuario a guardar.
+     * @param pass Contraseña del usuario.
+     */
+    static void trySaveUser(Context context, User user, String pass){
         File dir = context.getFilesDir();
         File file = new File(dir, FILE);
 
@@ -32,12 +42,14 @@ public class LocalStorage {
             bw.newLine();
             bw.write(user.nick);
             bw.close();
-            return true;
         }catch (IOException e){
-            return false;
         }
     }
 
+    /**
+     * Intenta iniciar sesión con los datos del archivo local, si lo hay.
+     * @param context Contexto de la actividad que ejecuta este método.
+     */
     public static void tryLoginFromFile(Context context){
         File dir = context.getFilesDir();
         File file = new File(dir, FILE);
@@ -54,6 +66,12 @@ public class LocalStorage {
             e.printStackTrace();
         }
     }
+
+    /**
+     * Cierra sesión y borra las credenciales del Usuario en el archivo local.
+     * @param context
+     * @return True, si se ha cerrado sesión; false en otro caso.
+     */
     public static boolean logout(Context context){
         File dir = context.getFilesDir();
         File file = new File(dir, FILE);

@@ -39,7 +39,7 @@ public class LoadInfoCustomGamemodes extends AsyncTask<Void, Void, List<InfoCust
 
             Statement st = con.createStatement();
             ResultSet rs = st.executeQuery("SELECT Id, UserEmail, Name from CustomGamemodes "+(search==null?"":"where Name like \"%"+search+"%\" or UserEmail like \"%"+search+"%\" ")+"order by Downloads"+(search==null?" limit 50":""));
-            Log.d("CRISTICHIEX", "SELECT Id, UserEmail, Name from CustomGamemodes "+(search==null?"":"where Name like \"%"+search+"%\" or UserEmail like \"%"+search+"%\" ")+"order by Downloads"+(search==null?" limit 50":""));
+            Log.d("CRISTICHIEX", "SELECT Id, UserEmail, Name from CustomGamemodes "+(search==null?"":"where Name like \"%"+search+"%\" or UserEmail like \"%"+search+"%\" ")+"order by Downloads desc"+(search==null?" limit 50":""));
 
             while (rs.next()) {
                 int id = rs.getInt(1);

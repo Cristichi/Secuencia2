@@ -36,7 +36,6 @@ public class MainActivity extends ActivityWithMusic {
                 SoundSystem.playCartoonSlipUp();
                 Intent intento = new Intent(MainActivity.this, TabbedMenuActivity.class);
                 startActivity(intento);
-                //finish();
             }
         });
 

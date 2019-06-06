@@ -12,6 +12,9 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
+/**
+ * Modos de Juego oficiales que funcionan por palabras
+ */
 public enum WordGamemode implements Gamemode<Integer> {
     ERASMUS("ERASMUS", R.string.wsp_erasmus_name, R.drawable.icon_wsp_erasmus,
             R.string.wsp_erasmus_greece, R.string.wsp_erasmus_italy,
@@ -66,17 +69,9 @@ public enum WordGamemode implements Gamemode<Integer> {
         return sol;
     }
 
-    protected void setCode(String code) {
-        this.code = code;
-    }
-
     @Override
     public String getCode() {
         return code;
-    }
-
-    public void setName(@StringRes int name) {
-        this.name = name;
     }
 
     @Override

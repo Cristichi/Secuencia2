@@ -68,6 +68,9 @@ public class CustomEditorActivity extends ActivityWithMusic {
         });
     }
 
+    /**
+     * Diálogo que muestra un campo de texto y un botón de añadir que añade un elemento a la lista
+     */
     private class CustomDialogAsk extends Dialog{
         private RecyclerAdapter adapter;
         public CustomDialogAsk(Activity a, RecyclerAdapter adapter) {
@@ -177,14 +180,6 @@ public class CustomEditorActivity extends ActivityWithMusic {
             }
         }
 
-        public boolean removeItem(String string){
-            if (stringList.remove(string)){
-                notifyDataSetChanged();
-                return true;
-            }
-            return false;
-        }
-
         public List<String> getStringList() {
             return stringList;
         }
@@ -197,11 +192,6 @@ public class CustomEditorActivity extends ActivityWithMusic {
                 sol+=string+"\n";
             }
             return sol.trim();
-        }
-
-        public void clear(){
-            stringList.clear();
-            notifyDataSetChanged();
         }
     }
 }

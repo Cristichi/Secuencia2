@@ -1,13 +1,15 @@
 package org.iesmurgi.cristichi;
 
 import android.app.Activity;
+import android.content.Context;
 import android.media.AudioAttributes;
 import android.media.MediaPlayer;
 import android.media.SoundPool;
 
+/**
+ * Clase que engloba métodos que controlan el flujo de sonido, ya sea música o efectos de sonido.
+ */
 public class SoundSystem {
-    private static Activity context;
-
     private static MediaPlayer background;
     private static MediaPlayer gameBackground;
     private static SoundPool soundPool;
@@ -23,7 +25,11 @@ public class SoundSystem {
 
     private static boolean destroyed = true;
 
-    public static void Init(MainActivity context){
+    /**
+     * Debe ejecutarse este método antes de poder ejecutar cualquiera de los otros métodos.
+     * @param context Actividad principal.
+     */
+    public static void Init(Context context){
         if (!destroyed){
             return;
         }
@@ -52,85 +58,129 @@ public class SoundSystem {
         destroyed = false;
     }
 
+    /**
+     * Reproduce la música de fondo.
+     */
     public static void playMusicBackground(){
         if (!destroyed) {
             background.start();
         }
     }
 
+    /**
+     * Pausa la música de fondo.
+     */
     public static void pauseMusicBackground(){
         if (!destroyed) {
             background.pause();
         }
     }
 
+    /**
+     * Reproduce la música de fondo de las partidas.
+     */
     public static void playMusicBackgroundGame(){
         if (!destroyed) {
             gameBackground.start();
         }
     }
 
+    /**
+     * Pausa la música de fondo de las partidas.
+     */
     public static void pauseMusicBackgroundGame(){
         if (!destroyed) {
             gameBackground.pause();
         }
     }
 
-    public static void stopMusicBackgroundGame(){
+    /**
+     * Reinicia la música de fondo de las partidas.
+     */
+    public static void resetMusicBackgroundGame(){
         if (!destroyed) {
             gameBackground.pause();
             gameBackground.seekTo(0);
         }
     }
 
+    /**
+     * Reproduce el sonido correspondiente.
+     */
     public static void playCartoonPunch(){
         if (!destroyed){
             soundPool.play(soundIdCartoonPunch, 0.2f, 0.2f, 0, 0, 1);
         }
     }
 
+    /**
+     * Reproduce el sonido correspondiente.
+     */
     public static void playCartoonSlipFall(){
         if (!destroyed){
             soundPool.play(soundIdCartoonSlipFall, 0.2f, 0.2f, 0, 0, 1);
         }
     }
 
+    /**
+     * Reproduce el sonido correspondiente.
+     */
     public static void playCartoonSlipUp(){
         if (!destroyed){
             soundPool.play(soundIdCartoonSlipUp, 0.2f, 0.2f, 0, 0, 1);
         }
     }
 
+    /**
+     * Reproduce el sonido correspondiente.
+     */
     public static void playCartoonDrumRoll(){
         if (!destroyed){
             soundPool.play(soundIdCartoonDrumRoll, 0.2f, 0.2f, 0, 0, 1);
         }
     }
 
+    /**
+     * Reproduce el sonido correspondiente.
+     */
     public static void playCartoonFail(){
         if (!destroyed){
             soundPool.play(soundIdCartoonFail, 0.2f, 0.2f, 0, 0, 1);
         }
     }
 
+    /**
+     * Reproduce el sonido correspondiente.
+     */
     public static void playCartoonHonkHorn(){
         if (!destroyed){
             soundPool.play(soundIdCartoonHonkHorn, 0.2f, 0.2f, 0, 0, 1);
         }
     }
 
+    /**
+     * Reproduce el sonido correspondiente.
+     */
     public static void playRecordedCluk(){
         if (!destroyed){
             soundPool.play(soundIdRecordedCluk, 0.2f, 0.2f, 0, 0, 1);
         }
     }
 
+    /**
+     * Reproduce el sonido correspondiente.
+     */
     public static void playRecordedPop(){
         if (!destroyed){
             soundPool.play(soundIdRecordedPop, 0.2f, 0.2f, 0, 0, 1);
         }
     }
 
+    /**
+     * Destruye el sistema de sonido, debe ejecutarse al destruirse la última actividad de la
+     * aplicación. Una vez eejcutado este método, debe ejecutarse de nuevo el método Init
+     * para poder usar de nuevo el resto de métodos.
+     */
     public static void destroy(){
         if (destroyed){
             return;

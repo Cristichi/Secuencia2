@@ -11,6 +11,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
+/**
+ * Tarea asíncrona para obtener los datos de un Modo de Juego personalizado dado por su Id
+ */
 public class LoadCustomGamemode extends AsyncTask<Void, Void, CustomGamemode> {
     private boolean exception;
 

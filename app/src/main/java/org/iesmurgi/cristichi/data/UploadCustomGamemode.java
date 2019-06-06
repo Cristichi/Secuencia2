@@ -18,6 +18,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
+/**
+ * Tarea asíncrona para publicar un Modo de Juego personalizado
+ */
 public class UploadCustomGamemode extends AsyncTask<Void, Void, Boolean> {
     private Activity ctxt;
     private AlertDialog dialog;

@@ -12,6 +12,9 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
+/**
+ * Modos de Juego oficiales que funcionan por imágenes
+ */
 public enum ImageGamemode implements Gamemode<Integer> {
     CATS("CATS", R.string.isp_cats_name, R.drawable.icon_isp_cats,
             R.drawable.isp_cats_1, R.drawable.isp_cats_2,
@@ -69,17 +72,9 @@ public enum ImageGamemode implements Gamemode<Integer> {
         return sol;
     }
 
-    protected void setCode(String code) {
-        this.code = code;
-    }
-
     @Override
     public String getCode() {
         return code;
-    }
-
-    public void setName(@StringRes int name) {
-        this.name = name;
     }
 
     @Override @StringRes

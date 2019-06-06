@@ -109,7 +109,6 @@ public class EditAccountActivity extends ActivityWithMusic {
     }
 
     class EditAccountTask extends AsyncTask<Void, Void, ReturnLogin> {
-
         private AlertDialog dial;
         private Context ctxt;
         private String oldEmail, oldNick, oldPass, newEmail, newNick, newPass;

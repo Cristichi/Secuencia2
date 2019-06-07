@@ -86,7 +86,7 @@
             android:layout_weight="1"
             android:text="@string/account_highscores_title_gamemode"
             android:textAlignment="center"
-            android:textColor="@color/secondaryTextColor"
+            android:textColor="@color/primaryTextColor"
             android:textSize="18sp"
             android:textStyle="bold" />
 
@@ -96,7 +96,7 @@
             android:layout_weight="1"
             android:text="@string/account_highscores_title_difficulty"
             android:textAlignment="center"
-            android:textColor="@color/secondaryTextColor"
+            android:textColor="@color/primaryTextColor"
             android:textSize="18sp"
             android:textStyle="bold" />
 
@@ -106,7 +106,7 @@
             android:layout_weight="1"
             android:text="@string/account_highscores_title_score"
             android:textAlignment="center"
-            android:textColor="@color/secondaryTextColor"
+            android:textColor="@color/primaryTextColor"
             android:textSize="18sp"
             android:textStyle="bold" />
 
@@ -116,7 +116,7 @@
             android:layout_weight="1"
             android:text="@string/account_highscores_title_date"
             android:textAlignment="center"
-            android:textColor="@color/secondaryTextColor"
+            android:textColor="@color/primaryTextColor"
             android:textSize="18sp"
             android:textStyle="bold" />
 

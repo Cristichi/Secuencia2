@@ -32,6 +32,21 @@
     <color name="primaryHintTextColor">#CCCCCC</color>
     <color name="secondaryHintTextColor">#CCCCCC</color>
 
+    - - -
+
+
+    <color name="primaryColor">#ffffff</color>
+    <color name="primaryLightColor">#ffffff</color>
+    <color name="primaryDarkColor">#ffffff</color>
+    <color name="secondaryColor">#5b6abf</color>
+    <color name="secondaryLightColor">#8d98f2</color>
+    <color name="secondaryDarkColor">#25408e</color>
+    <color name="primaryTextColor">#000000</color>
+    <color name="secondaryTextColor">#ffffff</color>
+
+    <color name="primaryHintTextColor">#444444</color>
+    <color name="secondaryHintTextColor">#444444</color>
+
     -->
 
     <color name="primaryColor">#5b6abf</color>

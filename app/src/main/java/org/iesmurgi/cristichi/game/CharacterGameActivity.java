@@ -152,38 +152,40 @@ public class CharacterGameActivity extends ActivityGameWithMusic {
                         empezado = true;
                         inicio = System.currentTimeMillis();
                     }
-                    Character car = (char)v.getTag();
-                    if (secuence.get(0).equals(car)){
-                        SoundSystem.playRecordedPop();
-                        llSerialView.removeViewAt(0);
-                        secuence.remove(0);
-                        if (secuence.isEmpty()){
-                            fin = System.currentTimeMillis();
-                            double segundos = (fin-inicio)/1000;
-                            double prescore = secuenceInicial/segundos*1000;
-                            Intent intento = new Intent(CharacterGameActivity.this, ScoreActivity.class);
-                            intento.putExtra("prescore", prescore);
-                            intento.putExtra("difficultyName", diff.getName());
-                            intento.putExtra("difficultyId", diff.getId());
-                            intento.putExtra("gamemodeName", sp.getName());
-                            intento.putExtra("gamemodeCode", sp.getCode());
-                            CharacterGameActivity.this.startActivity(intento);
-                            CharacterGameActivity.this.finish();
-                        }else{
-                            ((TextView)llSerialView.getChildAt(0)).setTextSize(charSizeTarget);
+                    if (!secuence.isEmpty()) {
+                        Character car = (char) v.getTag();
+                        if (secuence.get(0).equals(car)) {
+                            SoundSystem.playRecordedPop();
+                            llSerialView.removeViewAt(0);
+                            secuence.remove(0);
+                            if (secuence.isEmpty()) {
+                                fin = System.currentTimeMillis();
+                                double segundos = (fin - inicio) / 1000;
+                                double prescore = secuenceInicial / segundos * 1000;
+                                Intent intento = new Intent(CharacterGameActivity.this, ScoreActivity.class);
+                                intento.putExtra("prescore", prescore);
+                                intento.putExtra("difficultyName", diff.getName());
+                                intento.putExtra("difficultyId", diff.getId());
+                                intento.putExtra("gamemodeName", sp.getName());
+                                intento.putExtra("gamemodeCode", sp.getCode());
+                                CharacterGameActivity.this.startActivity(intento);
+                                CharacterGameActivity.this.finish();
+                            } else {
+                                ((TextView) llSerialView.getChildAt(0)).setTextSize(charSizeTarget);
+                            }
+                        } else {
+                            SoundSystem.playCartoonHonkHorn();
+                            secuence.add(car);
+                            TextView tv = new TextView(CharacterGameActivity.this);
+                            tv.setPadding(5, 5, 5, 5);
+                            tv.setTextSize(charSize);
+                            tv.setTextColor(textColorSecondary);
+                            tv.setText(car.toString());
+                            llSerialView.addView(tv);
+                            scrollView.fullScroll(View.FOCUS_UP);
                         }
-                    }else{
-                        SoundSystem.playCartoonHonkHorn();
-                        secuence.add(car);
-                        TextView tv = new TextView(CharacterGameActivity.this);
-                        tv.setPadding(5,5,5,5);
-                        tv.setTextSize(charSize);
-                        tv.setTextColor(textColorSecondary);
-                        tv.setText(car.toString());
-                        llSerialView.addView(tv);
-                        scrollView.fullScroll(View.FOCUS_UP);
+                        randomizeBtns();
                     }
-                    randomizeBtns();
                 }
             });
             rowWidth+=btnSize;

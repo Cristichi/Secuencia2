@@ -141,40 +141,42 @@ public class ImageGameActivity extends ActivityGameWithMusic {
                         empezado = true;
                         inicio = System.currentTimeMillis();
                     }
-                    Integer car = (int) v.getTag();
-                    if (secuence.get(0).equals(car)){
-                        SoundSystem.playRecordedPop();
-                        llSerialView.removeViewAt(0);
-                        secuence.remove(0);
-                        if (secuence.isEmpty()){
-                            fin = System.currentTimeMillis();
-                            double segundos = (fin-inicio)/1000;
-                            double prescore = secuenceInicial/segundos*1000;
-                            Intent intento = new Intent(ImageGameActivity.this, ScoreActivity.class);
-                            intento.putExtra("prescore", prescore);
-                            intento.putExtra("difficultyName", diff.getName());
-                            intento.putExtra("difficultyId", diff.getId());
-                            intento.putExtra("gamemodeName", sp.getName());
-                            intento.putExtra("gamemodeCode", sp.getCode());
-                            ImageGameActivity.this.startActivity(intento);
-                            ImageGameActivity.this.finish();
-                        }else{
-                            ViewGroup.LayoutParams lp = (llSerialView.getChildAt(0)).getLayoutParams();
-                            lp.height = lp.width = (int) imageSizeTarget;
+                    if (!secuence.isEmpty()) {
+                        Integer car = (int) v.getTag();
+                        if (secuence.get(0).equals(car)) {
+                            SoundSystem.playRecordedPop();
+                            llSerialView.removeViewAt(0);
+                            secuence.remove(0);
+                            if (secuence.isEmpty()) {
+                                fin = System.currentTimeMillis();
+                                double segundos = (fin - inicio) / 1000;
+                                double prescore = secuenceInicial / segundos * 1000;
+                                Intent intento = new Intent(ImageGameActivity.this, ScoreActivity.class);
+                                intento.putExtra("prescore", prescore);
+                                intento.putExtra("difficultyName", diff.getName());
+                                intento.putExtra("difficultyId", diff.getId());
+                                intento.putExtra("gamemodeName", sp.getName());
+                                intento.putExtra("gamemodeCode", sp.getCode());
+                                ImageGameActivity.this.startActivity(intento);
+                                ImageGameActivity.this.finish();
+                            } else {
+                                ViewGroup.LayoutParams lp = (llSerialView.getChildAt(0)).getLayoutParams();
+                                lp.height = lp.width = (int) imageSizeTarget;
 
+                            }
+                        } else {
+                            SoundSystem.playCartoonHonkHorn();
+                            secuence.add(car);
+                            ImageView tv = new ImageView(ImageGameActivity.this);
+                            tv.setImageResource(car);
+                            llSerialView.addView(tv);
+                            ViewGroup.LayoutParams lp = tv.getLayoutParams();
+                            lp.height = lp.width = (int) imageSize;
+                            tv.setPadding(5, 5, 5, 5);
+                            scrollView.fullScroll(View.FOCUS_UP);
                         }
-                    }else{
-                        SoundSystem.playCartoonHonkHorn();
-                        secuence.add(car);
-                        ImageView tv = new ImageView(ImageGameActivity.this);
-                        tv.setImageResource(car);
-                        llSerialView.addView(tv);
-                        ViewGroup.LayoutParams lp = tv.getLayoutParams();
-                        lp.height = lp.width = (int) imageSize;
-                        tv.setPadding(5,5,5,5);
-                        scrollView.fullScroll(View.FOCUS_UP);
+                        randomizeBtns();
                     }
-                    randomizeBtns();
                 }
             });
             rowWidth+=btnSize;

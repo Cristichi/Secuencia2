@@ -163,38 +163,40 @@ public class WordGameActivity extends ActivityGameWithMusic {
                         empezado = true;
                         inicio = System.currentTimeMillis();
                     }
-                    Integer car = (int)v.getTag();
-                    if (secuence.get(0).equals(car)){
-                        SoundSystem.playRecordedPop();
-                        llSerialView.removeViewAt(0);
-                        secuence.remove(0);
-                        if (secuence.isEmpty()){
-                            fin = System.currentTimeMillis();
-                            double segundos = (fin-inicio)/1000;
-                            double prescore = secuenceInicial/segundos*1000;
-                            Intent intento = new Intent(WordGameActivity.this, ScoreActivity.class);
-                            intento.putExtra("prescore", prescore);
-                            intento.putExtra("difficultyName", diff.getName());
-                            intento.putExtra("difficultyId", diff.getId());
-                            intento.putExtra("gamemodeName", sp.getName());
-                            intento.putExtra("gamemodeCode", sp.getCode());
-                            WordGameActivity.this.startActivity(intento);
-                            WordGameActivity.this.finish();
-                        }else{
-                            ((TextView)llSerialView.getChildAt(0)).setTextSize(wordSizeTarget);
+                    if (!secuence.isEmpty()) {
+                        Integer car = (int) v.getTag();
+                        if (secuence.get(0).equals(car)) {
+                            SoundSystem.playRecordedPop();
+                            llSerialView.removeViewAt(0);
+                            secuence.remove(0);
+                            if (secuence.isEmpty()) {
+                                fin = System.currentTimeMillis();
+                                double segundos = (fin - inicio) / 1000;
+                                double prescore = secuenceInicial / segundos * 1000;
+                                Intent intento = new Intent(WordGameActivity.this, ScoreActivity.class);
+                                intento.putExtra("prescore", prescore);
+                                intento.putExtra("difficultyName", diff.getName());
+                                intento.putExtra("difficultyId", diff.getId());
+                                intento.putExtra("gamemodeName", sp.getName());
+                                intento.putExtra("gamemodeCode", sp.getCode());
+                                WordGameActivity.this.startActivity(intento);
+                                WordGameActivity.this.finish();
+                            } else {
+                                ((TextView) llSerialView.getChildAt(0)).setTextSize(wordSizeTarget);
+                            }
+                        } else {
+                            SoundSystem.playCartoonHonkHorn();
+                            secuence.add(car);
+                            TextView tv = new TextView(WordGameActivity.this);
+                            tv.setTextColor(textColorSecondary);
+                            tv.setText(car);
+                            tv.setTextSize(wordSize);
+                            tv.setPadding(5, 5, 10, 5);
+                            llSerialView.addView(tv);
+                            scrollView.fullScroll(View.FOCUS_UP);
                         }
-                    }else{
-                        SoundSystem.playCartoonHonkHorn();
-                        secuence.add(car);
-                        TextView tv = new TextView(WordGameActivity.this);
-                        tv.setTextColor(textColorSecondary);
-                        tv.setText(car);
-                        tv.setTextSize(wordSize);
-                        tv.setPadding(5,5,10,5);
-                        llSerialView.addView(tv);
-                        scrollView.fullScroll(View.FOCUS_UP);
+                        randomizeBtns();
                     }
-                    randomizeBtns();
                 }
             });
             rowWidth+=btnSize;

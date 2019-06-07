@@ -95,7 +95,7 @@ public class WordGameActivity extends ActivityGameWithMusic {
             boolean first = true;
             for(Integer car : secuence){
                 TextView tv = new TextView(this);
-                tv.setGravity(Gravity.CENTER);
+                tv.setGravity(Gravity.CENTER_VERTICAL);
                 tv.setTextColor(textColorPrimary);
                 tv.setText(car);
                 tv.setPadding(5,5,10,5);

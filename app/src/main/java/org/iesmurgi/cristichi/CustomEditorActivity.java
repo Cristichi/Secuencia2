@@ -57,7 +57,7 @@ public class CustomEditorActivity extends ActivityWithMusic {
                 String title = etName.getText().toString().trim();
                 if (title.isEmpty()){
                     new AlertDialog.Builder(CustomEditorActivity.this).setMessage(R.string.custom_editor_error_empty_name).show();
-                } else if (adapter.getStringList().size()<3){
+                } else if (adapter.getStringList().size()<2){
                     new AlertDialog.Builder(CustomEditorActivity.this).setMessage(R.string.custom_editor_error_not_enough_values).show();
                 }else {
                     String values = adapter.toString();

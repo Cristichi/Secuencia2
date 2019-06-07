@@ -112,7 +112,7 @@
     <string name="custom_editor_name">Mi Modo Personalizado</string>
     <string name="custom_editor_add_string">Añadir nuevo valor</string>
     <string name="custom_editor_error_empty_name">Pon un nombre a tu Modo de Juego</string>
-    <string name="custom_editor_error_not_enough_values">Por favor, introduce al menos 3 valores</string>
+    <string name="custom_editor_error_not_enough_values">Por favor, introduce al menos 2 valores</string>
     <string name="custom_editor_uploading_title">Publicando</string>
     <string name="custom_editor_uploading_message">Conectando al servidor, espere por favor&#8230;</string>
     <string name="custom_editor_uploading_good">¡Has publicado tu modo de juego!</string>

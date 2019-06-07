@@ -8,8 +8,8 @@ android {
         applicationId "org.iesmurgi.cristichi"
         minSdkVersion 21
         targetSdkVersion 28
-        versionCode 6
-        versionName "Beta 1.4"
+        versionCode 7
+        versionName "1.5"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {

@@ -14,7 +14,7 @@
         android:layout_weight="1"
         android:gravity="center"
         android:textAlignment="center"
-        android:textColor="@color/secondaryTextColor"
+        android:textColor="@color/primaryTextColor"
         android:textSize="18sp" />
 
     <TextView
@@ -24,7 +24,7 @@
         android:layout_weight="1"
         android:gravity="center"
         android:textAlignment="center"
-        android:textColor="@color/secondaryTextColor"
+        android:textColor="@color/primaryTextColor"
         android:textSize="18sp" />
 
     <TextView
@@ -34,7 +34,7 @@
         android:layout_weight="1"
         android:gravity="center"
         android:textAlignment="center"
-        android:textColor="@color/secondaryTextColor"
+        android:textColor="@color/primaryTextColor"
         android:textSize="18sp" />
 
     <TextView
@@ -44,6 +44,6 @@
         android:layout_weight="1"
         android:gravity="center"
         android:textAlignment="center"
-        android:textColor="@color/secondaryTextColor"
+        android:textColor="@color/primaryTextColor"
         android:textSize="18sp" />
 </LinearLayout>

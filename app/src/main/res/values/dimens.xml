@@ -7,14 +7,20 @@
     <dimen name="custom_tab_layout_height">72dp</dimen>
 
     <dimen name="btn_char_width">80dp</dimen>
-    <dimen name="char_size">30dp</dimen>
-    <dimen name="char_size_target">40dp</dimen>
+    <dimen name="btn_text_char_size">30dp</dimen>
+
+    <dimen name="char_size">40dp</dimen>
+    <dimen name="char_size_target">50dp</dimen>
+
 
     <dimen name="btn_image_width">80dp</dimen>
     <dimen name="image_width">100dp</dimen>
     <dimen name="image_width_target">130dp</dimen>
 
-    <dimen name="btn_word_width">130dp</dimen>
+
+    <dimen name="btn_word_width">200dp</dimen>
+    <dimen name="btn_text_word_size">20dp</dimen>
+
     <dimen name="word_size">30dp</dimen>
     <dimen name="word_size_target">40dp</dimen>
 </resources>

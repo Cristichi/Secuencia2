@@ -36,8 +36,8 @@ public class WordGameActivity extends ActivityGameWithMusic {
     private int btnSize;
     private float wordSize;
     private float wordSizeTarget;
+    private float btnWordSize;
     private int textColorPrimary;
-    private int textColorSecondary;
 
     private WordGamemode sp;
     private Difficulty diff;
@@ -56,7 +56,6 @@ public class WordGameActivity extends ActivityGameWithMusic {
         setContentView(R.layout.activity_game);
 
         textColorPrimary =  ResourcesCompat.getColor(getResources(), R.color.primaryTextColor, getTheme());
-        textColorSecondary =  ResourcesCompat.getColor(getResources(), R.color.secondaryTextColor, getTheme());
 
         Display display = getWindowManager().getDefaultDisplay();
         DisplayMetrics outMetrics = new DisplayMetrics();
@@ -69,6 +68,7 @@ public class WordGameActivity extends ActivityGameWithMusic {
         btnSize = (int) getResources().getDimension(R.dimen.btn_word_width);
         wordSize = getResources().getDimension(R.dimen.word_size)/density;
         wordSizeTarget = getResources().getDimension(R.dimen.word_size_target)/density;
+        btnWordSize = getResources().getDimension(R.dimen.btn_text_word_size)/density;
 
         try{
             Bundle extras = getIntent().getExtras();
@@ -95,14 +95,15 @@ public class WordGameActivity extends ActivityGameWithMusic {
             boolean first = true;
             for(Integer car : secuence){
                 TextView tv = new TextView(this);
-                tv.setTextColor(textColorSecondary);
+                tv.setGravity(Gravity.CENTER);
+                tv.setTextColor(textColorPrimary);
                 tv.setText(car);
                 tv.setPadding(5,5,10,5);
                 llSerialView.addView(tv);
                 if (first){
                     tv.setTextSize(wordSizeTarget);
                     tv.measure(0,0);
-                    scrollView.getLayoutParams().height = tv.getMeasuredHeight();
+                    scrollView.getLayoutParams().height = tv.getMeasuredHeight()+20;
                     first = false;
                 }else{
                     tv.setTextSize(wordSize);
@@ -111,11 +112,6 @@ public class WordGameActivity extends ActivityGameWithMusic {
 
             randomizeBtns();
         }catch (NullPointerException | IndexOutOfBoundsException e){
-            Log.e("CRISTICHIEX", "Error: "+e);
-            Log.e("CRISTICHIEX", "Error: "+e);
-            Log.e("CRISTICHIEX", "Error: "+e);
-            Log.e("CRISTICHIEX", "Error: "+e);
-            Log.e("CRISTICHIEX", "Error: "+e);
             e.printStackTrace();
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
             builder.setTitle(R.string.error_access_game_tit);
@@ -154,6 +150,7 @@ public class WordGameActivity extends ActivityGameWithMusic {
         float rowWidth = 0;
         for(int i=0; i<buttons.size(); i++){
             Button btn = buttons.get(i);
+            btn.setTextSize(btnWordSize);
             btn.setWidth(btnSize);
             btn.setAllCaps(false);
             btn.setOnClickListener(new View.OnClickListener() {
@@ -188,9 +185,9 @@ public class WordGameActivity extends ActivityGameWithMusic {
                             SoundSystem.playCartoonHonkHorn();
                             secuence.add(car);
                             TextView tv = new TextView(WordGameActivity.this);
-                            tv.setTextColor(textColorSecondary);
-                            tv.setText(car);
                             tv.setTextSize(wordSize);
+                            tv.setTextColor(textColorPrimary);
+                            tv.setText(car);
                             tv.setPadding(5, 5, 10, 5);
                             llSerialView.addView(tv);
                             scrollView.fullScroll(View.FOCUS_UP);

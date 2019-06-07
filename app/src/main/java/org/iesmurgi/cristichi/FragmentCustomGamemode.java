@@ -95,6 +95,7 @@ public class FragmentCustomGamemode extends FragmentGamemodes {
             }
         };
         task.execute();
+        rv.setAdapter(new RecyclerViewCustomGamemodeAdapter(inflater.getContext(), new ArrayList<InfoCustomGamemode>()));
         return sol;
     }
 }

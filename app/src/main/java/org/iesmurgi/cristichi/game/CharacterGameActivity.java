@@ -34,7 +34,8 @@ public class CharacterGameActivity extends ActivityGameWithMusic {
     private int btnSize;
     private float charSize;
     private float charSizeTarget;
-    private int textColorSecondary;
+    private float btnCharSize;
+    private int textColorPrimary;
 
     private CharacterGamemode sp;
     private Difficulty diff;
@@ -51,18 +52,18 @@ public class CharacterGameActivity extends ActivityGameWithMusic {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
 
-        textColorSecondary =  ResourcesCompat.getColor(getResources(), R.color.secondaryTextColor, getTheme());
+        textColorPrimary =  ResourcesCompat.getColor(getResources(), R.color.primaryTextColor, getTheme());
 
         Display display = getWindowManager().getDefaultDisplay();
         DisplayMetrics outMetrics = new DisplayMetrics();
         display.getMetrics(outMetrics);
 
         float density  = getResources().getDisplayMetrics().density;
-        //screenWidth = outMetrics.widthPixels / density;
         screenWidth = outMetrics.widthPixels;
 
         btnSize = (int) getResources().getDimension(R.dimen.btn_char_width);
         charSize = getResources().getDimension(R.dimen.char_size)/density;
+        btnCharSize = getResources().getDimension(R.dimen.btn_text_char_size)/density;
         charSizeTarget = getResources().getDimension(R.dimen.char_size_target)/density;
 
         try{
@@ -89,7 +90,7 @@ public class CharacterGameActivity extends ActivityGameWithMusic {
                 }else{
                     tv.setTextSize(charSize);
                 }
-                tv.setTextColor(textColorSecondary);
+                tv.setTextColor(textColorPrimary);
                 tv.setText(car.toString());
                 tv.setPadding(5,5,5,5);
                 llSerialView.addView(tv);
@@ -97,11 +98,6 @@ public class CharacterGameActivity extends ActivityGameWithMusic {
 
             randomizeBtns();
         }catch (NullPointerException | IndexOutOfBoundsException e){
-            Log.e("CRISTICHIEX", "Error: "+e);
-            Log.e("CRISTICHIEX", "Error: "+e);
-            Log.e("CRISTICHIEX", "Error: "+e);
-            Log.e("CRISTICHIEX", "Error: "+e);
-            Log.e("CRISTICHIEX", "Error: "+e);
             e.printStackTrace();
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
             builder.setTitle(R.string.error_access_game_tit);
@@ -144,6 +140,7 @@ public class CharacterGameActivity extends ActivityGameWithMusic {
             Button btn = buttons.get(i);
             btn.setPadding(5,5,5,5);
             btn.setWidth(btnSize);
+            btn.setTextSize(btnCharSize);
             btn.setAllCaps(false);
             btn.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -179,7 +176,7 @@ public class CharacterGameActivity extends ActivityGameWithMusic {
                             TextView tv = new TextView(CharacterGameActivity.this);
                             tv.setPadding(5, 5, 5, 5);
                             tv.setTextSize(charSize);
-                            tv.setTextColor(textColorSecondary);
+                            tv.setTextColor(textColorPrimary);
                             tv.setText(car.toString());
                             llSerialView.addView(tv);
                             scrollView.fullScroll(View.FOCUS_UP);
@@ -190,7 +187,6 @@ public class CharacterGameActivity extends ActivityGameWithMusic {
             });
             rowWidth+=btnSize;
             if (rowWidth> screenWidth){
-                //Log.d("CRISTICHIEX", "btn screenWidth="+btnSize+", row screenWidth="+rowWidth+", screen screenWidth="+ screenWidth +", i="+i+", getMaxWidth="+btn.getMaxWidth());
                 tlButtons.addView(row);
                 row = new TableRow(this);
                 row.setGravity(Gravity.CENTER);

@@ -62,9 +62,9 @@ public class ImageGameActivity extends ActivityGameWithMusic {
             sp = ImageGamemode.values()[extras.getInt("stylePack", -1)];
             diff = Difficulty.values()[extras.getInt("difficulty", -1)];
 
-            btnSize = getResources().getDimension(R.dimen.btn_image_width);
             imageSize = getResources().getDimension(R.dimen.image_width);
             imageSizeTarget = getResources().getDimension(R.dimen.image_width_target);
+            btnSize = getResources().getDimension(R.dimen.btn_image_width);
 
             TextView title = findViewById(R.id.tvTitle);
             title.setText(sp.getName());

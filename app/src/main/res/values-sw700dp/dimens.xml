@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="btn_char_width">200dp</dimen>
+    <dimen name="btn_text_char_size">80dp</dimen>
+    <dimen name="char_size">100dp</dimen>
+    <dimen name="char_size_target">140dp</dimen>
+
+    <dimen name="btn_image_width">160dp</dimen>
+    <dimen name="image_width">200dp</dimen>
+    <dimen name="image_width_target">230dp</dimen>
+
+    <dimen name="btn_word_width">250dp</dimen>
+    <dimen name="btn_text_word_size">50dp</dimen>
+    <dimen name="word_size">100dp</dimen>
+    <dimen name="word_size_target">120dp</dimen>
+</resources>

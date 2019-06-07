@@ -8,7 +8,6 @@ import android.os.Bundle;
 import android.support.v4.content.res.ResourcesCompat;
 import android.support.v7.app.AlertDialog;
 import android.util.DisplayMetrics;
-import android.util.Log;
 import android.view.Display;
 import android.view.Gravity;
 import android.view.MotionEvent;
@@ -27,7 +26,6 @@ import org.iesmurgi.cristichi.ScoreActivity;
 import org.iesmurgi.cristichi.SoundSystem;
 import org.iesmurgi.cristichi.data.CustomGamemode;
 import org.iesmurgi.cristichi.data.Difficulty;
-import org.iesmurgi.cristichi.data.WordGamemode;
 
 import java.util.List;
 
@@ -37,8 +35,8 @@ public class CustomGameActivity extends ActivityGameWithMusic {
     private int btnSize;
     private float wordSize;
     private float wordSizeTarget;
+    private float btnWordSize;
     private int textColorPrimary;
-    private int textColorSecondary;
 
     private CustomGamemode sp;
     private Difficulty diff;
@@ -57,7 +55,6 @@ public class CustomGameActivity extends ActivityGameWithMusic {
         setContentView(R.layout.activity_game);
 
         textColorPrimary =  ResourcesCompat.getColor(getResources(), R.color.primaryTextColor, getTheme());
-        textColorSecondary =  ResourcesCompat.getColor(getResources(), R.color.secondaryTextColor, getTheme());
 
         Display display = getWindowManager().getDefaultDisplay();
         DisplayMetrics outMetrics = new DisplayMetrics();
@@ -70,6 +67,7 @@ public class CustomGameActivity extends ActivityGameWithMusic {
         btnSize = (int) getResources().getDimension(R.dimen.btn_word_width);
         wordSize = getResources().getDimension(R.dimen.word_size)/density;
         wordSizeTarget = getResources().getDimension(R.dimen.word_size_target)/density;
+        btnWordSize = getResources().getDimension(R.dimen.btn_text_word_size)/density;
 
         try{
             Bundle extras = getIntent().getExtras();
@@ -96,14 +94,15 @@ public class CustomGameActivity extends ActivityGameWithMusic {
             boolean first = true;
             for(String car : secuence){
                 TextView tv = new TextView(this);
-                tv.setTextColor(textColorSecondary);
+                tv.setGravity(Gravity.CENTER);
+                tv.setTextColor(textColorPrimary);
                 tv.setText(car);
                 tv.setPadding(5,5,10,5);
                 llSerialView.addView(tv);
                 if (first){
                     tv.setTextSize(wordSizeTarget);
                     tv.measure(0,0);
-                    scrollView.getLayoutParams().height = tv.getMeasuredHeight();
+                    scrollView.getLayoutParams().height = tv.getMeasuredHeight()+20;
                     first = false;
                 }else{
                     tv.setTextSize(wordSize);
@@ -150,6 +149,7 @@ public class CustomGameActivity extends ActivityGameWithMusic {
         float rowWidth = 0;
         for(int i=0; i<buttons.size(); i++){
             Button btn = buttons.get(i);
+            btn.setTextSize(btnWordSize);
             btn.setWidth(btnSize);
             btn.setAllCaps(false);
             btn.setOnClickListener(new View.OnClickListener() {
@@ -184,7 +184,9 @@ public class CustomGameActivity extends ActivityGameWithMusic {
                             SoundSystem.playCartoonHonkHorn();
                             secuence.add(car);
                             TextView tv = new TextView(CustomGameActivity.this);
-                            tv.setTextColor(textColorSecondary);
+                            tv.setGravity(Gravity.CENTER);
+                            tv.setTextSize(wordSize);
+                            tv.setTextColor(textColorPrimary);
                             tv.setText(car);
                             tv.setTextSize(wordSize);
                             tv.setPadding(5, 5, 10, 5);

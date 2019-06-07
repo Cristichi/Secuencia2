@@ -14,6 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -115,6 +116,8 @@ public class HighscoresActivity extends ActivityWithMusic {
     }
 
     private static class RecyclerViewHolder extends RecyclerView.ViewHolder {
+        LinearLayout llHolder;
+        TextView tvOrder;
         TextView tvUser;
         TextView tvGamemode;
         TextView tvDifficulty;
@@ -124,6 +127,8 @@ public class HighscoresActivity extends ActivityWithMusic {
         RecyclerViewHolder(View itemView) {
             super(itemView);
 
+            llHolder = itemView.findViewById(R.id.llHolder);
+            tvOrder = itemView.findViewById(R.id.tvOrder);
             tvUser = itemView.findViewById(R.id.tvEmail);
             tvGamemode = itemView.findViewById(R.id.tvGamemode);
             tvDifficulty = itemView.findViewById(R.id.tvDifficulty);
@@ -153,7 +158,13 @@ public class HighscoresActivity extends ActivityWithMusic {
 
         @Override
         public void onBindViewHolder(@NonNull RecyclerViewHolder holder, int position) {
+            if (position%2==0)
+                holder.llHolder.setBackgroundResource(R.drawable.background_primary_gradient_border_inverse);
+            else
+                holder.llHolder.setBackgroundResource(R.drawable.background_primary_gradient_border);
+
             HighScore hs = highScores.get(position);
+            holder.tvOrder.setText(String.valueOf(position+1));
             holder.tvUser.setText(hs.user);
             holder.tvGamemode.setText(hs.gamemode);
             holder.tvDifficulty.setText(hs.diff);
@@ -212,12 +223,7 @@ public class HighscoresActivity extends ActivityWithMusic {
                                 "where Users.Email=HighScores.UserEmail " +
                                 (gamemode!=null?"and Gamemode='"+gamemode+"' ":"") +
                                 (difficulty!=null?"and Difficulty='"+difficulty+"' ":"") +
-                                "order by Score desc limit 20");
-                Log.d("CRISTICHIEX", "SELECT Nickname, Gamemode, Difficulty, Score, ScoreDate from HighScores, Users " +
-                                "where Users.Email=HighScores.UserEmail " +
-                                (gamemode!=null?"and Gamemode='"+gamemode+"' ":"") +
-                                (difficulty!=null?"and Difficulty='"+difficulty+"' ":"") +
-                                "order by Score desc limit 20");
+                                "order by Score desc limit 50");
 
                 while (rs.next()) {
                     String nickname = rs.getString(1);

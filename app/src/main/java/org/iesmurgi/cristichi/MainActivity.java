@@ -77,7 +77,8 @@ public class MainActivity extends ActivityWithMusic {
         ivNewPoint = findViewById(R.id.ivNew);
 
         firstStart = true;
-        LocalStorage.tryLoginFromFile(MainActivity.this);
+        if (!Session.isLogged())
+            LocalStorage.tryLoginFromFile(MainActivity.this);
     }
 
     @Override

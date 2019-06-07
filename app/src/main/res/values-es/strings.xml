@@ -71,7 +71,7 @@
     <string name="highscores_title_email">Usuario</string>
     <string name="highscores_title_gamemode">Modo de Juego</string>
     <string name="highscores_title_difficulty">Dificultad</string>
-    <string name="highscores_title_score">Puntuación</string>
+    <string name="highscores_title_score">Puntos</string>
     <string name="highscores_title_date">Fecha</string>
     <string name="highscores_error_empty">No se encontraron puntuaciones</string>
     <string name="highscores_unknown_gamemode">Desconocido</string>

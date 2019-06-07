@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--
+    <dimen name="btn_char_width">200dp</dimen>
+    <dimen name="btn_text_char_size">80dp</dimen>
+    <dimen name="char_size">100dp</dimen>
+    <dimen name="char_size_target">140dp</dimen>
+
+    <dimen name="btn_image_width">160dp</dimen>
+    <dimen name="image_width">200dp</dimen>
+    <dimen name="image_width_target">230dp</dimen>
+
+    <dimen name="btn_word_width">250dp</dimen>
+    <dimen name="btn_text_word_size">50dp</dimen>
+    <dimen name="word_size">100dp</dimen>
+    <dimen name="word_size_target">120dp</dimen>
+    -->
+
+    <dimen name="btn_char_width">120dp</dimen>
+    <dimen name="btn_text_char_size">60dp</dimen>
+
+    <dimen name="char_size">70dp</dimen>
+    <dimen name="char_size_target">110dp</dimen>
+
+
+    <dimen name="btn_image_width">130dp</dimen>
+    <dimen name="image_width">170dp</dimen>
+    <dimen name="image_width_target">200dp</dimen>
+
+
+    <dimen name="btn_word_width">220dp</dimen>
+    <dimen name="btn_text_word_size">40dp</dimen>
+
+    <dimen name="word_size">70dp</dimen>
+    <dimen name="word_size_target">110dp</dimen>
+
+    <!--
+
+    <dimen name="btn_char_width">80dp</dimen>
+    <dimen name="btn_text_char_size">30dp</dimen>
+    <dimen name="char_size">40dp</dimen>
+    <dimen name="char_size_target">50dp</dimen>
+
+    <dimen name="btn_image_width">80dp</dimen>
+    <dimen name="image_width">100dp</dimen>
+    <dimen name="image_width_target">130dp</dimen>
+
+    <dimen name="btn_word_width">200dp</dimen>
+    <dimen name="btn_text_word_size">30dp</dimen>
+    <dimen name="word_size">50dp</dimen>
+    <dimen name="word_size_target">60dp</dimen>
+    -->
+</resources>

@@ -24,8 +24,9 @@
         <TextView
             android:id="@+id/textView4"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_weight="1"
+            android:gravity="center"
             android:text="#"
             android:textAlignment="center"
             android:textColor="@color/primaryTextColor"
@@ -34,8 +35,9 @@
 
         <TextView
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="2"
+            android:layout_height="match_parent"
+            android:layout_weight="3"
+            android:gravity="center"
             android:text="@string/highscores_title_email"
             android:textAlignment="center"
             android:textColor="@color/primaryTextColor"
@@ -44,8 +46,9 @@
 
         <TextView
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="2"
+            android:layout_height="match_parent"
+            android:layout_weight="3"
+            android:gravity="center"
             android:text="@string/highscores_title_gamemode"
             android:textAlignment="center"
             android:textColor="@color/primaryTextColor"
@@ -54,8 +57,9 @@
 
         <TextView
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="2"
+            android:layout_height="match_parent"
+            android:layout_weight="3"
+            android:gravity="center"
             android:text="@string/highscores_title_difficulty"
             android:textAlignment="center"
             android:textColor="@color/primaryTextColor"
@@ -64,8 +68,9 @@
 
         <TextView
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_weight="2"
+            android:gravity="center"
             android:text="@string/highscores_title_score"
             android:textAlignment="center"
             android:textColor="@color/primaryTextColor"

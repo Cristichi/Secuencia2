@@ -7,21 +7,27 @@
     android:layout_height="wrap_content"
     android:background="@drawable/background_primary_gradient_border"
     android:orientation="horizontal"
-    android:padding="3dp">
+    android:padding="3dp"
+    android:paddingTop="5dp"
+    android:paddingBottom="5dp">
 
     <TextView
         android:id="@+id/tvOrder"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
+        android:background="@drawable/logout_button"
+        android:gravity="center"
         android:textAlignment="center"
-        android:textColor="@color/primaryTextColor" />
+        android:textColor="@color/secondaryTextColor"
+        android:textStyle="bold" />
 
     <TextView
         android:id="@+id/tvEmail"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_weight="2"
+        android:layout_marginStart="3dp"
+        android:layout_weight="3"
         android:gravity="center"
         android:textAlignment="center"
         android:textColor="@color/primaryTextColor"
@@ -31,7 +37,8 @@
         android:id="@+id/tvGamemode"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_weight="2"
+        android:layout_marginStart="3dp"
+        android:layout_weight="3"
         android:gravity="center"
         android:textAlignment="center"
         android:textColor="@color/primaryTextColor"
@@ -41,7 +48,8 @@
         android:id="@+id/tvDifficulty"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_weight="2"
+        android:layout_marginStart="3dp"
+        android:layout_weight="3"
         android:gravity="center"
         android:textAlignment="center"
         android:textColor="@color/primaryTextColor"
@@ -51,6 +59,7 @@
         android:id="@+id/tvScore"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginStart="3dp"
         android:layout_weight="2"
         android:gravity="center"
         android:textAlignment="center"

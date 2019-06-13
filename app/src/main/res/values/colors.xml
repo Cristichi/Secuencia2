@@ -58,7 +58,7 @@
     <color name="primaryTextColor">#ffffff</color>
     <color name="secondaryTextColor">#000000</color>
 
-    <color name="primaryHintTextColor">#444444</color>
+    <color name="primaryHintTextColor">#CCCCCC</color>
     <color name="secondaryHintTextColor">#444444</color>
 
     <color name="background">#ffffff</color>

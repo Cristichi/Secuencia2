@@ -108,7 +108,6 @@
     <string name="custom_list_delete_good">Has borrado tu modo de juego</string>
     <string name="custom_list_delete_bad">Error. Comprueba tu conexión a Internet</string>
 
-    <string name="accepted_digits_custom_gamemode">qwertyuiopasdfghjklzxcvbnmñ 1234567890 QWERTYUIOPASDFGHJKLZXCVBNMÑ áéíóúÁÉÍÓÚ ¿?¡!-+/*=%()[]{}@#$€.,\"\'</string>
     <string name="custom_editor_name">Mi Modo Personalizado</string>
     <string name="custom_editor_add_string">Añadir nuevo valor</string>
     <string name="custom_editor_error_empty_name">Pon un nombre a tu Modo de Juego</string>

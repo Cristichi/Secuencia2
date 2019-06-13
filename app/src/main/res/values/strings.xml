@@ -109,7 +109,7 @@
     <string name="custom_list_delete_good">Your gamemode was delete successfully</string>
     <string name="custom_list_delete_bad">Error. Check your Internet connection</string>
 
-    <string name="accepted_digits_custom_gamemode">qwertyuiopasdfghjklzxcvbnm 1234567890 QWERTYUIOPASDFGHJKLZXCVBNM áéíóúÁÉÍÓÚ ¿?¡!-+/*=%()[]{}@#$€.,\"\'</string>
+    <string name="accepted_digits_custom_gamemode" translatable="false">qwertyuiopasdfghjklzxcvbnm 1234567890 QWERTYUIOPASDFGHJKLZXCVBNM áéíóúÁÉÍÓÚ ¿?¡!-+/*=%()[]{}@#$€.,\"\'</string>
     <string name="custom_editor_name">My Custom Mode</string>
     <string name="custom_editor_add_string">Add new value</string>
     <string name="custom_editor_error_empty_name">Enter a name for your gamemode</string>

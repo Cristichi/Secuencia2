@@ -52,8 +52,8 @@ public class UploadCustomGamemode extends AsyncTask<Void, Void, Boolean> {
                 Class.forName("com.mysql.jdbc.Driver");
                 DriverManager.registerDriver(new com.mysql.jdbc.Driver());
                 DriverManager.setLoginTimeout(2);
-                Log.d("CRISTICHIEX", DriverManager.getLoginTimeout()+"");
-                con = DriverManager.getConnection(DDBBConstraints.URL_DDBB, DDBBConstraints.USER, DDBBConstraints.PASSWORD);
+                con = DriverManager.getConnection(
+                        DDBBConstraints.URL_DDBB, DDBBConstraints.USER, DDBBConstraints.PASSWORD);
 
 
                 Statement st = con.createStatement();

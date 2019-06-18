@@ -7,6 +7,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -16,6 +17,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.cristichi.secuencia2.data.Difficulty;
 import com.cristichi.secuencia2.game.CharacterGameActivity;
@@ -32,6 +34,9 @@ import java.util.List;
 
 public class FragmentGamemodes extends Fragment {
 
+    RecyclerView rv;
+    RecyclerViewAdapter adapter;
+
     private ArrayList<Gamemode> packs;
 
     public FragmentGamemodes(){
@@ -41,11 +46,8 @@ public class FragmentGamemodes extends Fragment {
     public void setPacks(Gamemode... packs) {
         this.packs = new ArrayList<>(packs.length);
         this.packs.addAll(Arrays.asList(packs));
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+        if (adapter!=null)
+            adapter.setItemList(this.packs);
     }
 
     @Override
@@ -53,10 +55,27 @@ public class FragmentGamemodes extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View sol = inflater.inflate(R.layout.fragment_sp, container, false);
-        RecyclerView rv = sol.findViewById(R.id.recyclerView);
-        rv.setLayoutManager(new LinearLayoutManager(inflater.getContext()));
-        rv.setAdapter(new RecyclerViewAdapter(inflater.getContext(), packs));
+        rv = sol.findViewById(R.id.recyclerView);
+        rv.setLayoutManager(new LinearLayoutManager(getContext()));
+        adapter = new RecyclerViewAdapter(getContext(), packs);
+        rv.setAdapter(adapter);
         return sol;
+    }
+
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putSerializable("packs", packs);
+    }
+
+    @Override
+    public void onViewStateRestored(@Nullable Bundle savedInstanceState) {
+        super.onViewStateRestored(savedInstanceState);
+        try {
+            packs = (ArrayList<Gamemode>) savedInstanceState.getSerializable("packs");
+            adapter.setItemList(packs);
+        }catch (Exception e){
+        }
     }
 }
 
@@ -67,6 +86,11 @@ class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewHolders> {
     public RecyclerViewAdapter(Context context, List<Gamemode> itemList) {
         this.itemList = itemList;
         this.context = context;
+    }
+
+    public void setItemList(List<Gamemode> itemList) {
+        this.itemList = itemList;
+        notifyDataSetChanged();
     }
 
     private int cont = 0;

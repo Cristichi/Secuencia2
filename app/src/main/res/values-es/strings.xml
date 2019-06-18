@@ -148,13 +148,6 @@
     <string name="wsp_week_days_saturday">Sábado</string>
     <string name="wsp_week_days_sunday">Domingo</string>
 
-    <string name="wsp_erasmus_name">Ciudades Erasmus+</string>
-    <string name="wsp_erasmus_greece">Serres</string>
-    <string name="wsp_erasmus_italy">Módica</string>
-    <string name="wsp_erasmus_turkey">Samsun</string>
-    <string name="wsp_erasmus_poland">Slupsk</string>
-    <string name="wsp_erasmus_spain">El Ejido</string>
-
     <string name="diff_easiest">Muy Corto</string>
     <string name="diff_easy">Corto</string>
     <string name="diff_medium">Competitivo</string>
